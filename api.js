@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const type_1 = require("./types/type");
+const type_1 = __importDefault(require("./types/type"));
 class Api {
     constructor(opts) {
         opts = opts || {};

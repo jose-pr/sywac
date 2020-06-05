@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import path from "path";
 import fs from "fs";
 export interface ContextOptions {
@@ -77,8 +78,8 @@ export declare class Context {
     versionRequested: DeferVersion | false;
     constructor(opts?: ContextOptions);
     get utils(): any;
-    get pathLib(): any;
-    get fsLib(): any;
+    get pathLib(): path.PlatformPath | undefined;
+    get fsLib(): typeof fs | undefined;
     slurpArgs(args: string | string[]): this;
     parseSingleArg(arg: string): {
         key: string;

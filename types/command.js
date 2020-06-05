@@ -1,9 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeCommand = void 0;
 //@ts-ignore
-const api_1 = require("../api");
-const type_1 = require("./type");
+const api_1 = __importDefault(require("../api"));
+const type_1 = __importDefault(require("./type"));
 class TypeCommand extends type_1.default {
     constructor(opts) {
         // default value is for benefit of context.details.types

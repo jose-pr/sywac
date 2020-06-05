@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypePositional = void 0;
-const wrapper_1 = require("./wrapper");
+const wrapper_1 = __importDefault(require("./wrapper"));
 class TypePositional extends wrapper_1.default {
     constructor(opts) {
         super(Object.assign({ acceptFlags: false, variadic: false }, opts || {}));

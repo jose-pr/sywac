@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const implicit_1 = require("./implicit");
+const implicit_1 = __importDefault(require("./implicit"));
 class TypeVersion extends implicit_1.default {
     constructor(opts) {
         super(Object.assign({ desc: 'Show version number' }, opts));

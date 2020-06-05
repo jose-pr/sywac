@@ -31,8 +31,8 @@ declare class TypePath extends TypeString {
     get datatype(): "path" | "file" | "dir";
     get fulltype(): "path" | "file" | "directory";
     buildHelpHints(hints: string[]): void;
-    get pathLib(): any;
-    get fsLib(): any;
+    get pathLib(): path.PlatformPath | undefined;
+    get fsLib(): typeof fs | undefined;
     get isStrict(): boolean;
     get shouldValidateDefaultValue(): boolean;
     validateValue(value: string, context: Context): true | Promise<boolean>;

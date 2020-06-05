@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeArray = void 0;
-const type_1 = require("./type");
-const wrapper_1 = require("./wrapper");
+const type_1 = __importDefault(require("./type"));
+const wrapper_1 = __importDefault(require("./wrapper"));
 const SOURCE_DEFAULT = type_1.default.SOURCE_DEFAULT;
 class TypeArray extends wrapper_1.default {
     constructor(opts) {
