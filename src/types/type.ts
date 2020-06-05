@@ -1,9 +1,9 @@
 import { Context, SlurpedArg } from "../context"
 
-export type CoerceFunction<T> = (v:any)=>T
+export type CoerceFunction<T> = (v: any) => T
 export interface TypeOptions<T> {
 
-  aliases?: string[]|string
+  aliases?: string[] | string
   defaultValue?: T
   /**
    * @default false
@@ -127,24 +127,24 @@ export class Type<T> {
     return 'positional'
   }
 
-  protected _aliases:string[]
-  protected _defaultVal?:T
-  protected _required?:boolean
-  protected _strict?:boolean
-  protected _coerceHandler?:CoerceFunction<T>
-  protected _flags?:string
-  protected _desc?:string
-  protected _hints?:string|string[]
-  protected _group?:string
-  protected _hidden?:boolean
-  protected _parent?:string
+  protected _aliases: string[]
+  protected _defaultVal?: T
+  protected _required?: boolean
+  protected _strict?: boolean
+  protected _coerceHandler?: CoerceFunction<T>
+  protected _flags?: string
+  protected _desc?: string
+  protected _hints?: string | string[]
+  protected _group?: string
+  protected _hidden?: boolean
+  protected _parent?: string
 
-  constructor(opts?:TypeOptions<T>) {
+  constructor(opts?: TypeOptions<T>) {
     this._aliases = []
     this.configure(opts, true)
   }
 
-  configure(opts?:TypeOptions<T>, override?:boolean) {
+  configure(opts?: TypeOptions<T>, override?: boolean) {
     opts = opts || {} as TypeOptions<T>
     if (typeof override === 'undefined') override = true
     // configurable for parsing
@@ -168,7 +168,7 @@ export class Type<T> {
     return `${this.parent}|${this.datatype}|${this.aliases.join(',')}`
   }
 
-  withParent(apiName:string) {
+  withParent(apiName: string) {
     this._parent = apiName
     return this
   }
@@ -187,7 +187,7 @@ export class Type<T> {
   }
 
   // == before parsing ==
-  alias(a:string) {
+  alias(a: string) {
     if (a) this._aliases = this._aliases.concat(a)
     return this
   }
@@ -196,7 +196,7 @@ export class Type<T> {
     return this._aliases
   }
 
-  defaultValue(dv:T) {
+  defaultValue(dv: T) {
     this._defaultVal = dv
     return this
   }
@@ -205,7 +205,7 @@ export class Type<T> {
     return this._defaultVal
   }
 
-  required(r:boolean) {
+  required(r: boolean) {
     this._required = r
     return this
   }
@@ -214,7 +214,7 @@ export class Type<T> {
     return !!this._required
   }
 
-  strict(s:boolean) {
+  strict(s: boolean) {
     this._strict = s
     return this
   }
@@ -223,16 +223,16 @@ export class Type<T> {
     return !!this._strict
   }
 
-  coerce(syncFunction:CoerceFunction<T>) {
+  coerce(syncFunction: CoerceFunction<T>) {
     this._coerceHandler = syncFunction
     return this
   }
 
   get coerceHandler() {
-    return typeof this._coerceHandler === 'function' ? this._coerceHandler : (v:any) => v as T
+    return typeof this._coerceHandler === 'function' ? this._coerceHandler : (v: any) => v as T
   }
 
-  flags(f:string) {
+  flags(f: string) {
     this._flags = f
     return this
   }
@@ -241,12 +241,12 @@ export class Type<T> {
     return this._flags
   }
 
-  description(d?:string) {
+  description(d?: string) {
     this._desc = d
     return this
   }
 
-  desc(d?:string) {
+  desc(d?: string) {
     return this.description(d)
   }
 
@@ -255,7 +255,7 @@ export class Type<T> {
     return typeof this._desc === 'string' ? this._desc : ''
   }
 
-  hints(h?:string|string[]) {
+  hints(h?: string | string[]) {
     this._hints = h
     return this
   }
@@ -267,7 +267,7 @@ export class Type<T> {
     return hints.length ? '[' + hints.join('] [') + ']' : ''
   }
 
-  buildHelpHints(hintsArray:string[]) {
+  buildHelpHints(hintsArray: string[]) {
     // required
     if (this.isRequired) hintsArray.push('required')
     // datatype
@@ -277,7 +277,7 @@ export class Type<T> {
     if (dv && (!Array.isArray(dv) || dv.length)) hintsArray.push(`default: ${dv}`)
   }
 
-  group(g:string) {
+  group(g: string) {
     this._group = g
     return this
   }
@@ -286,7 +286,7 @@ export class Type<T> {
     return this._group || 'Options:'
   }
 
-  hidden(h:boolean) {
+  hidden(h: boolean) {
     this._hidden = h
     return this
   }
@@ -295,7 +295,7 @@ export class Type<T> {
     return !!this._hidden
   }
 
-  validateConfig(utils:any) {
+  validateConfig(utils: any) {
     // derive flags from aliases
     if (typeof this._flags !== 'string' && this._aliases.length) {
       this._flags = utils.aliasesToFlags(this._aliases)
@@ -346,13 +346,13 @@ export class Type<T> {
   }
 
   // async parsing
-  parse(context:Context) {
+  parse(context: Context) {
     return this._internalParse(context, true)
   }
-  _internalParse(context:Context, validate?:boolean) {
+  _internalParse(context: Context, validate?: boolean) {
     // console.log('parse', this.constructor.name, this.helpFlags)
     let lastKeyMatchesAlias = false
-    let previousUsedValue:any
+    let previousUsedValue: any
     // iterate over each slurped arg and determine if its key-value pairs are relevant to this type/option
     context.slurped.forEach(arg => {
       // if the last key seen applies to this type, see if a keyless value applies as the value
@@ -384,7 +384,7 @@ export class Type<T> {
   }
 
   // async validation called from parse
-  async validateParsed(context:Context) {
+  async validateParsed(context: Context) {
     if (this.isRequired && !this.hasRequiredValue(context)) {
       const msgAndArgs = { msg: '', args: [] }
       this.buildRequiredMessage(context, msgAndArgs)
@@ -403,8 +403,8 @@ export class Type<T> {
     return this.resolve()
   }
 
-  failValidation(context:Context, msg:string[]) {
-    let args:string[]
+  failValidation(context: Context, msg: string[]) {
+    let args: string[]
     if (Array.isArray(msg)) {
       args = msg
     } else {
@@ -420,27 +420,27 @@ export class Type<T> {
     context.markTypeInvalid(this.id)
   }
 
-  hasRequiredValue(context:Context) {
+  hasRequiredValue(context: Context) {
     return context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT
   }
 
-  buildRequiredMessage(context:Context, msgAndArgs:{msg:string,args:string[]}) {
+  buildRequiredMessage(context: Context, msgAndArgs: { msg: string, args: string[] }) {
     msgAndArgs.msg = 'Missing required argument: %s'
     msgAndArgs.args = [this.aliases.join(' or ')]
   }
 
-  buildInvalidMessage(context:Context, msgAndArgs:{msg:string,args:(T|string)[]}) {
+  buildInvalidMessage(context: Context, msgAndArgs: { msg: string, args: (T | string)[] }) {
     msgAndArgs.msg = 'Value "%s" is invalid for argument %s.'
     msgAndArgs.args = [this.getValue(context), this.aliases.join(' or ')]
   }
 
   // async hook to execute after all parsing
-  postParse(context:Context) {
+  postParse(context: Context) {
     // console.log('postParse', this.constructor.name)
     return this.resolve()
   }
 
-  applySource(context:Context, source:string, position:number, raw:string) {
+  applySource(context: Context, source: string, position: number, raw: string) {
     context.employSource(this.id, source, position, raw)
     // source precedence, most to least direct (for future reference):
     // 1. prompt (interactive mode only)
@@ -451,25 +451,25 @@ export class Type<T> {
     // 6. default
   }
 
-  isApplicable(context:Context, currentValue:unknown, previousValue:unknown, slurpedArg:SlurpedArg) {
+  isApplicable(context: Context, currentValue: unknown, previousValue: unknown, slurpedArg: SlurpedArg) {
     // assumes (1) this type should hold a single value
     // and (2) a non-string previous value was not explicit
     // e.g. previous was not --key=value
     return typeof previousValue !== 'string'
   }
 
-  observeAlias(context:Context, alias:string) { }
+  observeAlias(context: Context, alias: string) { }
 
-  setValue(context:Context, value:T) {
+  setValue(context: Context, value: T) {
     context.assignValue(this.id, value)
   }
 
-  getValue(context:Context) {
+  getValue(context: Context) {
     return context.lookupValue(this.id) as T
   }
 
   // subtype impls can be async (return a promise)
-  validateValue(value:unknown, context:Context) {
+  validateValue(value: unknown, context: Context): Promise<boolean> | boolean {
     return true
   }
 
@@ -489,7 +489,7 @@ export class Type<T> {
     }
   }
 
-  toResult(context:Context, shouldCoerce:boolean) {
+  toResult(context: Context, shouldCoerce: boolean) {
     const obj = context.lookupSource(this.id)
     return {
       // populated via config

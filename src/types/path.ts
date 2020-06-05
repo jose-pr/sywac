@@ -1,13 +1,36 @@
-'use strict'
+import { TypeOptions } from "./type"
+import TypeString from "./string"
+import { Context } from "../context"
+import fs from 'fs'
+import path from 'path'
 
-const TypeString = require('./string')
-
+export interface TypePathOptions extends TypeOptions<string> {
+  dirAllowed?: boolean,
+  fileAllowed?: boolean,
+  normalize?: boolean,
+  asObject?: boolean,
+  asPosix?: boolean,
+  asWin32?: boolean
+  fsLib?:typeof fs
+  pathLib?:typeof path
+  mustExist?:boolean
+}
 class TypePath extends TypeString {
-  static get (opts) {
+  static get (opts:TypePathOptions) {
     return new TypePath(opts)
   }
 
-  constructor (opts) {
+  private _pathLib?:typeof path
+  private _fsLib?:typeof fs
+  private _dirAllowed?:boolean
+  private _fileAllowed?:boolean
+  private _normalize?:boolean
+  private _asObject?:boolean
+  private _asPosix?:boolean
+  private _asWin32?:boolean
+  private _mustExist?:boolean
+
+  constructor (opts?:TypePathOptions) {
     super(Object.assign({
       dirAllowed: true,
       fileAllowed: true,
@@ -18,8 +41,8 @@ class TypePath extends TypeString {
     }, opts))
   }
 
-  configure (opts, override) {
-    opts = opts || {}
+  configure (opts?:TypePathOptions, override?:boolean) {
+    opts = opts || {} as TypePathOptions
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -51,15 +74,15 @@ class TypePath extends TypeString {
     return t === 'dir' ? 'directory' : t
   }
 
-  buildHelpHints (hints) {
+  buildHelpHints (hints:string[]) {
     super.buildHelpHints(hints)
     if (typeof this._mustExist === 'boolean') hints.push(this._mustExist ? 'must exist' : 'must not exist')
   }
 
   get pathLib () {
     if (!this._pathLib) this._pathLib = require('path')
-    if (this._asPosix) return this._pathLib.posix
-    if (this._asWin32) return this._pathLib.win32
+    if (this._asPosix) return this._pathLib!.posix
+    if (this._asWin32) return this._pathLib!.win32
     return this._pathLib
   }
 
@@ -78,10 +101,10 @@ class TypePath extends TypeString {
   }
 
   // always resolve to true since we add our own validation messages
-  validateValue (value, context) {
+  validateValue (value:string, context:Context) {
     if (!value) return true
-    return new Promise(resolve => {
-      this.fsLib.stat(value, (err, stats) => {
+    return new Promise<boolean>(resolve => {
+      this.fsLib!.stat(value, (err, stats) => {
         if (err) this.handleStatErr(err, context, value)
         else this.handleStats(stats, context, value)
         resolve(true)
@@ -89,17 +112,18 @@ class TypePath extends TypeString {
     })
   }
 
-  handleStatErr (err, context, value) {
+  handleStatErr (err:NodeJS.ErrnoException, context:Context, value:string) {
     const msgMap = {
       EACCES_true: 'Cannot access %s: %s',
       EACCES_false: 'The %s already exists and is inaccessible: %s',
       ENOENT_true: 'The %s does not exist: %s'
-    }
+    } as Record<string,string>
     const msg = msgMap[err.code + '_' + this._mustExist]
+    //@ts-ignore
     if (msg) this.failValidation(context, msg, this.fulltype, value)
   }
 
-  handleStats (stats, context, value) {
+  handleStats (stats:fs.Stats, context:Context, value:string) {
     let msg
     const actualType = stats.isFile() ? 'file' : 'directory'
     const wantedType = this.fulltype
@@ -109,13 +133,14 @@ class TypePath extends TypeString {
     } else if (wantedType !== 'path' && actualType !== wantedType) {
       msg = 'The path is a %s: %s'
     }
+    //@ts-ignore
     if (msg) this.failValidation(context, msg, actualType, value)
   }
 
-  getValue (context) {
-    let value = super.getValue(context)
-    if (value && this._normalize) value = this.pathLib.normalize(value)
-    if (value && this._asObject) value = this.pathLib.parse(value)
+  getValue (context:Context) {
+    let value = super.getValue(context) as string
+    if (value && this._normalize) value = this.pathLib!.normalize(value)
+    if (value && this._asObject) value = this.pathLib!.parse(value) as any
     return value
   }
 }

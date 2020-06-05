@@ -25,4 +25,4 @@ class TypeString extends Type<string> {
   }
 }
 
-module.exports = TypeString
+export default TypeString
