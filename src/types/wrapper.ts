@@ -1,10 +1,14 @@
-'use strict'
+import Type, { TypeOptions } from './type'
 
-const Type = require('./type')
+export interface TypeWrapperOptions<T> extends TypeOptions<T> {
+  elementType?: Type<T>
+  of?:Type<T>
+}
 
-class TypeWrapper extends Type {
-  configure (opts, override) {
-    opts = opts || {}
+class TypeWrapper<T> extends Type<T> {
+  private _elementType!: Type<T>
+  configure(opts?: TypeWrapperOptions<T>, override?: boolean) {
+    opts = opts || {} as TypeWrapperOptions<T>
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -13,21 +17,21 @@ class TypeWrapper extends Type {
     return this
   }
 
-  of (subtype) {
+  of(subtype:Type<T>) {
     this._elementType = subtype
     return this
   }
 
-  get elementType () {
+  get elementType() {
     if (!this._elementType) this._elementType = require('./string').get()
     return this._elementType
   }
 
-  get datatype () {
+  get datatype() {
     return this.elementType.datatype
   }
 
-  get shouldValidateDefaultValue () {
+  get shouldValidateDefaultValue() {
     return this.elementType.shouldValidateDefaultValue
   }
 }
