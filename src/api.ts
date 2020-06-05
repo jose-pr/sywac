@@ -1,24 +1,135 @@
-'use strict'
+import path from "path"
+import fs from "fs";
+import Type, { TypeFactory, TypeOptions } from './types/type'
+import { ContextOptions, Context } from "./context";
+import TypeString, { TypeStringOptions } from "./types/string";
+import TypePath, { TypePathOptions } from "./types/path";
+import TypeEnum, { TypeEnumOptions } from "./types/enum";
+import TypeArray, { TypeArrayOptions } from "./types/array";
+import TypeHelp, { TypeHelpOptions } from "./types/help";
+import TypeVersion, { TypeVersionOptions } from "./types/version";
+import TypePositional, { TypePositionalOptions } from "./types/positional";
+import TypeCommand, { TypeCommandOptions } from "./types/command";
+import { TypeUnknown } from "./types/unknown";
+import TypeBoolean from "./types/boolean";
+import TypeNumber from "./types/number";
 
-const SOURCE_DEFAULT = require('./types/type').SOURCE_DEFAULT
-
+export declare interface ApiOptions {
+  utils?: unknown
+  pathLib?: typeof path
+  fsLib?: typeof fs
+  factories?: Record<string, TypeFactory<Type<any>, unknown>>
+  name?: string
+  parentName?: string
+  helpOpts?: {}
+  showHelpByDefault?: boolean
+  strictMode?: boolean
+  modulesSeen?: []
+}
+declare interface OutputOptions extends Partial<{
+  'lineSep': string
+  'sectionSep': string
+  'pad': string
+  'indent': string
+  'split': string
+  'maxWidth': number
+  'examplePrefix': string
+  'showHelpOnError': boolean
+}> { }
+declare interface _HelpOptions {
+  'lineSep': string
+  'sectionSep': string
+  'pad': string
+  'indent': string
+  'split': string
+  'icon': string
+  'slogan': string
+  'usagePrefix': string
+  'usageHasOptions': string
+  'groupOrder': string[]
+  'epilogue': string
+  'maxWidth': string
+  'examplePrefix': string
+  'exampleOrder': string[]
+  'usageCommandPlaceholder': string
+  'usageArgsPlaceholder': string
+  'usageOptionsPlaceholder': string
+  'showHelpOnError': string
+  'styleGroup': string
+  'styleGroupError': string
+  'styleFlags': string
+  'styleFlagsError': string
+  'styleDesc': string
+  'styleDescError': string
+  'styleHints': string
+  'styleHintsError': string
+  'styleMessages': string
+  'styleUsagePrefix': string
+  'styleUsagePositionals': string
+  'styleUsageCommandPlaceholder': string
+  'styleUsageArgsPlaceholder': string
+  'styleUsageOptionsPlaceholder': string
+  'styleExample': string
+  'styleAll': string
+  'usage': string
+  'examples': Record<string, ExampleOptions[]>
+  usageHasArgs:boolean
+  usageHasCommand:boolean
+  usagePositionals:string[]
+}
+export interface ExampleOptions {
+  group?: string
+  flags?: string
+}
+export interface Hooks extends Partial<{
+  'group': Function
+  'groupError': Function
+  'flags': Function
+  'flagsError': Function
+  'desc': Function
+  'descError': Function
+  'hints': Function
+  'hintsError': Function
+  'messages': Function
+  'usagePrefix': Function
+  'usagePositionals': Function
+  'usageCommandPlaceholder': Function
+  'usageArgsPlaceholder': Function
+  'usageOptionsPlaceholder': Function
+  'example': Function
+  'all': Function
+}> { }
+export interface HelpOptions extends Partial<_HelpOptions> { }
 class Api {
-  static get DEFAULT_COMMAND_INDICATOR () {
+  static get DEFAULT_COMMAND_INDICATOR() {
     return '*'
   }
-
-  static get (opts) {
+  static ROOT_NAME?: string
+  static get(opts?: ApiOptions) {
     return new Api(opts)
   }
+  types: Type<unknown>[]
+  private _helpOpts: HelpOptions
+  private _factories: Record<string, TypeFactory<Type<any>, any>>
+  private _showHelpByDefault?: boolean
+  private _strictMode?: boolean
+  private _magicCommandAdded?: boolean
+  private _modulesSeen: string[]
+  private _utils?: any
+  private _pathLib?: any
+  private _fsLib?: any
+  private _name?: string
+  private _parentName?: string
+  private _unknownType?: Type<unknown>
 
-  constructor (opts) {
+  constructor(opts?: ApiOptions) {
     opts = opts || {}
     this.types = []
     this._helpOpts = opts.helpOpts || {}
     this._factories = {
       // meta
       unknownType: this.getUnknownType,
-      _context: this.getContext,
+      _context: this.getContext as any,
       helpBuffer: this.getHelpBuffer,
       // common types
       boolean: this.getBoolean,
@@ -34,7 +145,7 @@ class Api {
       versionType: this.getVersionType,
       // advanced types
       positional: this.getPositional,
-      commandType: this.getCommand
+      commandType: this.getCommand as any
     }
     this._showHelpByDefault = 'showHelpByDefault' in opts ? opts.showHelpByDefault : false
     this._strictMode = 'strictMode' in opts ? opts.strictMode : false
@@ -44,8 +155,8 @@ class Api {
     if (!Api.ROOT_NAME) Api.ROOT_NAME = this.name
   }
 
-  configure (opts) {
-    opts = opts || {}
+  configure(opts?: ApiOptions) {
+    opts = opts || {} as ApiOptions
     // lazily configured instance dependencies (expects a single instance)
     this._utils = opts.utils || this._utils
     this._pathLib = opts.pathLib || this._pathLib
@@ -53,7 +164,7 @@ class Api {
 
     // lazily configured factory dependencies (expects a function to call per instance)
     if ('factories' in opts) {
-      Object.keys(opts.factories).forEach(name => this.registerFactory(name, opts.factories[name]))
+      Object.keys(opts.factories!).forEach(name => this.registerFactory(name, opts!.factories![name]))
     }
 
     // other
@@ -62,7 +173,7 @@ class Api {
     return this
   }
 
-  newChild (commandName, childOptions) {
+  newChild(commandName: string, childOptions?: ApiOptions) {
     return new Api(Object.assign({
       factories: this._factories,
       utils: this.utils,
@@ -77,7 +188,7 @@ class Api {
     }, childOptions))
   }
 
-  _assignHelpOpts (target, source) {
+  _assignHelpOpts(target: HelpOptions, source: HelpOptions) {
     [
       'lineSep', 'sectionSep', 'pad', 'indent', 'split', 'icon', 'slogan',
       'usagePrefix', 'usageHasOptions', 'groupOrder', 'epilogue', 'maxWidth',
@@ -89,131 +200,139 @@ class Api {
       'styleUsageArgsPlaceholder', 'styleUsageOptionsPlaceholder', 'styleExample',
       'styleAll'
     ].forEach(opt => {
+      //@ts-ignore
       if (opt in source) target[opt] = source[opt]
     })
     return target
   }
 
   // lazy dependency accessors
-  get unknownType () {
-    if (!this._unknownType) this._unknownType = this.get('unknownType').withParent(Api.ROOT_NAME)
+  get unknownType() {
+    if (!this._unknownType) this._unknownType = this!.get('unknownType')!.withParent(Api.ROOT_NAME!)
     return this._unknownType
   }
 
-  get utils () {
+  get utils() {
     if (!this._utils) this._utils = require('./lib/utils').get()
     return this._utils
   }
 
-  get helpOpts () {
+  get helpOpts() {
     return this._helpOpts
   }
 
-  get pathLib () {
+  get pathLib() {
     if (!this._pathLib) this._pathLib = require('path')
     return this._pathLib
   }
 
-  get fsLib () {
+  get fsLib():typeof fs {
     if (!this._fsLib) this._fsLib = require('fs')
     return this._fsLib
   }
 
-  get name () {
+  get name() {
     if (typeof this._name !== 'string') this._name = this.pathLib.basename(process.argv[1], '.js')
     return this._name
   }
 
-  get parentName () {
+  get parentName() {
     return this._parentName || 'node'
   }
 
   // type factories
-  registerFactory (name, factory) {
+  registerFactory<T>(name: string, factory: TypeFactory<Type<T>, T>) {
+    //@ts-ignore
     if (name && typeof factory === 'function') this._factories[name] = factory
     return this
   }
 
-  get (name, opts) {
+  get(name: string, opts?: TypeOptions<unknown>) {
     if (name && this._factories[name]) return this._factories[name].call(this, opts)
     return null
   }
 
   // meta factories
-  getUnknownType (opts) {
-    return require('./types/unknown').get(opts)
+  getUnknownType(opts?: TypeOptions<unknown>) {
+    return require('./types/unknown').get(opts) as TypeUnknown
   }
 
-  getContext (opts) {
-    return require('./context').get(opts)
+  getContext(opts?: ContextOptions) {
+    return require('./context').get(opts) as Context
   }
 
-  getHelpBuffer (opts) {
-    return require('./buffer').get(opts)
+  getHelpBuffer(opts?: any) {
+    return require('./buffer').get(opts) as any
   }
 
   // common type factories
-  getBoolean (opts) {
-    return require('./types/boolean').get(opts)
+  getBoolean(opts?: TypeOptions<boolean>) {
+    return require('./types/boolean').get(opts) as TypeBoolean
   }
 
-  getString (opts) {
-    return require('./types/string').get(opts)
+  getString(opts?: TypeStringOptions) {
+    return require('./types/string').get(opts) as TypeString
   }
 
-  getNumber (opts) {
-    return require('./types/number').get(opts)
+  getNumber(opts?: TypeOptions<number>) {
+    return require('./types/number').get(opts) as TypeNumber
   }
 
-  getPath (opts) {
+  getPath(opts?: TypePathOptions) {
     return require('./types/path').get(Object.assign({
       pathLib: this.pathLib,
       fsLib: this.fsLib
-    }, opts))
+    }, opts)) as TypePath
   }
 
-  getFile (opts) {
-    return this.getPath(Object.assign({ dirAllowed: false }, opts))
+  getFile(opts?: Omit<TypePathOptions, 'dirAllowed'>) {
+    return this.getPath(Object.assign({ dirAllowed: false }, opts)) as TypePath
   }
 
-  getDir (opts) {
-    return this.getPath(Object.assign({ fileAllowed: false }, opts))
+  getDir(opts?: Omit<TypePathOptions, 'fileAllowed'>) {
+    return this.getPath(Object.assign({ fileAllowed: false }, opts)) as TypePath
   }
 
-  getEnum (opts) {
-    return require('./types/enum').get(opts)
+  getEnum(opts?: TypeEnumOptions) {
+    return require('./types/enum').get(opts) as TypeEnum
   }
 
-  getArray (opts) {
-    return require('./types/array').get(opts)
+  getArray<T>(opts?: TypeArrayOptions<T>) {
+    return require('./types/array').get(opts) as TypeArray<T>
   }
 
   // specialty type factories
-  getHelpType (opts) {
-    return require('./types/help').get(opts)
+  getHelpType(opts?: TypeHelpOptions) {
+    return require('./types/help').get(opts) as TypeHelp
   }
 
-  getVersionType (opts) {
-    return require('./types/version').get(opts)
+  getVersionType(opts?: TypeVersionOptions) {
+    return require('./types/version').get(opts) as TypeVersion
   }
 
   // advanced type factories
-  getPositional (opts) {
-    return require('./types/positional').get(opts)
+  getPositional<T>(opts?: TypePositionalOptions<T>) {
+    return require('./types/positional').get(opts) as TypePositional<T>
   }
 
-  getCommand (opts) {
-    return require('./types/command').get(opts)
+  getCommand(opts?: TypeCommandOptions) {
+    return require('./types/command').get(opts) as TypeCommand
   }
 
   // help text
-  preface (icon, slogan) {
+  preface(icon: string, slogan: string) {
     this.helpOpts.icon = icon
     this.helpOpts.slogan = slogan
     return this
   }
 
-  usage (usage) {
+  usage(usage: string | {
+    usage?: string,
+    prefix?: string,
+    commandPlaceholder?: string,
+    argsPlaceholder?: string,
+    optionsPlaceholder?: string
+  }) {
     if (typeof usage === 'string') this.helpOpts.usage = usage
     else if (usage) {
       const keyMap = {
@@ -224,18 +343,19 @@ class Api {
         optionsPlaceholder: 'usageOptionsPlaceholder'
       }
       Object.keys(keyMap).forEach(key => {
+        //@ts-ignore
         if (key in usage) this.helpOpts[keyMap[key]] = usage[key]
       })
     }
     return this
   }
 
-  groupOrder (orderArray) {
+  groupOrder(orderArray: string[]) {
     if (Array.isArray(orderArray) || typeof orderArray === 'undefined') this.helpOpts.groupOrder = orderArray
     return this
   }
 
-  example (example, opts) {
+  example(example: string, opts?: ExampleOptions) {
     opts = opts || {}
     if (typeof example === 'string') {
       opts.flags = example
@@ -248,50 +368,59 @@ class Api {
     return this
   }
 
-  exampleOrder (orderArray) {
+  exampleOrder(orderArray: []) {
     if (Array.isArray(orderArray) || typeof orderArray === 'undefined') this.helpOpts.exampleOrder = orderArray
     return this
   }
 
-  epilogue (epilogue) {
+  epilogue(epilogue: string) {
     this.helpOpts.epilogue = epilogue
     return this
   }
 
-  outputSettings (settings) {
+  outputSettings(settings: OutputOptions) {
     if (!settings) return this
-    ;['lineSep', 'sectionSep', 'pad', 'indent', 'split', 'maxWidth', 'examplePrefix', 'showHelpOnError'].forEach(opt => {
-      if (opt in settings) this.helpOpts[opt] = settings[opt]
-    })
+      ;['lineSep', 'sectionSep', 'pad', 'indent', 'split', 'maxWidth', 'examplePrefix', 'showHelpOnError'].forEach(opt => {
+        //@ts-ignore
+        if (opt in settings) this.helpOpts[opt] = settings[opt]
+      })
     return this
   }
 
-  style (hooks) {
+  style(hooks: Hooks) {
     if (!hooks) return this
-    ;[
-      'group', 'groupError', 'flags', 'flagsError', 'desc', 'descError', 'hints',
-      'hintsError', 'messages', 'usagePrefix', 'usagePositionals', 'usageCommandPlaceholder',
-      'usageArgsPlaceholder', 'usageOptionsPlaceholder', 'example', 'all'
-    ].forEach(key => {
-      if (typeof hooks[key] === 'function') {
-        const helpOptsKey = 'style' + key[0].toUpperCase() + key.slice(1)
-        this.helpOpts[helpOptsKey] = hooks[key]
-      }
-    })
+      ;[
+        'group', 'groupError', 'flags', 'flagsError', 'desc', 'descError', 'hints',
+        'hintsError', 'messages', 'usagePrefix', 'usagePositionals', 'usageCommandPlaceholder',
+        'usageArgsPlaceholder', 'usageOptionsPlaceholder', 'example', 'all'
+      ].forEach(key => {
+        //@ts-ignore
+        if (typeof hooks[key] === 'function') {
+          const helpOptsKey = 'style' + key[0].toUpperCase() + key.slice(1)
+          //@ts-ignore
+          this.helpOpts[helpOptsKey] = hooks[key]
+        }
+      })
     return this
   }
-
-  showHelpByDefault (boolean) {
+  /**
+   * 
+   * @param boolean Defaults to `true`
+   */
+  showHelpByDefault(boolean?:boolean) {
     this._showHelpByDefault = boolean !== false
     return this
   }
-
-  strict (boolean) {
+  /**
+   * 
+   * @param boolean Defaults to `true`
+   */
+  strict(boolean?:boolean) {
     this._strictMode = boolean !== false
     return this
   }
 
-  addStrictModeErrors (context) {
+  addStrictModeErrors(context:Context) {
     if (this._strictMode) {
       const unknownOptions = context.getUnknownSlurpedOptions()
       if (unknownOptions.length > 0) {
@@ -305,18 +434,20 @@ class Api {
   }
 
   // complex types
-  commandDirectory (dir, opts) {
+  commandDirectory(dir:string, opts?:{
+    extensions?:string[]
+  }) {
     if (typeof dir === 'object') {
       opts = dir
       dir = ''
     }
     opts = Object.assign({}, opts)
     if (!Array.isArray(opts.extensions)) opts.extensions = ['.js']
-    let searchDir
+    let searchDir:string
     if (dir && typeof dir === 'string' && this.pathLib.isAbsolute(dir)) {
       searchDir = dir
     } else {
-      const callerFile = this.utils.getCallerFile()
+      const callerFile:string = this.utils.getCallerFile()
       if (this._modulesSeen.indexOf(callerFile) === -1) this._modulesSeen.push(callerFile)
       searchDir = this.pathLib.dirname(callerFile)
       if (dir && typeof dir === 'string') searchDir = this.pathLib.resolve(searchDir, dir)
@@ -325,12 +456,13 @@ class Api {
     let mod
     this.fsLib.readdirSync(searchDir).forEach(fileInDir => {
       filepath = this.pathLib.join(searchDir, fileInDir)
-      if (opts.extensions.indexOf(this.pathLib.extname(fileInDir)) !== -1 && this._modulesSeen.indexOf(filepath) === -1) {
+      if (opts!.extensions!.indexOf(this.pathLib.extname(fileInDir)) !== -1 && this._modulesSeen.indexOf(filepath) === -1) {
         this._modulesSeen.push(filepath)
         mod = require(filepath)
         if (mod.flags || mod.aliases) {
           this._internalCommand(mod)
         } else if (typeof mod === 'function') {
+          //@ts-ignore
           this._internalCommand({
             aliases: this.pathLib.basename(fileInDir, this.pathLib.extname(fileInDir)),
             run: mod
@@ -341,17 +473,17 @@ class Api {
     return this
   }
 
-  command (dsl, opts) {
+  command(dsl:string, opts?:TypeCommandOptions) {
     this._internalCommand(dsl, opts)
     return this
   }
 
-  _internalCommand (dsl, opts) {
-    opts = opts || {}
+  _internalCommand(dsl:string, opts?:TypeCommandOptions|Function) {
+    opts = opts || {} as TypeCommandOptions
 
     // argument shuffling
     if (typeof opts === 'function') {
-      opts = { run: opts }
+      opts = { run: opts } as TypeCommandOptions
     }
     if (dsl && typeof dsl === 'object') {
       opts = Object.assign({}, dsl, opts)
@@ -361,7 +493,7 @@ class Api {
     } else {
       opts = Object.assign({}, opts)
     }
-    if (!opts.flags && opts.aliases) opts.flags = [].concat(opts.aliases)[0]
+    if (!opts.flags && opts.aliases) opts.flags = ([] as string[]).concat(opts.aliases)[0]
 
     // opts is an object and opts.flags is the dsl
     // split dsl into name/alias and positionals
@@ -377,12 +509,12 @@ class Api {
 
     this.helpOpts.usageHasCommand = true
 
-    const commandType = this.get('commandType', opts)
+    const commandType = this.get('commandType', opts) as TypeCommand
     this.custom(commandType)
     return commandType
   }
 
-  positional (dsl, opts) {
+  positional<T>(dsl:string|TypePositionalOptions<T>, opts?:TypePositionalOptions<T>) {
     opts = Object.assign({}, opts) // copy object so we don't alter object with external refs
     let addedToHelp = false
 
@@ -395,15 +527,17 @@ class Api {
     } else if (typeof dsl === 'string') {
       this.helpOpts.usagePositionals = (this.helpOpts.usagePositionals || []).concat(dsl)
       addedToHelp = true
-      const array = this.utils.stringToMultiPositional(dsl)
+      const array = this.utils.stringToMultiPositional(dsl) as string[]
       if (!opts.params) {
         opts.params = array
       } else if (Array.isArray(opts.params)) {
         opts.params = array.map((string, index) => {
+          //@ts-ignore
           return opts.params[index] ? Object.assign({ flags: string }, opts.params[index]) : string
         })
       } else {
         opts.params = Object.keys(opts.params).map((key, index) => {
+          //@ts-ignore
           let obj = opts.params[key]
           if (obj && !obj.flags) obj = Object.assign({ flags: array[index] }, obj)
           // if (obj && !obj.aliases) obj.aliases = key
@@ -411,10 +545,11 @@ class Api {
         })
       }
     }
-
+    //@ts-ignore
     opts.ignore = [].concat(opts.ignore).filter(Boolean)
 
     const params = Array.isArray(opts.params) ? opts.params.slice() : Object.keys(opts.params).map(key => {
+      //@ts-ignore
       let obj = opts.params[key]
       if (obj && !obj.flags) obj = Object.assign({ flags: key }, obj)
       return obj
@@ -432,20 +567,28 @@ class Api {
       if (!addedToHelp) this.helpOpts.usagePositionals = (this.helpOpts.usagePositionals || []).concat(param.flags)
 
       // allow "commentary" things in positional dsl string via opts.ignore
+      //@ts-ignore
       if (~opts.ignore.indexOf(param.flags)) return numSkipped++
 
       // TODO if no flags or aliases, throw error
 
       // convenience to define descriptions in opts
+      //@ts-ignore
       if (!(param.description || param.desc) && (opts.paramsDescription || opts.paramsDesc)) {
+        //@ts-ignore
         param.desc = [].concat(opts.paramsDescription || opts.paramsDesc)[index - numSkipped]
       }
+      //@ts-ignore
       if (!param.group && opts.paramsGroup) param.group = opts.paramsGroup
 
       // don't apply command desc to positional params (via configure calls below)
+      //@ts-ignore
       const optsDescription = opts.description
+      //@ts-ignore
       const optsDesc = opts.desc
+       //@ts-ignore
       delete opts.description
+       //@ts-ignore
       delete opts.desc
 
       // inferPositionalProperties will generate flags/aliases for wrapped elementType needed for parsing
@@ -453,14 +596,17 @@ class Api {
       delete param.flags
 
       param = Object.assign(this.utils.inferPositionalProperties(positionalFlags, Object.keys(this._factories)), param)
+       //@ts-ignore
       if (!param.elementType) param.elementType = this._getType(param).configure(opts, false)
 
       param.flags = positionalFlags
+       //@ts-ignore
       const positional = this.get('positional', param).configure(opts, false)
-
+ //@ts-ignore
       opts.description = optsDescription
+       //@ts-ignore
       opts.desc = optsDesc
-
+ //@ts-ignore
       if (this.unknownType) this.unknownType.addPositional(positional)
       this.custom(positional)
     })
@@ -469,16 +615,16 @@ class Api {
   }
 
   // configure any arg type
-  custom (type) {
+  custom<T>(type:Type<T>) {
     if (type) {
-      if (typeof type.withParent === 'function') type.withParent(this.name)
+      if (typeof type.withParent === 'function') type.withParent(this.name!)
       if (typeof type.validateConfig === 'function') type.validateConfig(this.utils)
       this.types.push(type)
     }
     return this
   }
-
-  _normalizeOpts (flags, opts) {
+  //@ts-ignore
+  _normalizeOpts(flags, opts) {
     opts = opts || {}
     if (Array.isArray(flags)) {
       opts.aliases = flags // treat an array as aliases
@@ -489,13 +635,15 @@ class Api {
     }
     return opts
   }
-
-  _addOptionType (flags, opts, name) {
+//@ts-ignore
+  _addOptionType(flags, opts, name) {
+    //@ts-ignore
     this.helpOpts.usageHasOptions = true
+    //@ts-ignore
     return this.custom(this._getType(flags, opts, name))
   }
-
-  _getType (flags, opts, name) {
+ //@ts-ignore
+  _getType(flags, opts, name) {
     opts = this._normalizeOpts(flags, opts)
 
     name = String(name || opts.type)
@@ -507,8 +655,8 @@ class Api {
 
     return this.get(name, opts)
   }
-
-  _getArrayType (flags, opts, subtypeName) {
+ //@ts-ignore
+  _getArrayType(flags, opts, subtypeName) {
     opts = this._normalizeOpts(flags, opts) // TODO this may be redundant
 
     subtypeName = String(subtypeName || opts.type)
@@ -526,72 +674,74 @@ class Api {
   }
 
   // specify 'type' (as string) in opts
-  option (flags, opts) {
+  option(flags:string, opts:TypeOptions<any>) {
+    //@ts-ignore
     return this._addOptionType(flags, opts)
   }
 
   // common individual value types
-  boolean (flags, opts) {
+  boolean(flags:string, opts:TypeOptions<boolean>) {
     return this._addOptionType(flags, opts, 'boolean')
   }
 
-  string (flags, opts) {
+  string(flags:string, opts:TypeStringOptions) {
     return this._addOptionType(flags, opts, 'string')
   }
-
-  number (flags, opts) {
+  
+  number(flags:string, opts:TypeOptions<number>) {
     return this._addOptionType(flags, opts, 'number')
   }
 
-  path (flags, opts) {
+  path(flags:string, opts:TypePathOptions) {
     return this._addOptionType(flags, opts, 'path')
   }
 
-  file (flags, opts) {
+  file(flags:string, opts:TypePathOptions) {
     return this._addOptionType(flags, opts, 'file')
   }
 
-  dir (flags, opts) {
+  dir(flags:string, opts:TypePathOptions) {
     return this._addOptionType(flags, opts, 'dir')
   }
 
-  enumeration (flags, opts) {
+  enumeration(flags:string, opts:TypeEnumOptions) {
     return this._addOptionType(flags, opts, 'enum')
   }
 
   // specialty types
-  help (flags, opts) {
+  help(flags:string, opts:TypeHelpOptions) {
     return this._addOptionType(flags, opts, 'helpType')
   }
 
-  version (flags, opts) {
+  version(flags:string, opts:TypeVersionOptions) {
     return this._addOptionType(flags, opts, 'versionType')
   }
 
   // multiple value types
-  array (flags, opts) {
+  array<T>(flags:string, opts:TypeArrayOptions<T>) {
     return this._addOptionType(flags, opts, 'array')
   }
 
-  stringArray (flags, opts) {
+  stringArray(flags:string, opts:TypeArrayOptions<string>) {
     return this._addOptionType(flags, opts, 'array:string')
   }
 
-  numberArray (flags, opts) {
+  numberArray(flags:string, opts:TypeArrayOptions<number>) {
     return this._addOptionType(flags, opts, 'array:number')
   }
 
   // TODO more types
 
   // lifecycle hook
-  check (handler) {
+  check(handler:Function) {
+    //@ts-ignore
     this._checkHandler = handler
     return this
   }
 
   // parse and exit if there's output (e.g. help text) or a non-zero code; otherwise resolves to argv
   // useful for standard CLIs
-  async parseAndExit (args, state) {
+  async parseAndExit(args:any, state:any) {
     const context = await this._parse(args, state)
     const result = context.toResult()
     if (result.output) {
@@ -606,19 +756,19 @@ class Api {
 
   // parse and resolve to a context result (never exits)
   // useful for chatbots or checking results
-  async parse (args, state) {
+  async parse(args:string[], state:any) {
     const context = await this._parse(args, state)
     return context.toResult()
   }
 
-  async _parse (args, state) {
+  async _parse(args:string[], state:unknown) {
     // init context and kick off recursive type parsing/execution
     const context = this.initContext(false, state).slurpArgs(args)
 
     // init unknownType in context only for the top-level (all levels share/overwrite the same argv._)
     if (this.unknownType) {
       this.unknownType.setValue(context, this.unknownType.defaultVal)
-      this.unknownType.applySource(context, SOURCE_DEFAULT)
+      this.unknownType.applySource(context, Type.SOURCE_DEFAULT)
     }
 
     if (this._showHelpByDefault && !context.details.args.length) {
@@ -648,25 +798,30 @@ class Api {
   }
 
   // recursive, meant to be used internally
-  async parseFromContext (context) {
+  async parseFromContext(context:Context) {
     // first complete configuration for special types
     let hasCommands = false
     let hasDefaultCommand = false
     this.types.forEach(type => {
+      //@ts-ignore
       if (type.needsApi) type.configure({ api: this.newChild(type.aliases[0]) }, false)
-
+      //@ts-ignore
       const implicit = type.implicitCommands
+      //@ts-ignore
       if (implicit && implicit.length) this.unknownType.addImplicit(implicit, type)
 
       if (type.datatype === 'command') {
         hasCommands = true
+        //@ts-ignore
         if (type.isDefault) hasDefaultCommand = true
       }
     })
     if (!this._magicCommandAdded && this._showHelpByDefault && hasCommands && !hasDefaultCommand) {
       this._magicCommandAdded = true
+      //@ts-ignore
       this._internalCommand(Api.DEFAULT_COMMAND_INDICATOR, (argv, context) => {
         context.deferImplicitHelp().addDeferredHelp(this.initHelpBuffer())
+        //@ts-ignore
       }).configure({ api: this.newChild(Api.DEFAULT_COMMAND_INDICATOR, { strictMode: false }) }, false)
     }
 
@@ -695,7 +850,9 @@ class Api {
 
     // run custom api-level async argv check/hook between argv population and command execution
     // it should use context.cliMessage to report errors (or can otherwise manipulate context)
+    //@ts-ignore
     if (typeof this._checkHandler === 'function' && shouldCoerceAndCheck) {
+      //@ts-ignore
       await this._checkHandler(context.argv, context)
     }
 
@@ -705,47 +862,50 @@ class Api {
     return Promise.all(postParse)
   }
 
-  initContext (includeTypes, state) {
+  initContext(includeTypes:boolean, state:unknown) {
     const context = this.get('_context', {
+      //@ts-ignore
       utils: this.utils,
       pathLib: this.pathLib,
       fsLib: this.fsLib,
       state
-    })
+    }) as Context
     return includeTypes ? this.applyTypes(context) : context
   }
 
-  applyTypes (context) {
-    context.pushLevel(this.name, this.types.map(type => {
+  applyTypes(context:Context) {
+    //@ts-ignore
+    context.pushLevel(this.name!, this.types.map(type => {
       type.setValue(context, type.defaultVal)
-      type.applySource(context, SOURCE_DEFAULT)
+      type.applySource(context, Type.SOURCE_DEFAULT)
       return type.toObject()
     }))
     return context
   }
 
-  initHelpBuffer () {
-    const helpOpts = Object.assign({ utils: this.utils, usageName: this.name }, this.helpOpts)
-    return this.get('helpBuffer', helpOpts)
+  initHelpBuffer() {
+    const helpOpts = Object.assign({ utils: this.utils, usageName: this.name }, this.helpOpts) as HelpOptions
+    return this.get('helpBuffer', helpOpts as any) as any
   }
 
   // clear as mud? this predicts the future, essentially the inverse of conditions found in parse after
   // parseFromContext and also the conditions that would make the showHelpByDefault command run
   // basically, we don't want to run the custom check handler if help text or version will be output
-  shouldCoerceAndCheck (context) {
+  shouldCoerceAndCheck(context:Context) {
     return !context.helpRequested &&
       !context.helpRequestedImplicitly &&
       !context.versionRequested &&
       !(context.messages && context.messages.length) &&
-      (!this._magicCommandAdded || context.explicitCommandMatch(this.name))
+      (!this._magicCommandAdded || context.explicitCommandMatch(this.name!))
   }
 
   // optional convenience methods
-  getHelp (opts) {
+  getHelp(opts:any) {
+    //@ts-ignore
     return this.initContext(true).addHelp(this.initHelpBuffer(), opts).output
   }
 }
 
 Api.ROOT_NAME = undefined // defined by first Api instance in constructor
 
-module.exports = Api
+export default Api

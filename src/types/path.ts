@@ -145,4 +145,4 @@ class TypePath extends TypeString {
   }
 }
 
-module.exports = TypePath
+export default TypePath

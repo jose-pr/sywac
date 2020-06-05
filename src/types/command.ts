@@ -10,11 +10,11 @@ export interface TypeCommandOptions extends TypeOptions<boolean>, PositionalOpti
   paramsDsl?:string
 }
 export interface PositionalOptions {
-  'params':string[]
-  'paramsDescription':string[]
-  'paramsDesc':string[]
-  'paramsGroup':string[]
-  'ignore':boolean
+  'params'?:string[]
+  'paramsDescription'?:string[]
+  'paramsDesc'?:string[]
+  'paramsGroup'?:string[]
+  'ignore'?:boolean
 }
 export class TypeCommand extends Type<boolean> {
   static get(opts?: TypeCommandOptions) {

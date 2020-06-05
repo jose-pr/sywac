@@ -4,6 +4,7 @@ import { Context } from '../context'
 export interface TypePositionalOptions<T> extends TypeWrapperOptions<T> {
   acceptFlags?: boolean
   variadic?: boolean
+  params?:any
 }
 
 export class TypePositional<T> extends TypeWrapper<T> {

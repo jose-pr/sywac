@@ -74,4 +74,4 @@ class TypeEnum extends TypeString {
   }
 }
 
-module.exports = TypeEnum
+export default TypeEnum

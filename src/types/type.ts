@@ -114,6 +114,8 @@ export interface TypeOptions<T> {
    */
   hidden: boolean
 }
+export type TypeFactory<T extends Type<V>, V> = (opts?: TypeOptions<V>) => Type<V>
+
 export class Type<T> {
   static get SOURCE_DEFAULT() {
     return 'default'
@@ -440,7 +442,7 @@ export class Type<T> {
     return this.resolve()
   }
 
-  applySource(context: Context, source?: string|null, position?: number, raw?: string) {
+  applySource(context: Context, source?: string | null, position?: number, raw?: string) {
     context.employSource(this.id, source, position, raw)
     // source precedence, most to least direct (for future reference):
     // 1. prompt (interactive mode only)
@@ -489,7 +491,7 @@ export class Type<T> {
     }
   }
 
-  toResult(context: Context, shouldCoerce?: boolean):Partial<TypeObject> {
+  toResult(context: Context, shouldCoerce?: boolean): Partial<TypeObject> {
     const obj = context.lookupSource(this.id)
     return {
       // populated via config

@@ -35,4 +35,4 @@ class TypeNumber extends Type<number> {
   }
 }
 
-module.exports = TypeNumber
+export default TypeNumber

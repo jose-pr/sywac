@@ -384,7 +384,7 @@ export class Context {
 
   getUnknownSlurpedOptions() {
     return Object.keys(this.argv).filter(key => !(key in this.knownArgv)).map(key => {
-      return this.slurped.find(arg => arg.parsed.some(p => p.key === key))
+      return this.slurped.find(arg => arg.parsed.some(p => p.key === key))!
     })
   }
 

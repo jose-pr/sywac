@@ -55,4 +55,4 @@ class TypeVersion extends TypeImplicitCommand {
   }
 }
 
-module.exports = TypeVersion
+export default TypeVersion

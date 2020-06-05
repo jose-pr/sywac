@@ -62,4 +62,4 @@ class TypeHelp extends TypeImplicitCommand {
   }
 }
 
-module.exports = TypeHelp
+export default TypeHelp
