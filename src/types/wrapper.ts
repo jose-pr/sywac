@@ -5,7 +5,7 @@ export interface TypeWrapperOptions<T> extends TypeOptions<T> {
   of?:Type<T>
 }
 
-class TypeWrapper<T> extends Type<T> {
+export class TypeWrapper<T> extends Type<T> {
   private _elementType!: Type<T>
   configure(opts?: TypeWrapperOptions<T>, override?: boolean) {
     opts = opts || {} as TypeWrapperOptions<T>
@@ -36,4 +36,4 @@ class TypeWrapper<T> extends Type<T> {
   }
 }
 
-module.exports = TypeWrapper
+export default TypeWrapper
