@@ -9,10 +9,16 @@ export interface ContextOptions {
   fsLib?: typeof fs
   state?: unknown
 }
+export interface ParsedArg {
+  key: string,
+  value: unknown,
+  claimed?: boolean,
+  last?: boolean,
+}
 export interface SlurpedArg {
   raw: string,
   index: number,
-  parsed: { key: string, value: string | boolean, claimed?: boolean }[]
+  parsed: ParsedArg[]
 }
 export type DeferVersion = { version?: string | Function }
 export type HelBuffer = {
@@ -330,7 +336,7 @@ export class Context {
     this.sources.set(id, { source: source, position: [], raw: [] })
   }
 
-  employSource(id: string, source: string, position: number, raw: string) {
+  employSource(id: string, source?: string|null, position?: number, raw?: string) {
     let obj = this.lookupSource(id)
     if (!obj) {
       obj = { source: undefined as any, position: [], raw: [] }

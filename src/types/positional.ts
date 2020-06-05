@@ -1,18 +1,25 @@
-'use strict'
+import TypeWrapper, { TypeWrapperOptions } from './wrapper'
+import { Context } from '../context'
 
-const TypeWrapper = require('./wrapper')
+export interface TypePositionalOptions<T> extends TypeWrapperOptions<T> {
+  acceptFlags?: boolean
+  variadic?: boolean
+}
 
-class TypePositional extends TypeWrapper {
-  static get (opts) {
+export class TypePositional<T> extends TypeWrapper<T> {
+  static get<T>(opts?: TypePositionalOptions<T>) {
     return new TypePositional(opts)
   }
 
-  constructor (opts) {
-    super(Object.assign({ acceptFlags: false, variadic: false }, opts || {}))
+  acceptFlags?: boolean
+  _variadic?: boolean
+
+  constructor(opts?: TypePositionalOptions<T>) {
+    super(Object.assign({ acceptFlags: false, variadic: false }, opts || {} as TypePositionalOptions<T>))
   }
 
-  configure (opts, override) {
-    opts = opts || {}
+  configure(opts?: TypePositionalOptions<T>, override?: boolean) {
+    opts = opts || {} as TypePositionalOptions<T>
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -22,32 +29,32 @@ class TypePositional extends TypeWrapper {
     return this
   }
 
-  get isVariadic () {
+  get isVariadic() {
     // TODO perhaps remove this._variadic and return this.datatype.startsWith('array') instead
     return this._variadic
   }
 
-  get helpGroup () {
+  get helpGroup() {
     return this._group || 'Arguments:'
   }
 
-  buildHelpHints (hints) {
+  buildHelpHints(hints: string[]) {
     this.elementType.buildHelpHints(hints)
   }
 
-  withParent (apiName) {
+  withParent(apiName: string) {
     super.withParent(apiName)
     this.elementType.withParent(apiName)
     return this
   }
 
   // called by api
-  validateConfig (utils) {
+  validateConfig(utils: any) {
     if (this.acceptFlags) this.elementType.validateConfig(utils)
   }
 
   // called by api
-  async parse (context) {
+  async parse(context: Context) {
     // only need to parse for flags
     // otherwise will be populated by unknownType
     if (this.acceptFlags) {
@@ -59,24 +66,24 @@ class TypePositional extends TypeWrapper {
   }
 
   // called by unknownType
-  async validateParsed (context) {
+  async validateParsed(context: Context) {
     await this.elementType.validateParsed(context)
     return super.resolve()
   }
 
   // called by unknownType
-  setValue (context, value) {
+  setValue(context: Context, value: T) {
     this.elementType.setValue(context, value)
   }
 
   // called by unknownType
-  applySource (context, source, position, raw) {
+  applySource(context: Context, source: string, position: number, raw: string) {
     this.elementType.applySource(context, source, position, raw)
   }
 
-  toResult (context, shouldCoerce) {
+  toResult(context: Context, shouldCoerce: boolean) {
     return this.elementType.toResult(context, shouldCoerce)
   }
 }
 
-module.exports = TypePositional
+export default TypePositional
