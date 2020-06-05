@@ -127,17 +127,17 @@ export class Type<T> {
     return 'positional'
   }
 
-  private _aliases:string[]
-  private _defaultVal?:T
-  private _required?:boolean
-  private _strict?:boolean
-  private _coerceHandler?:CoerceFunction<T>
-  private _flags?:string
-  private _desc?:string
-  private _hints?:string|string[]
-  private _group?:string
-  private _hidden?:boolean
-  private _parent?:string
+  protected _aliases:string[]
+  protected _defaultVal?:T
+  protected _required?:boolean
+  protected _strict?:boolean
+  protected _coerceHandler?:CoerceFunction<T>
+  protected _flags?:string
+  protected _desc?:string
+  protected _hints?:string|string[]
+  protected _group?:string
+  protected _hidden?:boolean
+  protected _parent?:string
 
   constructor(opts?:TypeOptions<T>) {
     this._aliases = []
