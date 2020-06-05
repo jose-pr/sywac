@@ -323,7 +323,7 @@ export class Context {
   }
 
   lookupValue(id: string) {
-    return this.values.get(id)
+    return this.values.get(id) 
   }
 
   resetSource(id: string, source: string) {

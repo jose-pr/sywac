@@ -429,9 +429,9 @@ export class Type<T> {
     msgAndArgs.args = [this.aliases.join(' or ')]
   }
 
-  buildInvalidMessage(context:Context, msgAndArgs:{msg:string,args:string[]}) {
+  buildInvalidMessage(context:Context, msgAndArgs:{msg:string,args:(T|string)[]}) {
     msgAndArgs.msg = 'Value "%s" is invalid for argument %s.'
-    msgAndArgs.args = [this.getValue(context) as string, this.aliases.join(' or ')]
+    msgAndArgs.args = [this.getValue(context), this.aliases.join(' or ')]
   }
 
   // async hook to execute after all parsing
@@ -465,7 +465,7 @@ export class Type<T> {
   }
 
   getValue(context:Context) {
-    return context.lookupValue(this.id)
+    return context.lookupValue(this.id) as T
   }
 
   // subtype impls can be async (return a promise)
