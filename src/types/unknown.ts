@@ -1,13 +1,16 @@
-'use strict'
+import Type, { TypeOptions } from './type'
+import { Context, SlurpedArg, ParsedArg } from '../context'
+import TypeImplicitCommand from './implicit'
+import TypePositional from './positional'
 
-const Type = require('./type')
-
-class TypeUnknown extends Type {
-  static get (opts) {
+export class TypeUnknown extends Type<unknown> {
+  static get(opts: TypeOptions<unknown>) {
     return new TypeUnknown(opts)
   }
+  positionals: TypePositional<any>[] = []
+  implicit: Record<string, TypeImplicitCommand> = {}
 
-  constructor (opts) {
+  constructor(opts: TypeOptions<unknown>) {
     super(Object.assign({
       aliases: '_',
       defaultValue: []
@@ -16,25 +19,25 @@ class TypeUnknown extends Type {
     this.implicit = {}
   }
 
-  get datatype () {
+  get datatype() {
     return 'array:string'
   }
 
-  addPositional (positional) {
+  addPositional(positional: TypePositional<any>) {
     this.positionals.push(positional)
   }
 
-  addImplicit (aliases, type) {
+  addImplicit(aliases: string[], type: TypeImplicitCommand) {
     aliases.forEach(alias => {
       this.implicit[alias] = type
     })
   }
 
-  async parse (context) {
+  async parse(context:Context) {
     // console.log('parse', this.constructor.name)
     // find all slurped args that have unclaimed kv pairs
-    const unknownSlurped = []
-    let unclaimed, argParsedLength
+    const unknownSlurped:SlurpedArg[] = []
+    let unclaimed:ParsedArg[], argParsedLength:number
     context.slurped.forEach(arg => {
       // filter arg.parsed to unclaimed
       argParsedLength = arg.parsed.length
@@ -57,13 +60,13 @@ class TypeUnknown extends Type {
     // console.log('unknownSlurped:', JSON.stringify(unknownSlurped, null, 2))
 
     // TODO when setting context.argv below, add to context.details.types ??
-    let unparsed = []
-    let prev = [{}]
-    let prevIndex
+    let unparsed:SlurpedArg[] = []
+    let prev:ParsedArg[] = [{} as ParsedArg]
+    let prevIndex:number
     unknownSlurped.forEach(arg => {
       arg.parsed.forEach(kv => {
         if (kv.key) context.argv[kv.key] = kv.value // TODO attempt to coerce to correct type?
-        else unparsed.push({ raw: arg.raw, index: arg.index })
+        else unparsed.push({ raw: arg.raw, index: arg.index } as SlurpedArg)
       })
       if (!arg.parsed[arg.parsed.length - 1].key && prev[prev.length - 1].key && typeof prev[prev.length - 1].value !== 'string' && prev[prev.length - 1].last && prevIndex === (arg.index - 1)) {
         context.argv[prev[prev.length - 1].key] = arg.parsed[arg.parsed.length - 1].value // TODO attempt to coerce to correct type?
@@ -101,7 +104,7 @@ class TypeUnknown extends Type {
     return super.resolve()
   }
 
-  _tryImplicitCommand (unparsed, context, implicitCommands) {
+  _tryImplicitCommand(unparsed:SlurpedArg[], context:Context, implicitCommands:string[]) {
     const first = unparsed[0]
     const matched = implicitCommands.find(alias => alias === first.raw) // maybe indexOf would be better/faster?
     if (matched) {
@@ -130,7 +133,7 @@ class TypeUnknown extends Type {
   // b = two
   // c = three four
 
-  _populatePositionals (unparsed, context) {
+  _populatePositionals(unparsed:SlurpedArg[], context:Context) {
     // filter out positionals already populated via flags
     // (can populate via flags or positional args, but not both at same time)
     const positionals = this.positionals.filter(p => context.lookupSourceValue(p.id) !== Type.SOURCE_FLAG)
@@ -143,20 +146,20 @@ class TypeUnknown extends Type {
 
       // requireds take precedence, skip optionals if insufficient args
       if (numArgsLeft <= numRequiredLeft) {
-        while (!current.isRequired) {
+        while (!current!.isRequired) {
           // console.log(`skipping optional "${current.helpFlags}", numArgsLeft: ${numArgsLeft}, numRequiredLeft: ${numRequiredLeft}`)
           current = positionals.shift()
         }
       }
 
       // assign value and decrement numArgsLeft
-      current.setValue(context, arg.raw)
-      current.applySource(context, Type.SOURCE_POSITIONAL, arg.index, arg.raw)
+      current!.setValue(context, arg.raw)
+      current!.applySource(context, Type.SOURCE_POSITIONAL, arg.index, arg.raw)
       numArgsLeft--
 
       // determine if we should move on to the next positional
-      if (!current.isVariadic || numArgsLeft <= positionals.length) {
-        if (current.isRequired) numRequiredLeft--
+      if (!current!.isVariadic || numArgsLeft <= positionals.length) {
+        if (current!.isRequired) numRequiredLeft--
         current = positionals.shift()
       }
     })

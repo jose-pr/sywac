@@ -440,7 +440,7 @@ export class Type<T> {
     return this.resolve()
   }
 
-  applySource(context: Context, source: string, position: number, raw: string) {
+  applySource(context: Context, source?: string|null, position?: number, raw?: string) {
     context.employSource(this.id, source, position, raw)
     // source precedence, most to least direct (for future reference):
     // 1. prompt (interactive mode only)
