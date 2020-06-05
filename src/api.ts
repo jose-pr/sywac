@@ -863,6 +863,7 @@ class Api {
   }
 
   initContext(includeTypes:boolean, state:unknown) {
+    //@ts-ignore
     const context = this.get('_context', {
       //@ts-ignore
       utils: this.utils,

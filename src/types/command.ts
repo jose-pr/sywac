@@ -138,8 +138,10 @@ export class TypeCommand extends Type<boolean> {
       this._apiConfigured = true
       // add positionals from preconfigured opts
       if (typeof this._positionalDsl === 'string' && this._positionalDsl.length) {
+        //@ts-ignore
         this.api.positional(this._positionalDsl, this._positionalOpts)
       } else if (this._positionalOpts && this._positionalOpts.params) {
+        //@ts-ignore
         this.api.positional(this._positionalOpts)
       }
 
