@@ -1,25 +1,151 @@
-'use strict'
+import { Context, SlurpedArg } from "../context"
 
-class Type {
-  static get SOURCE_DEFAULT () {
+export type CoerceFunction<T> = (v:any)=>T
+export interface TypeOptions<T> {
+
+  aliases?: string[]|string
+  defaultValue?: T
+  /**
+   * @default false
+   */
+  required?: boolean
+  /**
+   * @default false
+   */
+  strict?: boolean
+  coerce?: CoerceFunction<T>
+  /**
+   * Defines the flags used in help text and aliases to expect when parsing.
+   * 
+     For example,`-n, --num <number>` would allow -n or --num to be given when parsing.
+   */
+  flags?: string
+  /**
+   * The desc (or description) property controls the text displayed immediately to the right of the option or argument in the generated help text.
+   If not specified, the description will be blank.
+  ```ts
+  sywac.boolean('--confirm', {
+  desc: 'skip confirmation prompt'
+  });
+  ```
+  ```console
+  Options:
+  --confirm  skip confirmation prompt                                  [boolean]
+  ```
+  See also the {@link TypeOptions.hints} property.
+   */
+  description?: string
+  /**
+   * Alias for description
+   * 
+   * See also the {@link TypeOptions.description} property*/
+  desc?: string
+  /**
+   * 
+   The hints property controls the type information displayed to the far right of the option or argument in the generated help text.
+
+    By default, a hint will be generated automatically based on the type of the option - for example, [boolean] or [number].
+
+    You can use this to display an optional option as if it was required, or to make the hint more specific.
+    ```ts
+    sywac.string('--name <name>', {
+      hints: '[required] [string]'
+    });
+    sywac.array('--users', {
+      hints: '[list of users]'
+    });
+    ```
+    ```console
+    Options:
+      --name                                               [required] [string]
+      --users                                                        [list of users]
+    ```
+    You can also use this property to suppress an unwanted auto-generated hint.
+    ```ts
+    sywac.command({
+      aliases: 'update <student-id>',
+      desc: 'update a student record',
+      hints: ''                       // suppress usual aliases hint
+    });
+    ```
+    ```console
+    Commands:
+      update    update a student record
+    See also the {@link TypeOptions.description} property.
+    ```
+   */
+  hints: string[]
+  /**
+   * The group option allows you to organize options into multiple sections in the generated help text. By default, commands are grouped under the section Commands:, positional arguments are grouped under the section Arguments:, and flagged options are grouped under Options:.
+
+  Tip:
+
+  The text you specify will be used verbatim, so be sure to include the ending colon (:)
+  within your label if you want the colon in your section header.
+  ```js
+  sywac.number('-p, --port <port>', {
+  desc: 'port to listen on',
+  group: 'Server Options:'
+  });
+  ```
+  ```console
+  Server Options:
+  -p, --port   port to listen on                                  [number]
+  ```
+   */
+  group: string
+  /**
+   * The hidden option allows you to specify that an option or argument should not be included
+     in the generated help text.
+
+      You can use this to hide a rarely-used or deprecated option, while still taking advantage
+      of sywac’s parsing.
+      ```ts
+      sywac.boolean('--fancy', {
+        hidden: true
+      });
+      ```
+      You can also use it to slurp up extra positional arguments, without being displayed in the arguments section.
+      ```ts
+      sywac.positional('[users...]', {
+        hidden: true
+      });
+      ```
+   */
+  hidden: boolean
+}
+export class Type<T> {
+  static get SOURCE_DEFAULT() {
     return 'default'
   }
 
-  static get SOURCE_FLAG () {
+  static get SOURCE_FLAG() {
     return 'flag'
   }
 
-  static get SOURCE_POSITIONAL () {
+  static get SOURCE_POSITIONAL() {
     return 'positional'
   }
 
-  constructor (opts) {
+  private _aliases:string[]
+  private _defaultVal?:T
+  private _required?:boolean
+  private _strict?:boolean
+  private _coerceHandler?:CoerceFunction<T>
+  private _flags?:string
+  private _desc?:string
+  private _hints?:string|string[]
+  private _group?:string
+  private _hidden?:boolean
+  private _parent?:string
+
+  constructor(opts?:TypeOptions<T>) {
     this._aliases = []
     this.configure(opts, true)
   }
 
-  configure (opts, override) {
-    opts = opts || {}
+  configure(opts?:TypeOptions<T>, override?:boolean) {
+    opts = opts || {} as TypeOptions<T>
     if (typeof override === 'undefined') override = true
     // configurable for parsing
     if (override || !this._aliases.length) this._aliases = opts.aliases ? (this._aliases || []).concat(opts.aliases) : this._aliases
@@ -36,112 +162,112 @@ class Type {
     return this
   }
 
-  // returns a string uniquely identifying this type across all levels
-  // used for mapping values and sources in context
-  get id () {
+  /**A string uniquely identifying this type across all levels
+  used for mapping values and sources in context*/
+  get id() {
     return `${this.parent}|${this.datatype}|${this.aliases.join(',')}`
   }
 
-  withParent (apiName) {
+  withParent(apiName:string) {
     this._parent = apiName
     return this
   }
 
-  get parent () {
+  get parent() {
     return this._parent || 'node'
   }
 
-  get datatype () {
-    // subtypes should override this!
+  /**subtypes should override this!*/
+  get datatype() {
     return 'value'
   }
 
-  get shouldValidateDefaultValue () {
+  get shouldValidateDefaultValue() {
     return false
   }
 
   // == before parsing ==
-  alias (a) {
+  alias(a:string) {
     if (a) this._aliases = this._aliases.concat(a)
     return this
   }
 
-  get aliases () {
+  get aliases() {
     return this._aliases
   }
 
-  defaultValue (dv) {
+  defaultValue(dv:T) {
     this._defaultVal = dv
     return this
   }
 
-  get defaultVal () {
+  get defaultVal() {
     return this._defaultVal
   }
 
-  required (r) {
+  required(r:boolean) {
     this._required = r
     return this
   }
 
-  get isRequired () {
+  get isRequired() {
     return !!this._required
   }
 
-  strict (s) {
+  strict(s:boolean) {
     this._strict = s
     return this
   }
 
-  get isStrict () {
+  get isStrict() {
     return !!this._strict
   }
 
-  coerce (syncFunction) {
+  coerce(syncFunction:CoerceFunction<T>) {
     this._coerceHandler = syncFunction
     return this
   }
 
-  get coerceHandler () {
-    return typeof this._coerceHandler === 'function' ? this._coerceHandler : v => v
+  get coerceHandler() {
+    return typeof this._coerceHandler === 'function' ? this._coerceHandler : (v:any) => v as T
   }
 
-  flags (f) {
+  flags(f:string) {
     this._flags = f
     return this
   }
 
-  get helpFlags () {
+  get helpFlags() {
     return this._flags
   }
 
-  description (d) {
+  description(d?:string) {
     this._desc = d
     return this
   }
 
-  desc (d) {
+  desc(d?:string) {
     return this.description(d)
   }
 
-  get helpDesc () {
+  get helpDesc() {
     // if this isn't a string, it can mess up buffer.js logic
     return typeof this._desc === 'string' ? this._desc : ''
   }
 
-  hints (h) {
+  hints(h?:string|string[]) {
     this._hints = h
     return this
   }
 
-  get helpHints () {
+  get helpHints() {
     if (typeof this._hints !== 'undefined') return this._hints
-    const hints = []
+    const hints = [] as string[]
     this.buildHelpHints(hints)
     return hints.length ? '[' + hints.join('] [') + ']' : ''
   }
 
-  buildHelpHints (hintsArray) {
+  buildHelpHints(hintsArray:string[]) {
     // required
     if (this.isRequired) hintsArray.push('required')
     // datatype
@@ -151,25 +277,25 @@ class Type {
     if (dv && (!Array.isArray(dv) || dv.length)) hintsArray.push(`default: ${dv}`)
   }
 
-  group (g) {
+  group(g:string) {
     this._group = g
     return this
   }
 
-  get helpGroup () {
+  get helpGroup() {
     return this._group || 'Options:'
   }
 
-  hidden (h) {
+  hidden(h:boolean) {
     this._hidden = h
     return this
   }
 
-  get isHidden () {
+  get isHidden() {
     return !!this._hidden
   }
 
-  validateConfig (utils) {
+  validateConfig(utils:any) {
     // derive flags from aliases
     if (typeof this._flags !== 'string' && this._aliases.length) {
       this._flags = utils.aliasesToFlags(this._aliases)
@@ -213,21 +339,20 @@ class Type {
   //   })
   // }
 
-  resolve () {
+  resolve() {
     // console.log('resolve', this.constructor.name)
     return Promise.resolve(this)
     // return this.resolveSlow()
   }
 
   // async parsing
-  parse (context) {
+  parse(context:Context) {
     return this._internalParse(context, true)
   }
-
-  _internalParse (context, validate) {
+  _internalParse(context:Context, validate?:boolean) {
     // console.log('parse', this.constructor.name, this.helpFlags)
     let lastKeyMatchesAlias = false
-    let previousUsedValue
+    let previousUsedValue:any
     // iterate over each slurped arg and determine if its key-value pairs are relevant to this type/option
     context.slurped.forEach(arg => {
       // if the last key seen applies to this type, see if a keyless value applies as the value
@@ -259,7 +384,7 @@ class Type {
   }
 
   // async validation called from parse
-  async validateParsed (context) {
+  async validateParsed(context:Context) {
     if (this.isRequired && !this.hasRequiredValue(context)) {
       const msgAndArgs = { msg: '', args: [] }
       this.buildRequiredMessage(context, msgAndArgs)
@@ -278,8 +403,8 @@ class Type {
     return this.resolve()
   }
 
-  failValidation (context, msg) {
-    let args
+  failValidation(context:Context, msg:string[]) {
+    let args:string[]
     if (Array.isArray(msg)) {
       args = msg
     } else {
@@ -295,27 +420,27 @@ class Type {
     context.markTypeInvalid(this.id)
   }
 
-  hasRequiredValue (context) {
+  hasRequiredValue(context:Context) {
     return context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT
   }
 
-  buildRequiredMessage (context, msgAndArgs) {
+  buildRequiredMessage(context:Context, msgAndArgs:{msg:string,args:string[]}) {
     msgAndArgs.msg = 'Missing required argument: %s'
     msgAndArgs.args = [this.aliases.join(' or ')]
   }
 
-  buildInvalidMessage (context, msgAndArgs) {
+  buildInvalidMessage(context:Context, msgAndArgs:{msg:string,args:string[]}) {
     msgAndArgs.msg = 'Value "%s" is invalid for argument %s.'
-    msgAndArgs.args = [this.getValue(context), this.aliases.join(' or ')]
+    msgAndArgs.args = [this.getValue(context) as string, this.aliases.join(' or ')]
   }
 
   // async hook to execute after all parsing
-  postParse (context) {
+  postParse(context:Context) {
     // console.log('postParse', this.constructor.name)
     return this.resolve()
   }
 
-  applySource (context, source, position, raw) {
+  applySource(context:Context, source:string, position:number, raw:string) {
     context.employSource(this.id, source, position, raw)
     // source precedence, most to least direct (for future reference):
     // 1. prompt (interactive mode only)
@@ -326,29 +451,29 @@ class Type {
     // 6. default
   }
 
-  isApplicable (context, currentValue, previousValue, slurpedArg) {
+  isApplicable(context:Context, currentValue:unknown, previousValue:unknown, slurpedArg:SlurpedArg) {
     // assumes (1) this type should hold a single value
     // and (2) a non-string previous value was not explicit
     // e.g. previous was not --key=value
     return typeof previousValue !== 'string'
   }
 
-  observeAlias (context, alias) {}
+  observeAlias(context:Context, alias:string) { }
 
-  setValue (context, value) {
+  setValue(context:Context, value:T) {
     context.assignValue(this.id, value)
   }
 
-  getValue (context) {
+  getValue(context:Context) {
     return context.lookupValue(this.id)
   }
 
   // subtype impls can be async (return a promise)
-  validateValue (value, context) {
+  validateValue(value:unknown, context:Context) {
     return true
   }
 
-  toObject () {
+  toObject() {
     return {
       // populated via config
       id: this.id,
@@ -364,7 +489,7 @@ class Type {
     }
   }
 
-  toResult (context, shouldCoerce) {
+  toResult(context:Context, shouldCoerce:boolean) {
     const obj = context.lookupSource(this.id)
     return {
       // populated via config
@@ -385,4 +510,4 @@ class Type {
   }
 }
 
-module.exports = Type
+export default Type

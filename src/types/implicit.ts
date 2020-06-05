@@ -1,14 +1,19 @@
-'use strict'
+import TypeBoolean from './boolean'
+import { TypeOptions } from './type'
+import { Context } from '../context'
 
-const TypeBoolean = require('./boolean')
+export interface TypeImplicitCommandOptions extends TypeOptions<boolean> {
+  implicitCommand?: boolean
+}
 
 class TypeImplicitCommand extends TypeBoolean {
-  constructor (opts) {
+  private _implicitCommand?: boolean
+  constructor(opts?: TypeImplicitCommandOptions) {
     super(Object.assign({ implicitCommand: true }, opts))
   }
 
-  configure (opts, override) {
-    opts = opts || {}
+  configure(opts?: TypeImplicitCommandOptions, override?: boolean) {
+    opts = opts || {} as TypeImplicitCommandOptions
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -19,21 +24,21 @@ class TypeImplicitCommand extends TypeBoolean {
     return this
   }
 
-  get implicitCommands () {
+  get implicitCommands() {
     if (!this._implicitCommand) return []
     return this.aliases.filter(alias => alias.length > 1)
   }
 
-  buildHelpHints (hints) {
+  buildHelpHints(hints: string[]) {
     const commands = this.implicitCommands
     if (commands.length) hints.push('commands: ' + commands.join(', '))
     super.buildHelpHints(hints)
   }
 
-  implicitCommandFound (context, source, position, raw) {
+  implicitCommandFound(context: Context, source: string, position: number, raw: string) {
     this.setValue(context, true)
     this.applySource(context, source, position, raw)
   }
 }
 
-module.exports = TypeImplicitCommand
+export default TypeImplicitCommand
