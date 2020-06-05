@@ -21,7 +21,7 @@
 
 • **fsLib**? : *typeof fs*
 
-*Defined in [context.ts:9](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L9)*
+*Defined in [context.ts:9](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L9)*
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 • **pathLib**? : *typeof path*
 
-*Defined in [context.ts:8](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L8)*
+*Defined in [context.ts:8](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L8)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • **state**? : *unknown*
 
-*Defined in [context.ts:10](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L10)*
+*Defined in [context.ts:10](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L10)*
 
 ___
 
@@ -45,4 +45,4 @@ ___
 
 • **utils**? : *unknown*
 
-*Defined in [context.ts:7](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L7)*
+*Defined in [context.ts:7](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L7)*

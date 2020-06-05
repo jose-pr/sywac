@@ -29,7 +29,7 @@
 
 • **aliases**: *string[]*
 
-*Defined in [context.ts:27](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L27)*
+*Defined in [context.ts:27](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L27)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • **datatype**: *string*
 
-*Defined in [context.ts:28](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L28)*
+*Defined in [context.ts:28](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L28)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • **helpDesc**: *string*
 
-*Defined in [context.ts:31](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L31)*
+*Defined in [context.ts:31](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L31)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • **helpFlags**: *string*
 
-*Defined in [context.ts:30](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L30)*
+*Defined in [context.ts:30](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L30)*
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • **helpGroup**: *string*
 
-*Defined in [context.ts:33](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L33)*
+*Defined in [context.ts:33](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L33)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 • **helpHints**: *string*
 
-*Defined in [context.ts:32](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L32)*
+*Defined in [context.ts:32](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L32)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • **id**: *string*
 
-*Defined in [context.ts:26](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L26)*
+*Defined in [context.ts:26](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L26)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 • **invalid**? : *undefined | false | true*
 
-*Defined in [context.ts:35](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L35)*
+*Defined in [context.ts:35](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L35)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 • **isHidden**: *boolean*
 
-*Defined in [context.ts:34](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L34)*
+*Defined in [context.ts:34](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L34)*
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 • **isRequired**: *boolean*
 
-*Defined in [context.ts:29](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L29)*
+*Defined in [context.ts:29](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L29)*
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 • **parent**? : *undefined | string*
 
-*Defined in [context.ts:36](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L36)*
+*Defined in [context.ts:36](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L36)*
 
 ___
 
@@ -117,4 +117,4 @@ ___
 
 • **value**? : *unknown*
 
-*Defined in [context.ts:37](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L37)*
+*Defined in [context.ts:37](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L37)*

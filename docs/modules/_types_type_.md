@@ -22,7 +22,7 @@
 
 Ƭ **CoerceFunction**: *function*
 
-*Defined in [types/type.ts:3](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L3)*
+*Defined in [types/type.ts:3](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L3)*
 
 #### Type declaration:
 

@@ -38,4 +38,4 @@ ___
 
 • **api**: *any* = Api.get()
 
-*Defined in [index.ts:3](https://github.com/jose-pr/sywac/blob/a63bd2b/src/index.ts#L3)*
+*Defined in [index.ts:3](https://github.com/jose-pr/sywac/blob/59b0233/src/index.ts#L3)*

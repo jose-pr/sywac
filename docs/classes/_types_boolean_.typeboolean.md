@@ -80,7 +80,7 @@
 
 *Overrides [Type](_types_type_.type.md).[constructor](_types_type_.type.md#constructor)*
 
-*Defined in [types/boolean.ts:7](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/boolean.ts#L7)*
+*Defined in [types/boolean.ts:7](https://github.com/jose-pr/sywac/blob/59b0233/src/types/boolean.ts#L7)*
 
 **Parameters:**
 
@@ -98,7 +98,7 @@ Name | Type |
 
 *Inherited from [Type](_types_type_.type.md).[aliases](_types_type_.type.md#aliases)*
 
-*Defined in [types/type.ts:195](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L195)*
+*Defined in [types/type.ts:195](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L195)*
 
 **Returns:** *string[]*
 
@@ -110,7 +110,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[coerceHandler](_types_type_.type.md#coercehandler)*
 
-*Defined in [types/type.ts:231](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L231)*
+*Defined in [types/type.ts:231](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L231)*
 
 **Returns:** *function*
 
@@ -130,7 +130,7 @@ ___
 
 *Overrides [Type](_types_type_.type.md).[datatype](_types_type_.type.md#datatype)*
 
-*Defined in [types/boolean.ts:13](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/boolean.ts#L13)*
+*Defined in [types/boolean.ts:13](https://github.com/jose-pr/sywac/blob/59b0233/src/types/boolean.ts#L13)*
 
 **Returns:** *string*
 
@@ -142,7 +142,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[defaultVal](_types_type_.type.md#defaultval)*
 
-*Defined in [types/type.ts:204](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L204)*
+*Defined in [types/type.ts:204](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L204)*
 
 **Returns:** *undefined | T*
 
@@ -154,7 +154,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[helpDesc](_types_type_.type.md#helpdesc)*
 
-*Defined in [types/type.ts:253](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L253)*
+*Defined in [types/type.ts:253](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L253)*
 
 **Returns:** *string*
 
@@ -166,7 +166,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[helpFlags](_types_type_.type.md#helpflags)*
 
-*Defined in [types/type.ts:240](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L240)*
+*Defined in [types/type.ts:240](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L240)*
 
 **Returns:** *undefined | string*
 
@@ -178,7 +178,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[helpGroup](_types_type_.type.md#helpgroup)*
 
-*Defined in [types/type.ts:285](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L285)*
+*Defined in [types/type.ts:285](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L285)*
 
 **Returns:** *string*
 
@@ -190,7 +190,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[helpHints](_types_type_.type.md#helphints)*
 
-*Defined in [types/type.ts:263](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L263)*
+*Defined in [types/type.ts:263](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L263)*
 
 **Returns:** *string | string[]*
 
@@ -202,7 +202,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[id](_types_type_.type.md#id)*
 
-*Defined in [types/type.ts:167](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L167)*
+*Defined in [types/type.ts:167](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L167)*
 
 A string uniquely identifying this type across all levels
 used for mapping values and sources in context
@@ -217,7 +217,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[isHidden](_types_type_.type.md#ishidden)*
 
-*Defined in [types/type.ts:294](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L294)*
+*Defined in [types/type.ts:294](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L294)*
 
 **Returns:** *boolean*
 
@@ -229,7 +229,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[isRequired](_types_type_.type.md#isrequired)*
 
-*Defined in [types/type.ts:213](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L213)*
+*Defined in [types/type.ts:213](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L213)*
 
 **Returns:** *boolean*
 
@@ -241,7 +241,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[isStrict](_types_type_.type.md#isstrict)*
 
-*Defined in [types/type.ts:222](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L222)*
+*Defined in [types/type.ts:222](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L222)*
 
 **Returns:** *boolean*
 
@@ -253,7 +253,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[parent](_types_type_.type.md#parent)*
 
-*Defined in [types/type.ts:176](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L176)*
+*Defined in [types/type.ts:176](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L176)*
 
 **Returns:** *string*
 
@@ -265,7 +265,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[shouldValidateDefaultValue](_types_type_.type.md#shouldvalidatedefaultvalue)*
 
-*Defined in [types/type.ts:185](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L185)*
+*Defined in [types/type.ts:185](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L185)*
 
 **Returns:** *boolean*
 
@@ -277,7 +277,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[SOURCE_DEFAULT](_types_type_.type.md#static-source_default)*
 
-*Defined in [types/type.ts:118](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L118)*
+*Defined in [types/type.ts:118](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L118)*
 
 **Returns:** *string*
 
@@ -289,7 +289,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[SOURCE_FLAG](_types_type_.type.md#static-source_flag)*
 
-*Defined in [types/type.ts:122](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L122)*
+*Defined in [types/type.ts:122](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L122)*
 
 **Returns:** *string*
 
@@ -301,7 +301,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[SOURCE_POSITIONAL](_types_type_.type.md#static-source_positional)*
 
-*Defined in [types/type.ts:126](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L126)*
+*Defined in [types/type.ts:126](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L126)*
 
 **Returns:** *string*
 
@@ -313,7 +313,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[_internalParse](_types_type_.type.md#_internalparse)*
 
-*Defined in [types/type.ts:352](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L352)*
+*Defined in [types/type.ts:352](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L352)*
 
 **Parameters:**
 
@@ -332,7 +332,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[alias](_types_type_.type.md#alias)*
 
-*Defined in [types/type.ts:190](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L190)*
+*Defined in [types/type.ts:190](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L190)*
 
 **Parameters:**
 
@@ -350,7 +350,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[applySource](_types_type_.type.md#applysource)*
 
-*Defined in [types/type.ts:443](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L443)*
+*Defined in [types/type.ts:443](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L443)*
 
 **Parameters:**
 
@@ -371,7 +371,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[buildHelpHints](_types_type_.type.md#buildhelphints)*
 
-*Defined in [types/type.ts:270](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L270)*
+*Defined in [types/type.ts:270](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L270)*
 
 **Parameters:**
 
@@ -389,7 +389,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[buildInvalidMessage](_types_type_.type.md#buildinvalidmessage)*
 
-*Defined in [types/type.ts:432](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L432)*
+*Defined in [types/type.ts:432](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L432)*
 
 **Parameters:**
 
@@ -412,7 +412,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[buildRequiredMessage](_types_type_.type.md#buildrequiredmessage)*
 
-*Defined in [types/type.ts:427](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L427)*
+*Defined in [types/type.ts:427](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L427)*
 
 **Parameters:**
 
@@ -435,7 +435,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[coerce](_types_type_.type.md#coerce)*
 
-*Defined in [types/type.ts:226](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L226)*
+*Defined in [types/type.ts:226](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L226)*
 
 **Parameters:**
 
@@ -453,7 +453,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[configure](_types_type_.type.md#configure)*
 
-*Defined in [types/type.ts:147](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L147)*
+*Defined in [types/type.ts:147](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L147)*
 
 **Parameters:**
 
@@ -472,7 +472,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[defaultValue](_types_type_.type.md#defaultvalue)*
 
-*Defined in [types/type.ts:199](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L199)*
+*Defined in [types/type.ts:199](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L199)*
 
 **Parameters:**
 
@@ -490,7 +490,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[desc](_types_type_.type.md#desc)*
 
-*Defined in [types/type.ts:249](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L249)*
+*Defined in [types/type.ts:249](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L249)*
 
 **Parameters:**
 
@@ -508,7 +508,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[description](_types_type_.type.md#description)*
 
-*Defined in [types/type.ts:244](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L244)*
+*Defined in [types/type.ts:244](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L244)*
 
 **Parameters:**
 
@@ -526,7 +526,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[failValidation](_types_type_.type.md#failvalidation)*
 
-*Defined in [types/type.ts:406](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L406)*
+*Defined in [types/type.ts:406](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L406)*
 
 **Parameters:**
 
@@ -545,7 +545,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[flags](_types_type_.type.md#flags)*
 
-*Defined in [types/type.ts:235](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L235)*
+*Defined in [types/type.ts:235](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L235)*
 
 **Parameters:**
 
@@ -563,7 +563,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[getValue](_types_type_.type.md#getvalue)*
 
-*Defined in [types/type.ts:467](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L467)*
+*Defined in [types/type.ts:467](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L467)*
 
 **Parameters:**
 
@@ -581,7 +581,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[group](_types_type_.type.md#group)*
 
-*Defined in [types/type.ts:280](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L280)*
+*Defined in [types/type.ts:280](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L280)*
 
 **Parameters:**
 
@@ -599,7 +599,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[hasRequiredValue](_types_type_.type.md#hasrequiredvalue)*
 
-*Defined in [types/type.ts:423](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L423)*
+*Defined in [types/type.ts:423](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L423)*
 
 **Parameters:**
 
@@ -617,7 +617,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[hidden](_types_type_.type.md#hidden)*
 
-*Defined in [types/type.ts:289](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L289)*
+*Defined in [types/type.ts:289](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L289)*
 
 **Parameters:**
 
@@ -635,7 +635,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[hints](_types_type_.type.md#hints)*
 
-*Defined in [types/type.ts:258](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L258)*
+*Defined in [types/type.ts:258](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L258)*
 
 **Parameters:**
 
@@ -653,7 +653,7 @@ ___
 
 *Overrides [Type](_types_type_.type.md).[isApplicable](_types_type_.type.md#isapplicable)*
 
-*Defined in [types/boolean.ts:17](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/boolean.ts#L17)*
+*Defined in [types/boolean.ts:17](https://github.com/jose-pr/sywac/blob/59b0233/src/types/boolean.ts#L17)*
 
 **Parameters:**
 
@@ -674,7 +674,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[observeAlias](_types_type_.type.md#observealias)*
 
-*Defined in [types/type.ts:461](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L461)*
+*Defined in [types/type.ts:461](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L461)*
 
 **Parameters:**
 
@@ -693,7 +693,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[parse](_types_type_.type.md#parse)*
 
-*Defined in [types/type.ts:349](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L349)*
+*Defined in [types/type.ts:349](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L349)*
 
 **Parameters:**
 
@@ -711,7 +711,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[postParse](_types_type_.type.md#postparse)*
 
-*Defined in [types/type.ts:438](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L438)*
+*Defined in [types/type.ts:438](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L438)*
 
 **Parameters:**
 
@@ -729,7 +729,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[required](_types_type_.type.md#required)*
 
-*Defined in [types/type.ts:208](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L208)*
+*Defined in [types/type.ts:208](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L208)*
 
 **Parameters:**
 
@@ -747,7 +747,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[resolve](_types_type_.type.md#resolve)*
 
-*Defined in [types/type.ts:342](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L342)*
+*Defined in [types/type.ts:342](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L342)*
 
 **Returns:** *Promise‹this›*
 
@@ -759,7 +759,7 @@ ___
 
 *Overrides [Type](_types_type_.type.md).[setValue](_types_type_.type.md#setvalue)*
 
-*Defined in [types/boolean.ts:21](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/boolean.ts#L21)*
+*Defined in [types/boolean.ts:21](https://github.com/jose-pr/sywac/blob/59b0233/src/types/boolean.ts#L21)*
 
 **Parameters:**
 
@@ -778,7 +778,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[strict](_types_type_.type.md#strict)*
 
-*Defined in [types/type.ts:217](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L217)*
+*Defined in [types/type.ts:217](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L217)*
 
 **Parameters:**
 
@@ -796,7 +796,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[toObject](_types_type_.type.md#toobject)*
 
-*Defined in [types/type.ts:476](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L476)*
+*Defined in [types/type.ts:476](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L476)*
 
 **Returns:** *object*
 
@@ -826,7 +826,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[toResult](_types_type_.type.md#toresult)*
 
-*Defined in [types/type.ts:492](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L492)*
+*Defined in [types/type.ts:492](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L492)*
 
 **Parameters:**
 
@@ -859,7 +859,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[validateConfig](_types_type_.type.md#validateconfig)*
 
-*Defined in [types/type.ts:298](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L298)*
+*Defined in [types/type.ts:298](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L298)*
 
 **Parameters:**
 
@@ -877,7 +877,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[validateParsed](_types_type_.type.md#validateparsed)*
 
-*Defined in [types/type.ts:387](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L387)*
+*Defined in [types/type.ts:387](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L387)*
 
 **Parameters:**
 
@@ -895,7 +895,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[validateValue](_types_type_.type.md#validatevalue)*
 
-*Defined in [types/type.ts:472](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L472)*
+*Defined in [types/type.ts:472](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L472)*
 
 **Parameters:**
 
@@ -914,7 +914,7 @@ ___
 
 *Inherited from [Type](_types_type_.type.md).[withParent](_types_type_.type.md#withparent)*
 
-*Defined in [types/type.ts:171](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L171)*
+*Defined in [types/type.ts:171](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L171)*
 
 **Parameters:**
 
@@ -930,7 +930,7 @@ ___
 
 ▸ **get**(`opts`: [TypeOptions](../interfaces/_types_type_.typeoptions.md)‹boolean›): *[TypeBoolean](_types_boolean_.typeboolean.md)‹›*
 
-*Defined in [types/boolean.ts:5](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/boolean.ts#L5)*
+*Defined in [types/boolean.ts:5](https://github.com/jose-pr/sywac/blob/59b0233/src/types/boolean.ts#L5)*
 
 **Parameters:**
 

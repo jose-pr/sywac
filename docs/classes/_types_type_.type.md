@@ -93,7 +93,7 @@
 
 \+ **new Type**(`opts?`: [TypeOptions](../interfaces/_types_type_.typeoptions.md)‹T›): *[Type](_types_type_.type.md)*
 
-*Defined in [types/type.ts:140](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L140)*
+*Defined in [types/type.ts:140](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L140)*
 
 **Parameters:**
 
@@ -109,7 +109,7 @@ Name | Type |
 
 • **_aliases**: *string[]*
 
-*Defined in [types/type.ts:130](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L130)*
+*Defined in [types/type.ts:130](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L130)*
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 • **_coerceHandler**? : *[CoerceFunction](../modules/_types_type_.md#coercefunction)‹T›*
 
-*Defined in [types/type.ts:134](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L134)*
+*Defined in [types/type.ts:134](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L134)*
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 • **_defaultVal**? : *T*
 
-*Defined in [types/type.ts:131](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L131)*
+*Defined in [types/type.ts:131](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L131)*
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 • **_desc**? : *undefined | string*
 
-*Defined in [types/type.ts:136](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L136)*
+*Defined in [types/type.ts:136](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L136)*
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 • **_flags**? : *undefined | string*
 
-*Defined in [types/type.ts:135](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L135)*
+*Defined in [types/type.ts:135](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L135)*
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 • **_group**? : *undefined | string*
 
-*Defined in [types/type.ts:138](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L138)*
+*Defined in [types/type.ts:138](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L138)*
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 • **_hidden**? : *undefined | false | true*
 
-*Defined in [types/type.ts:139](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L139)*
+*Defined in [types/type.ts:139](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L139)*
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 • **_hints**? : *string | string[]*
 
-*Defined in [types/type.ts:137](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L137)*
+*Defined in [types/type.ts:137](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L137)*
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 • **_parent**? : *undefined | string*
 
-*Defined in [types/type.ts:140](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L140)*
+*Defined in [types/type.ts:140](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L140)*
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 • **_required**? : *undefined | false | true*
 
-*Defined in [types/type.ts:132](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L132)*
+*Defined in [types/type.ts:132](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L132)*
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 • **_strict**? : *undefined | false | true*
 
-*Defined in [types/type.ts:133](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L133)*
+*Defined in [types/type.ts:133](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L133)*
 
 ## Accessors
 
@@ -197,7 +197,7 @@ ___
 
 • **get aliases**(): *string[]*
 
-*Defined in [types/type.ts:195](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L195)*
+*Defined in [types/type.ts:195](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L195)*
 
 **Returns:** *string[]*
 
@@ -207,7 +207,7 @@ ___
 
 • **get coerceHandler**(): *function*
 
-*Defined in [types/type.ts:231](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L231)*
+*Defined in [types/type.ts:231](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L231)*
 
 **Returns:** *function*
 
@@ -225,7 +225,7 @@ ___
 
 • **get datatype**(): *string*
 
-*Defined in [types/type.ts:181](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L181)*
+*Defined in [types/type.ts:181](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L181)*
 
 subtypes should override this!
 
@@ -237,7 +237,7 @@ ___
 
 • **get defaultVal**(): *undefined | T*
 
-*Defined in [types/type.ts:204](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L204)*
+*Defined in [types/type.ts:204](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L204)*
 
 **Returns:** *undefined | T*
 
@@ -247,7 +247,7 @@ ___
 
 • **get helpDesc**(): *string*
 
-*Defined in [types/type.ts:253](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L253)*
+*Defined in [types/type.ts:253](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L253)*
 
 **Returns:** *string*
 
@@ -257,7 +257,7 @@ ___
 
 • **get helpFlags**(): *undefined | string*
 
-*Defined in [types/type.ts:240](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L240)*
+*Defined in [types/type.ts:240](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L240)*
 
 **Returns:** *undefined | string*
 
@@ -267,7 +267,7 @@ ___
 
 • **get helpGroup**(): *string*
 
-*Defined in [types/type.ts:285](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L285)*
+*Defined in [types/type.ts:285](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L285)*
 
 **Returns:** *string*
 
@@ -277,7 +277,7 @@ ___
 
 • **get helpHints**(): *string | string[]*
 
-*Defined in [types/type.ts:263](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L263)*
+*Defined in [types/type.ts:263](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L263)*
 
 **Returns:** *string | string[]*
 
@@ -287,7 +287,7 @@ ___
 
 • **get id**(): *string*
 
-*Defined in [types/type.ts:167](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L167)*
+*Defined in [types/type.ts:167](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L167)*
 
 A string uniquely identifying this type across all levels
 used for mapping values and sources in context
@@ -300,7 +300,7 @@ ___
 
 • **get isHidden**(): *boolean*
 
-*Defined in [types/type.ts:294](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L294)*
+*Defined in [types/type.ts:294](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L294)*
 
 **Returns:** *boolean*
 
@@ -310,7 +310,7 @@ ___
 
 • **get isRequired**(): *boolean*
 
-*Defined in [types/type.ts:213](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L213)*
+*Defined in [types/type.ts:213](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L213)*
 
 **Returns:** *boolean*
 
@@ -320,7 +320,7 @@ ___
 
 • **get isStrict**(): *boolean*
 
-*Defined in [types/type.ts:222](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L222)*
+*Defined in [types/type.ts:222](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L222)*
 
 **Returns:** *boolean*
 
@@ -330,7 +330,7 @@ ___
 
 • **get parent**(): *string*
 
-*Defined in [types/type.ts:176](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L176)*
+*Defined in [types/type.ts:176](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L176)*
 
 **Returns:** *string*
 
@@ -340,7 +340,7 @@ ___
 
 • **get shouldValidateDefaultValue**(): *boolean*
 
-*Defined in [types/type.ts:185](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L185)*
+*Defined in [types/type.ts:185](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L185)*
 
 **Returns:** *boolean*
 
@@ -350,7 +350,7 @@ ___
 
 • **get SOURCE_DEFAULT**(): *string*
 
-*Defined in [types/type.ts:118](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L118)*
+*Defined in [types/type.ts:118](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L118)*
 
 **Returns:** *string*
 
@@ -360,7 +360,7 @@ ___
 
 • **get SOURCE_FLAG**(): *string*
 
-*Defined in [types/type.ts:122](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L122)*
+*Defined in [types/type.ts:122](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L122)*
 
 **Returns:** *string*
 
@@ -370,7 +370,7 @@ ___
 
 • **get SOURCE_POSITIONAL**(): *string*
 
-*Defined in [types/type.ts:126](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L126)*
+*Defined in [types/type.ts:126](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L126)*
 
 **Returns:** *string*
 
@@ -380,7 +380,7 @@ ___
 
 ▸ **_internalParse**(`context`: [Context](_context_.context.md), `validate?`: undefined | false | true): *Promise‹this›*
 
-*Defined in [types/type.ts:352](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L352)*
+*Defined in [types/type.ts:352](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L352)*
 
 **Parameters:**
 
@@ -397,7 +397,7 @@ ___
 
 ▸ **alias**(`a`: string): *this*
 
-*Defined in [types/type.ts:190](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L190)*
+*Defined in [types/type.ts:190](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L190)*
 
 **Parameters:**
 
@@ -413,7 +413,7 @@ ___
 
 ▸ **applySource**(`context`: [Context](_context_.context.md), `source`: string, `position`: number, `raw`: string): *void*
 
-*Defined in [types/type.ts:443](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L443)*
+*Defined in [types/type.ts:443](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L443)*
 
 **Parameters:**
 
@@ -432,7 +432,7 @@ ___
 
 ▸ **buildHelpHints**(`hintsArray`: string[]): *void*
 
-*Defined in [types/type.ts:270](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L270)*
+*Defined in [types/type.ts:270](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L270)*
 
 **Parameters:**
 
@@ -448,7 +448,7 @@ ___
 
 ▸ **buildInvalidMessage**(`context`: [Context](_context_.context.md), `msgAndArgs`: object): *void*
 
-*Defined in [types/type.ts:432](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L432)*
+*Defined in [types/type.ts:432](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L432)*
 
 **Parameters:**
 
@@ -469,7 +469,7 @@ ___
 
 ▸ **buildRequiredMessage**(`context`: [Context](_context_.context.md), `msgAndArgs`: object): *void*
 
-*Defined in [types/type.ts:427](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L427)*
+*Defined in [types/type.ts:427](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L427)*
 
 **Parameters:**
 
@@ -490,7 +490,7 @@ ___
 
 ▸ **coerce**(`syncFunction`: [CoerceFunction](../modules/_types_type_.md#coercefunction)‹T›): *this*
 
-*Defined in [types/type.ts:226](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L226)*
+*Defined in [types/type.ts:226](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L226)*
 
 **Parameters:**
 
@@ -506,7 +506,7 @@ ___
 
 ▸ **configure**(`opts?`: [TypeOptions](../interfaces/_types_type_.typeoptions.md)‹T›, `override?`: undefined | false | true): *this*
 
-*Defined in [types/type.ts:147](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L147)*
+*Defined in [types/type.ts:147](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L147)*
 
 **Parameters:**
 
@@ -523,7 +523,7 @@ ___
 
 ▸ **defaultValue**(`dv`: T): *this*
 
-*Defined in [types/type.ts:199](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L199)*
+*Defined in [types/type.ts:199](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L199)*
 
 **Parameters:**
 
@@ -539,7 +539,7 @@ ___
 
 ▸ **desc**(`d?`: undefined | string): *this*
 
-*Defined in [types/type.ts:249](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L249)*
+*Defined in [types/type.ts:249](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L249)*
 
 **Parameters:**
 
@@ -555,7 +555,7 @@ ___
 
 ▸ **description**(`d?`: undefined | string): *this*
 
-*Defined in [types/type.ts:244](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L244)*
+*Defined in [types/type.ts:244](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L244)*
 
 **Parameters:**
 
@@ -571,7 +571,7 @@ ___
 
 ▸ **failValidation**(`context`: [Context](_context_.context.md), `msg`: string[]): *void*
 
-*Defined in [types/type.ts:406](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L406)*
+*Defined in [types/type.ts:406](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L406)*
 
 **Parameters:**
 
@@ -588,7 +588,7 @@ ___
 
 ▸ **flags**(`f`: string): *this*
 
-*Defined in [types/type.ts:235](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L235)*
+*Defined in [types/type.ts:235](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L235)*
 
 **Parameters:**
 
@@ -604,7 +604,7 @@ ___
 
 ▸ **getValue**(`context`: [Context](_context_.context.md)): *unknown*
 
-*Defined in [types/type.ts:467](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L467)*
+*Defined in [types/type.ts:467](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L467)*
 
 **Parameters:**
 
@@ -620,7 +620,7 @@ ___
 
 ▸ **group**(`g`: string): *this*
 
-*Defined in [types/type.ts:280](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L280)*
+*Defined in [types/type.ts:280](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L280)*
 
 **Parameters:**
 
@@ -636,7 +636,7 @@ ___
 
 ▸ **hasRequiredValue**(`context`: [Context](_context_.context.md)): *boolean*
 
-*Defined in [types/type.ts:423](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L423)*
+*Defined in [types/type.ts:423](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L423)*
 
 **Parameters:**
 
@@ -652,7 +652,7 @@ ___
 
 ▸ **hidden**(`h`: boolean): *this*
 
-*Defined in [types/type.ts:289](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L289)*
+*Defined in [types/type.ts:289](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L289)*
 
 **Parameters:**
 
@@ -668,7 +668,7 @@ ___
 
 ▸ **hints**(`h?`: string | string[]): *this*
 
-*Defined in [types/type.ts:258](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L258)*
+*Defined in [types/type.ts:258](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L258)*
 
 **Parameters:**
 
@@ -684,7 +684,7 @@ ___
 
 ▸ **isApplicable**(`context`: [Context](_context_.context.md), `currentValue`: unknown, `previousValue`: unknown, `slurpedArg`: [SlurpedArg](../interfaces/_context_.slurpedarg.md)): *boolean*
 
-*Defined in [types/type.ts:454](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L454)*
+*Defined in [types/type.ts:454](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L454)*
 
 **Parameters:**
 
@@ -703,7 +703,7 @@ ___
 
 ▸ **observeAlias**(`context`: [Context](_context_.context.md), `alias`: string): *void*
 
-*Defined in [types/type.ts:461](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L461)*
+*Defined in [types/type.ts:461](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L461)*
 
 **Parameters:**
 
@@ -720,7 +720,7 @@ ___
 
 ▸ **parse**(`context`: [Context](_context_.context.md)): *Promise‹this›*
 
-*Defined in [types/type.ts:349](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L349)*
+*Defined in [types/type.ts:349](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L349)*
 
 **Parameters:**
 
@@ -736,7 +736,7 @@ ___
 
 ▸ **postParse**(`context`: [Context](_context_.context.md)): *Promise‹this›*
 
-*Defined in [types/type.ts:438](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L438)*
+*Defined in [types/type.ts:438](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L438)*
 
 **Parameters:**
 
@@ -752,7 +752,7 @@ ___
 
 ▸ **required**(`r`: boolean): *this*
 
-*Defined in [types/type.ts:208](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L208)*
+*Defined in [types/type.ts:208](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L208)*
 
 **Parameters:**
 
@@ -768,7 +768,7 @@ ___
 
 ▸ **resolve**(): *Promise‹this›*
 
-*Defined in [types/type.ts:342](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L342)*
+*Defined in [types/type.ts:342](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L342)*
 
 **Returns:** *Promise‹this›*
 
@@ -778,7 +778,7 @@ ___
 
 ▸ **setValue**(`context`: [Context](_context_.context.md), `value`: T): *void*
 
-*Defined in [types/type.ts:463](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L463)*
+*Defined in [types/type.ts:463](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L463)*
 
 **Parameters:**
 
@@ -795,7 +795,7 @@ ___
 
 ▸ **strict**(`s`: boolean): *this*
 
-*Defined in [types/type.ts:217](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L217)*
+*Defined in [types/type.ts:217](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L217)*
 
 **Parameters:**
 
@@ -811,7 +811,7 @@ ___
 
 ▸ **toObject**(): *object*
 
-*Defined in [types/type.ts:476](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L476)*
+*Defined in [types/type.ts:476](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L476)*
 
 **Returns:** *object*
 
@@ -839,7 +839,7 @@ ___
 
 ▸ **toResult**(`context`: [Context](_context_.context.md), `shouldCoerce`: boolean): *object*
 
-*Defined in [types/type.ts:492](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L492)*
+*Defined in [types/type.ts:492](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L492)*
 
 **Parameters:**
 
@@ -870,7 +870,7 @@ ___
 
 ▸ **validateConfig**(`utils`: any): *void*
 
-*Defined in [types/type.ts:298](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L298)*
+*Defined in [types/type.ts:298](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L298)*
 
 **Parameters:**
 
@@ -886,7 +886,7 @@ ___
 
 ▸ **validateParsed**(`context`: [Context](_context_.context.md)): *Promise‹this›*
 
-*Defined in [types/type.ts:387](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L387)*
+*Defined in [types/type.ts:387](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L387)*
 
 **Parameters:**
 
@@ -902,7 +902,7 @@ ___
 
 ▸ **validateValue**(`value`: unknown, `context`: [Context](_context_.context.md)): *boolean*
 
-*Defined in [types/type.ts:472](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L472)*
+*Defined in [types/type.ts:472](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L472)*
 
 **Parameters:**
 
@@ -919,7 +919,7 @@ ___
 
 ▸ **withParent**(`apiName`: string): *this*
 
-*Defined in [types/type.ts:171](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L171)*
+*Defined in [types/type.ts:171](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L171)*
 
 **Parameters:**
 

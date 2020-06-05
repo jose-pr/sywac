@@ -30,7 +30,7 @@
 
 Ƭ **DeferVersion**: *object*
 
-*Defined in [context.ts:17](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L17)*
+*Defined in [context.ts:17](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L17)*
 
 #### Type declaration:
 
@@ -42,7 +42,7 @@ ___
 
 Ƭ **HelBuffer**: *object*
 
-*Defined in [context.ts:18](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L18)*
+*Defined in [context.ts:18](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L18)*
 
 #### Type declaration:
 
@@ -60,7 +60,7 @@ ___
 
 Ƭ **Source**: *object*
 
-*Defined in [context.ts:24](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L24)*
+*Defined in [context.ts:24](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L24)*
 
 #### Type declaration:
 
@@ -76,4 +76,4 @@ ___
 
 • **format**: *any* = require('util').format
 
-*Defined in [context.ts:4](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L4)*
+*Defined in [context.ts:4](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L4)*

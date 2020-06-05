@@ -20,7 +20,7 @@
 
 • **index**: *number*
 
-*Defined in [context.ts:14](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L14)*
+*Defined in [context.ts:14](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L14)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **parsed**: *object[]*
 
-*Defined in [context.ts:15](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L15)*
+*Defined in [context.ts:15](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L15)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **raw**: *string*
 
-*Defined in [context.ts:13](https://github.com/jose-pr/sywac/blob/a63bd2b/src/context.ts#L13)*
+*Defined in [context.ts:13](https://github.com/jose-pr/sywac/blob/59b0233/src/context.ts#L13)*

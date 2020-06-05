@@ -34,7 +34,7 @@
 
 • **aliases**? : *string[] | string*
 
-*Defined in [types/type.ts:6](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L6)*
+*Defined in [types/type.ts:6](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L6)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **coerce**? : *[CoerceFunction](../modules/_types_type_.md#coercefunction)‹T›*
 
-*Defined in [types/type.ts:16](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L16)*
+*Defined in [types/type.ts:16](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L16)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • **defaultValue**? : *T*
 
-*Defined in [types/type.ts:7](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L7)*
+*Defined in [types/type.ts:7](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L7)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 • **desc**? : *undefined | string*
 
-*Defined in [types/type.ts:42](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L42)*
+*Defined in [types/type.ts:42](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L42)*
 
 Alias for description
 
@@ -70,7 +70,7 @@ ___
 
 • **description**? : *undefined | string*
 
-*Defined in [types/type.ts:37](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L37)*
+*Defined in [types/type.ts:37](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L37)*
 
 The desc (or description) property controls the text displayed immediately to the right of the option or argument in the generated help text.
 If not specified, the description will be blank.
@@ -91,7 +91,7 @@ ___
 
 • **flags**? : *undefined | string*
 
-*Defined in [types/type.ts:22](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L22)*
+*Defined in [types/type.ts:22](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L22)*
 
 Defines the flags used in help text and aliases to expect when parsing.
 
@@ -103,7 +103,7 @@ ___
 
 • **group**: *string*
 
-*Defined in [types/type.ts:96](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L96)*
+*Defined in [types/type.ts:96](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L96)*
 
 The group option allows you to organize options into multiple sections in the generated help text. By default, commands are grouped under the section Commands:, positional arguments are grouped under the section Arguments:, and flagged options are grouped under Options:.
 
@@ -128,7 +128,7 @@ ___
 
 • **hidden**: *boolean*
 
-*Defined in [types/type.ts:115](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L115)*
+*Defined in [types/type.ts:115](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L115)*
 
 The hidden option allows you to specify that an option or argument should not be included
 in the generated help text.
@@ -153,7 +153,7 @@ ___
 
 • **hints**: *string[]*
 
-*Defined in [types/type.ts:77](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L77)*
+*Defined in [types/type.ts:77](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L77)*
 
 The hints property controls the type information displayed to the far right of the option or argument in the generated help text.
 
@@ -193,7 +193,7 @@ ___
 
 • **required**? : *undefined | false | true*
 
-*Defined in [types/type.ts:11](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L11)*
+*Defined in [types/type.ts:11](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L11)*
 
 **`default`** false
 
@@ -203,6 +203,6 @@ ___
 
 • **strict**? : *undefined | false | true*
 
-*Defined in [types/type.ts:15](https://github.com/jose-pr/sywac/blob/a63bd2b/src/types/type.ts#L15)*
+*Defined in [types/type.ts:15](https://github.com/jose-pr/sywac/blob/59b0233/src/types/type.ts#L15)*
 
 **`default`** false
