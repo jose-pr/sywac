@@ -16,7 +16,7 @@ export interface PositionalOptions {
   'paramsGroup':string[]
   'ignore':boolean
 }
-class TypeCommand extends Type<boolean> {
+export class TypeCommand extends Type<boolean> {
   static get(opts?: TypeCommandOptions) {
     return new TypeCommand(opts)
   }
@@ -163,4 +163,4 @@ class TypeCommand extends Type<boolean> {
   }
 }
 
-module.exports = TypeCommand
+export default TypeCommand
