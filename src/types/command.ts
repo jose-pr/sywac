@@ -1,20 +1,42 @@
-'use strict'
+//@ts-ignore
+import Api from '../api'
+import Type, { TypeOptions } from './type'
+import { Context } from '../context'
 
-const Api = require('../api')
-const Type = require('./type')
-
-class TypeCommand extends Type {
-  static get (opts) {
+export interface TypeCommandOptions extends TypeOptions<boolean>, PositionalOptions {
+  api?: Api
+  setup?:Function
+  run?:Function
+  paramsDsl?:string
+}
+export interface PositionalOptions {
+  'params':string[]
+  'paramsDescription':string[]
+  'paramsDesc':string[]
+  'paramsGroup':string[]
+  'ignore':boolean
+}
+class TypeCommand extends Type<boolean> {
+  static get(opts?: TypeCommandOptions) {
     return new TypeCommand(opts)
   }
 
-  constructor (opts) {
+  private _api?: Api
+  private _apiConfigured?:boolean
+  private _positionalOpts?:PositionalOptions
+  private _positionalDsl?:string
+  private _setupHandler?:Function
+  private _runHandler?:Function
+  private _default?:boolean
+  private _validAliases?:string[]
+
+  constructor(opts?: TypeCommandOptions) {
     // default value is for benefit of context.details.types
     super(Object.assign({ defaultValue: false }, opts))
   }
 
-  configure (opts, override) {
-    opts = opts || {}
+  configure(opts?: TypeCommandOptions, override?: boolean) {
+    opts = opts || {} as TypeCommandOptions
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -22,7 +44,7 @@ class TypeCommand extends Type {
       this._api = opts.api || this._api
       if (opts.api) this._apiConfigured = false
     }
-    if (override || !this._positionalOpts) this._positionalOpts = this._assignPositionalOpts(this._positionalOpts || {}, opts)
+    if (override || !this._positionalOpts) this._positionalOpts = this._assignPositionalOpts(this._positionalOpts || {} as PositionalOptions, opts)
     if (override || !this._positionalDsl) this._positionalDsl = opts.paramsDsl || this._positionalDsl
     if (override || typeof this._setupHandler !== 'function') this._setupHandler = opts.setup || this._setupHandler
     if (override || typeof this._runHandler !== 'function') this._runHandler = opts.run || this._runHandler
@@ -30,8 +52,9 @@ class TypeCommand extends Type {
     return this
   }
 
-  _assignPositionalOpts (target, source) {
+  _assignPositionalOpts(target:PositionalOptions, source:PositionalOptions) {
     ['params', 'paramsDescription', 'paramsDesc', 'paramsGroup', 'ignore'].forEach(opt => {
+      //@ts-ignore
       if (opt in source) target[opt] = source[opt]
     })
     return target
@@ -39,63 +62,63 @@ class TypeCommand extends Type {
 
   // if user requests help or a `setup` or `run` callback generates CLI messages,
   // we need to initialize the help buffer in the context of this command.
-  _initPossibleHelpBuffer (context) {
+  _initPossibleHelpBuffer(context:Context) {
     const result = context.helpRequested || context.messages.length
     if (result && !context.output) context.addDeferredHelp(this.api.initHelpBuffer())
     return result
   }
 
-  get needsApi () {
+  get needsApi() {
     return !this._api
   }
 
-  get api () {
+  get api() {
     if (!this._api) this._api = Api.get()
     return this._api
   }
 
-  get isDefault () {
+  get isDefault() {
     if (typeof this._default !== 'boolean') this._default = this.aliases.some(alias => alias === Api.DEFAULT_COMMAND_INDICATOR)
     return this._default
   }
 
-  get validAliases () {
+  get validAliases() {
     if (!Array.isArray(this._validAliases)) this._validAliases = this.aliases.filter(alias => alias !== Api.DEFAULT_COMMAND_INDICATOR)
     return this._validAliases
   }
 
-  get setupHandler () {
-    return typeof this._setupHandler === 'function' ? this._setupHandler : () => {}
+  get setupHandler() {
+    return typeof this._setupHandler === 'function' ? this._setupHandler : () => { }
   }
 
-  get runHandler () {
-    return typeof this._runHandler === 'function' ? this._runHandler : () => {}
+  get runHandler() {
+    return typeof this._runHandler === 'function' ? this._runHandler : () => { }
   }
 
-  get datatype () {
+  get datatype() {
     return 'command'
   }
 
-  get isHidden () {
+  get isHidden() {
     if (this.aliases.length === 1 && this.isDefault) return true
     return super.isHidden
   }
 
-  buildHelpHints (hints) {
+  buildHelpHints(hints:string[]) {
     if (this.validAliases.length > 1) hints.push('aliases: ' + this.validAliases.slice(1).join(', '))
     if (this.isDefault) hints.push('default')
   }
 
-  get helpGroup () {
+  get helpGroup() {
     return this._group || 'Commands:'
   }
 
-  parse (context) {
+  parse(context:Context) {
     return super.resolve()
   }
 
-  async postParse (context) {
-    const match = context.matchCommand(this.api.parentName, this.validAliases, this.isDefault)
+  async postParse(context:Context) {
+    const match = context.matchCommand(this.api.parentName, this.validAliases, this.isDefault) as {explicit:boolean,implicit:boolean, candidate?:string}
     if (!match.explicit && !match.implicit) return this.resolve()
 
     if (match.explicit) {

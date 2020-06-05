@@ -1,4 +1,4 @@
-import { Context, SlurpedArg } from "../context"
+import { Context, SlurpedArg, TypeObject } from "../context"
 
 export type CoerceFunction<T> = (v: any) => T
 export interface TypeOptions<T> {
@@ -489,7 +489,7 @@ export class Type<T> {
     }
   }
 
-  toResult(context: Context, shouldCoerce: boolean) {
+  toResult(context: Context, shouldCoerce?: boolean):Partial<TypeObject> {
     const obj = context.lookupSource(this.id)
     return {
       // populated via config

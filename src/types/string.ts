@@ -1,8 +1,12 @@
 import Type, { TypeOptions } from "./type"
 import { Context } from "../context"
 
+export interface TypeStringOptions extends TypeOptions<string>{
+
+}
+
 class TypeString extends Type<string> {
-  static get(opts?: TypeOptions<string>) {
+  static get(opts?: TypeStringOptions) {
     return new TypeString(opts)
   }
 

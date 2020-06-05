@@ -41,6 +41,9 @@ export interface TypeObject {
   invalid?: boolean
   parent?: string
   value?: unknown
+  source?:string
+  position?:number[]
+  raw?:string[]
 }
 export class Context {
   static get(opts?: ContextOptions) {
@@ -356,9 +359,9 @@ export class Context {
     return obj && obj.source
   }
 
-  populateArgv(typeResults: TypeObject[]) {
+  populateArgv(typeResults: Partial<TypeObject>[]) {
     let detailIndex
-    typeResults.forEach(tr => {
+    (typeResults as TypeObject[]).forEach(tr => {
       // find and reset detailed object; otherwise add it
       detailIndex = this.details.types.findIndex(t => t.parent === tr.parent && t.datatype === tr.datatype && this.utils.sameArrays(tr.aliases, t.aliases))
       if (detailIndex !== -1) this.details.types[detailIndex] = tr
