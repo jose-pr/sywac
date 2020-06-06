@@ -168,14 +168,14 @@ export interface IType<V = any, O extends TypeOptions<V> = TypeOptions<V>> {
   /** async hook to execute after all parsing*/
   postParse(context: Context): Promise<this>
 }
-
+/**@ignore*/
 export enum SOURCE_CONSTANTS {
   SOURCE_DEFAULT = 'default',
   SOURCE_FLAG = 'flag',
   SOURCE_POSITIONAL = 'positional'
 }
 
-export function normalizeOpts<O extends TypeOptions>(flags: string | string[] | Partial<O>, opts: Partial<O>) {
+export function normalizeTypeOpts<O extends TypeOptions>(flags: string | string[] | Partial<O>, opts: Partial<O>) {
   opts = opts || {}
   if (Array.isArray(flags)) {
     opts.aliases = flags // treat an array as aliases

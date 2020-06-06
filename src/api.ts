@@ -4,7 +4,8 @@ import { Context } from "./context";
 import { TypePositionalOptions } from "./types/positional";
 import TypeCommand, { TypeCommandOptions } from "./types/command";
 import { IFactory, registerProvidedFactories, assignOpts } from "./helpers/factory";
-import { TypeOptions, IType, SOURCE_CONSTANTS } from "./types/api";
+import { TypeOptions, IType, SOURCE_CONSTANTS, normalizeTypeOpts } from "./types/api";
+
 
 type WithOption<N extends string, A extends Api, Conf extends {} = {}> = A & {
   [n in N]: (this: Api, dsl: string | Conf, opts?: Conf) => A & WithOption<N, A, Conf>
@@ -96,6 +97,7 @@ export interface Hooks extends Partial<{
   'all': Function
 }> { }
 export interface HelpOptions extends Partial<_HelpOptions> { }
+/**@ignore*/
 const HELP_OPTS = [
   'lineSep', 'sectionSep', 'pad', 'indent', 'split', 'icon', 'slogan',
   'usagePrefix', 'usageHasOptions', 'groupOrder', 'epilogue', 'maxWidth',
@@ -107,12 +109,13 @@ const HELP_OPTS = [
   'styleUsageArgsPlaceholder', 'styleUsageOptionsPlaceholder', 'styleExample',
   'styleAll'
 ] as (keyof HelpOptions)[]
-
 export class Api {
+  /**@ignore*/
   static get DEFAULT_COMMAND_INDICATOR() {
     return '*'
   }
-  static ROOT_NAME?: string
+  /**Defined by first Api instance in constructor*/
+  private static ROOT_NAME?: string
   static get(opts?: ApiOptions) {
     return new Api(opts)
   }
@@ -387,7 +390,7 @@ export class Api {
     return this
   }
 
-  _internalCommand(dsl: string, opts?: TypeCommandOptions | Function) {
+  private _internalCommand(dsl: string, opts?: TypeCommandOptions | Function) {
     opts = opts || {} as TypeCommandOptions
 
     // argument shuffling
@@ -533,27 +536,15 @@ export class Api {
     return this
   }
   //@ts-ignore
-  _normalizeOpts(flags, opts) {
-    opts = opts || {}
-    if (Array.isArray(flags)) {
-      opts.aliases = flags // treat an array as aliases
-    } else if (typeof flags === 'string') {
-      opts.flags = flags // treat a string as flags
-    } else if (typeof flags === 'object') {
-      opts = flags
-    }
-    return opts
-  }
-  //@ts-ignore
-  _addOptionType(flags, opts, name) {
+  private _addOptionType(flags, opts, name) {
     //@ts-ignore
     this.helpOpts.usageHasOptions = true
     //@ts-ignore
     return this.custom(this._getType(flags, opts, name))
   }
   //@ts-ignore
-  _getType(flags, opts, name) {
-    opts = this._normalizeOpts(flags, opts)
+  private _getType(flags, opts, name) {
+    opts = normalizeTypeOpts(flags, opts)
 
     name = String(name || opts.type)
     if (name.indexOf(':') !== -1) {
@@ -565,8 +556,8 @@ export class Api {
     return this.get(name, opts)
   }
   //@ts-ignore
-  _getArrayType(flags, opts, subtypeName) {
-    opts = this._normalizeOpts(flags, opts) // TODO this may be redundant
+  private _getArrayType(flags, opts, subtypeName) {
+    opts = normalizeTypeOpts(flags, opts) // TODO this may be redundant
 
     subtypeName = String(subtypeName || opts.type)
     if (subtypeName.indexOf(':') !== -1) {
@@ -621,7 +612,7 @@ export class Api {
     return context.toResult()
   }
 
-  async _parse(args: string[], state: unknown) {
+  private async _parse(args: string[], state: unknown) {
     // init context and kick off recursive type parsing/execution
     const context = this.initContext(false, state).slurpArgs(args)
 
@@ -766,7 +757,5 @@ export class Api {
     return this.initContext(true).addHelp(this.initHelpBuffer(), opts).output
   }
 }
-
-Api.ROOT_NAME = undefined // defined by first Api instance in constructor
 
 export default Api

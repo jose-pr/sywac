@@ -18,6 +18,7 @@ export function registerProvidedFactories(api: import('../api').Api) {
     function registerOption<N extends string, O extends import("../types/api").TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, import("../types/type").Type<V>>) {
         if (factory && api.constructor.prototype[shorcut] === undefined) api.registerFactory(name, factory);
         api.constructor.prototype[shorcut] = ((flags: string | O, opts?: O) => {
+            //@ts-ignore
             return api._addOptionType(flags, opts, 'helpType')
         })
     }
