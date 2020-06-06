@@ -1,24 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Type = void 0;
+const api_1 = require("./api");
 class Type {
     constructor(opts) {
         this._aliases = [];
+        this._aliases = [];
         this.configure(opts, true);
     }
-    static get SOURCE_DEFAULT() {
-        return 'default';
-    }
-    static get SOURCE_FLAG() {
-        return 'flag';
-    }
-    static get SOURCE_POSITIONAL() {
-        return 'positional';
-    }
-    configure(opts, override) {
+    configure(opts, override = true) {
         opts = opts || {};
-        if (typeof override === 'undefined')
-            override = true;
         // configurable for parsing
         if (override || !this._aliases.length)
             this._aliases = opts.aliases ? (this._aliases || []).concat(opts.aliases) : this._aliases;
@@ -43,8 +34,6 @@ class Type {
             this._hidden = 'hidden' in opts ? opts.hidden : this._hidden;
         return this;
     }
-    /**A string uniquely identifying this type across all levels
-    used for mapping values and sources in context*/
     get id() {
         return `${this.parent}|${this.datatype}|${this.aliases.join(',')}`;
     }
@@ -55,7 +44,6 @@ class Type {
     get parent() {
         return this._parent || 'node';
     }
-    /**subtypes should override this!*/
     get datatype() {
         return 'value';
     }
@@ -202,8 +190,8 @@ class Type {
         // return this.resolveSlow()
     }
     // async parsing
-    parse(context) {
-        return this._internalParse(context, true);
+    parse(context, validate = true) {
+        return this._internalParse(context, validate);
     }
     _internalParse(context, validate) {
         // console.log('parse', this.constructor.name, this.helpFlags)
@@ -217,7 +205,7 @@ class Type {
             if (lastKeyMatchesAlias && arg.parsed.length === 1 && !arg.parsed[0].key && this.isApplicable(context, arg.parsed[0].value, previousUsedValue, arg)) {
                 previousUsedValue = arg.parsed[0].value;
                 this.setValue(context, previousUsedValue);
-                this.applySource(context, Type.SOURCE_FLAG, arg.index, arg.raw);
+                this.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw);
                 arg.parsed[0].claimed = true;
                 return;
             }
@@ -230,7 +218,7 @@ class Type {
                     this.observeAlias(context, matchedAlias);
                     previousUsedValue = kv.value;
                     this.setValue(context, previousUsedValue);
-                    this.applySource(context, Type.SOURCE_FLAG, arg.index, arg.raw);
+                    this.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw);
                     kv.claimed = true;
                 }
             });
@@ -245,7 +233,7 @@ class Type {
             if (msgAndArgs.msg)
                 this.failValidation(context, [msgAndArgs.msg].concat(msgAndArgs.args || []));
         }
-        if (this.isStrict && (context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
+        if (this.isStrict && (context.lookupSourceValue(this.id) !== api_1.SOURCE_CONSTANTS.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
             const isValid = await this.validateValue(this.getValue(context), context);
             if (!isValid) {
                 const msgAndArgs = { msg: '', args: [] };
@@ -274,7 +262,7 @@ class Type {
         context.markTypeInvalid(this.id);
     }
     hasRequiredValue(context) {
-        return context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT;
+        return context.lookupSourceValue(this.id) !== api_1.SOURCE_CONSTANTS.SOURCE_DEFAULT;
     }
     buildRequiredMessage(context, msgAndArgs) {
         msgAndArgs.msg = 'Missing required argument: %s';

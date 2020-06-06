@@ -7,6 +7,7 @@ exports.TypeCommand = void 0;
 //@ts-ignore
 const api_1 = __importDefault(require("../api"));
 const type_1 = __importDefault(require("./type"));
+const api_2 = require("./api");
 class TypeCommand extends type_1.default {
     constructor(opts) {
         // default value is for benefit of context.details.types
@@ -106,7 +107,7 @@ class TypeCommand extends type_1.default {
             });
             if (matchedArg) {
                 matchedArg.parsed[0].claimed = true;
-                this.applySource(context, type_1.default.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw);
+                this.applySource(context, api_2.SOURCE_CONSTANTS.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw);
             }
         }
         this.setValue(context, true); // set this value to true for context.details

@@ -1,6 +1,6 @@
 import TypeImplicitCommand from "./implicit"
-import { TypeOptions } from "./type"
 import { Context } from "../context"
+import { TypeOptions } from "./api"
 
 interface HelpBufferOptions {
   includePreface?: boolean

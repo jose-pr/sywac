@@ -1,39 +1,31 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const type_1 = __importDefault(require("./types/type"));
+exports.Api = void 0;
+const factory_1 = require("./helpers/factory");
+const api_1 = require("./types/api");
+const HELP_OPTS = [
+    'lineSep', 'sectionSep', 'pad', 'indent', 'split', 'icon', 'slogan',
+    'usagePrefix', 'usageHasOptions', 'groupOrder', 'epilogue', 'maxWidth',
+    'examplePrefix', 'exampleOrder', 'usageCommandPlaceholder',
+    'usageArgsPlaceholder', 'usageOptionsPlaceholder', 'showHelpOnError',
+    'styleGroup', 'styleGroupError', 'styleFlags', 'styleFlagsError',
+    'styleDesc', 'styleDescError', 'styleHints', 'styleHintsError', 'styleMessages',
+    'styleUsagePrefix', 'styleUsagePositionals', 'styleUsageCommandPlaceholder',
+    'styleUsageArgsPlaceholder', 'styleUsageOptionsPlaceholder', 'styleExample',
+    'styleAll'
+];
 class Api {
     constructor(opts) {
-        opts = opts || {};
+        var _a, _b, _c, _d;
         this.types = [];
-        this._helpOpts = opts.helpOpts || {};
-        this._factories = {
-            // meta
-            unknownType: this.getUnknownType,
-            _context: this.getContext,
-            helpBuffer: this.getHelpBuffer,
-            // common types
-            boolean: this.getBoolean,
-            string: this.getString,
-            number: this.getNumber,
-            path: this.getPath,
-            file: this.getFile,
-            dir: this.getDir,
-            enum: this.getEnum,
-            array: this.getArray,
-            // specialty types
-            helpType: this.getHelpType,
-            versionType: this.getVersionType,
-            // advanced types
-            positional: this.getPositional,
-            commandType: this.getCommand
-        };
-        this._showHelpByDefault = 'showHelpByDefault' in opts ? opts.showHelpByDefault : false;
-        this._strictMode = 'strictMode' in opts ? opts.strictMode : false;
+        this._factories = {};
         this._magicCommandAdded = false;
-        this._modulesSeen = opts.modulesSeen || [];
+        opts = opts !== null && opts !== void 0 ? opts : {};
+        this._helpOpts = (_a = opts.helpOpts) !== null && _a !== void 0 ? _a : {};
+        this._showHelpByDefault = (_b = opts === null || opts === void 0 ? void 0 : opts.showHelpByDefault) !== null && _b !== void 0 ? _b : false;
+        this._strictMode = (_c = opts.strictMode) !== null && _c !== void 0 ? _c : false;
+        this._modulesSeen = (_d = opts.modulesSeen) !== null && _d !== void 0 ? _d : [];
+        factory_1.registerProvidedFactories(this);
         this.configure(opts);
         if (!Api.ROOT_NAME)
             Api.ROOT_NAME = this.name;
@@ -45,13 +37,13 @@ class Api {
         return new Api(opts);
     }
     configure(opts) {
-        opts = opts || {};
+        opts = opts !== null && opts !== void 0 ? opts : {};
         // lazily configured instance dependencies (expects a single instance)
         this._utils = opts.utils || this._utils;
         this._pathLib = opts.pathLib || this._pathLib;
         this._fsLib = opts.fsLib || this._fsLib;
         // lazily configured factory dependencies (expects a function to call per instance)
-        if ('factories' in opts) {
+        if (opts.factories) {
             Object.keys(opts.factories).forEach(name => this.registerFactory(name, opts.factories[name]));
         }
         // other
@@ -68,28 +60,10 @@ class Api {
             name: this.name + ' ' + commandName,
             parentName: this.name,
             modulesSeen: this._modulesSeen.slice(),
-            helpOpts: this._assignHelpOpts({}, this.helpOpts),
+            helpOpts: factory_1.assignOpts({}, this.helpOpts, HELP_OPTS),
             showHelpByDefault: this._showHelpByDefault,
             strictMode: this._strictMode
         }, childOptions));
-    }
-    _assignHelpOpts(target, source) {
-        [
-            'lineSep', 'sectionSep', 'pad', 'indent', 'split', 'icon', 'slogan',
-            'usagePrefix', 'usageHasOptions', 'groupOrder', 'epilogue', 'maxWidth',
-            'examplePrefix', 'exampleOrder', 'usageCommandPlaceholder',
-            'usageArgsPlaceholder', 'usageOptionsPlaceholder', 'showHelpOnError',
-            'styleGroup', 'styleGroupError', 'styleFlags', 'styleFlagsError',
-            'styleDesc', 'styleDescError', 'styleHints', 'styleHintsError', 'styleMessages',
-            'styleUsagePrefix', 'styleUsagePositionals', 'styleUsageCommandPlaceholder',
-            'styleUsageArgsPlaceholder', 'styleUsageOptionsPlaceholder', 'styleExample',
-            'styleAll'
-        ].forEach(opt => {
-            //@ts-ignore
-            if (opt in source)
-                target[opt] = source[opt];
-        });
-        return target;
     }
     // lazy dependency accessors
     get unknownType() {
@@ -125,67 +99,23 @@ class Api {
     }
     // type factories
     registerFactory(name, factory) {
-        //@ts-ignore
         if (name && typeof factory === 'function')
             this._factories[name] = factory;
         return this;
+    }
+    registerOption(name, shorcut, factory) {
+        const that = this;
+        if (factory)
+            this.registerFactory(name, factory);
+        that[shorcut] = ((flags, opts) => {
+            return that._addOptionType(flags, opts, 'helpType');
+        });
+        return that;
     }
     get(name, opts) {
         if (name && this._factories[name])
             return this._factories[name].call(this, opts);
         return null;
-    }
-    // meta factories
-    getUnknownType(opts) {
-        return require('./types/unknown').get(opts);
-    }
-    getContext(opts) {
-        return require('./context').get(opts);
-    }
-    getHelpBuffer(opts) {
-        return require('./buffer').get(opts);
-    }
-    // common type factories
-    getBoolean(opts) {
-        return require('./types/boolean').get(opts);
-    }
-    getString(opts) {
-        return require('./types/string').get(opts);
-    }
-    getNumber(opts) {
-        return require('./types/number').get(opts);
-    }
-    getPath(opts) {
-        return require('./types/path').get(Object.assign({
-            pathLib: this.pathLib,
-            fsLib: this.fsLib
-        }, opts));
-    }
-    getFile(opts) {
-        return this.getPath(Object.assign({ dirAllowed: false }, opts));
-    }
-    getDir(opts) {
-        return this.getPath(Object.assign({ fileAllowed: false }, opts));
-    }
-    getEnum(opts) {
-        return require('./types/enum').get(opts);
-    }
-    getArray(opts) {
-        return require('./types/array').get(opts);
-    }
-    // specialty type factories
-    getHelpType(opts) {
-        return require('./types/help').get(opts);
-    }
-    getVersionType(opts) {
-        return require('./types/version').get(opts);
-    }
-    // advanced type factories
-    getPositional(opts) {
-        return require('./types/positional').get(opts);
-    }
-    getCommand(opts) {
-        return require('./types/command').get(opts);
     }
     // help text
     preface(icon, slogan) {
@@ -544,45 +474,6 @@ class Api {
         //@ts-ignore
         return this._addOptionType(flags, opts);
     }
-    // common individual value types
-    boolean(flags, opts) {
-        return this._addOptionType(flags, opts, 'boolean');
-    }
-    string(flags, opts) {
-        return this._addOptionType(flags, opts, 'string');
-    }
-    number(flags, opts) {
-        return this._addOptionType(flags, opts, 'number');
-    }
-    path(flags, opts) {
-        return this._addOptionType(flags, opts, 'path');
-    }
-    file(flags, opts) {
-        return this._addOptionType(flags, opts, 'file');
-    }
-    dir(flags, opts) {
-        return this._addOptionType(flags, opts, 'dir');
-    }
-    enumeration(flags, opts) {
-        return this._addOptionType(flags, opts, 'enum');
-    }
-    // specialty types
-    help(flags, opts) {
-        return this._addOptionType(flags, opts, 'helpType');
-    }
-    version(flags, opts) {
-        return this._addOptionType(flags, opts, 'versionType');
-    }
-    // multiple value types
-    array(flags, opts) {
-        return this._addOptionType(flags, opts, 'array');
-    }
-    stringArray(flags, opts) {
-        return this._addOptionType(flags, opts, 'array:string');
-    }
-    numberArray(flags, opts) {
-        return this._addOptionType(flags, opts, 'array:number');
-    }
     // TODO more types
     // lifecycle hook
     check(handler) {
@@ -617,7 +508,7 @@ class Api {
         // init unknownType in context only for the top-level (all levels share/overwrite the same argv._)
         if (this.unknownType) {
             this.unknownType.setValue(context, this.unknownType.defaultVal);
-            this.unknownType.applySource(context, type_1.default.SOURCE_DEFAULT);
+            this.unknownType.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_DEFAULT);
         }
         if (this._showHelpByDefault && !context.details.args.length) {
             // preemptively request help (to stderr)
@@ -717,7 +608,7 @@ class Api {
         //@ts-ignore
         context.pushLevel(this.name, this.types.map(type => {
             type.setValue(context, type.defaultVal);
-            type.applySource(context, type_1.default.SOURCE_DEFAULT);
+            type.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_DEFAULT);
             return type.toObject();
         }));
         return context;
@@ -742,5 +633,6 @@ class Api {
         return this.initContext(true).addHelp(this.initHelpBuffer(), opts).output;
     }
 }
+exports.Api = Api;
 Api.ROOT_NAME = undefined; // defined by first Api instance in constructor
 exports.default = Api;

@@ -1,139 +1,13 @@
-import { Context, SlurpedArg, TypeObject } from "../context"
+import { Context, SlurpedArg } from "../context"
+import { CoerceFunction, TypeOptions, IType, SOURCE_CONSTANTS, TypeResult, TypeObject } from "./api"
 
-export type CoerceFunction<T> = (v: any) => T
-export interface TypeOptions<T> {
 
-  aliases?: string[] | string
-  defaultValue?: T
-  /**
-   * @default false
-   */
-  required?: boolean
-  /**
-   * @default false
-   */
-  strict?: boolean
-  coerce?: CoerceFunction<T>
-  /**
-   * Defines the flags used in help text and aliases to expect when parsing.
-   * 
-     For example,`-n, --num <number>` would allow -n or --num to be given when parsing.
-   */
-  flags?: string
-  /**
-   * The desc (or description) property controls the text displayed immediately to the right of the option or argument in the generated help text.
-   If not specified, the description will be blank.
-  ```ts
-  sywac.boolean('--confirm', {
-  desc: 'skip confirmation prompt'
-  });
-  ```
-  ```console
-  Options:
-  --confirm  skip confirmation prompt                                  [boolean]
-  ```
-  See also the {@link TypeOptions.hints} property.
-   */
-  description?: string
-  /**
-   * Alias for description
-   * 
-   * See also the {@link TypeOptions.description} property*/
-  desc?: string
-  /**
-   * 
-   The hints property controls the type information displayed to the far right of the option or argument in the generated help text.
-
-    By default, a hint will be generated automatically based on the type of the option - for example, [boolean] or [number].
-
-    You can use this to display an optional option as if it was required, or to make the hint more specific.
-    ```ts
-    sywac.string('--name <name>', {
-      hints: '[required] [string]'
-    });
-    sywac.array('--users', {
-      hints: '[list of users]'
-    });
-    ```
-    ```console
-    Options:
-      --name                                               [required] [string]
-      --users                                                        [list of users]
-    ```
-    You can also use this property to suppress an unwanted auto-generated hint.
-    ```ts
-    sywac.command({
-      aliases: 'update <student-id>',
-      desc: 'update a student record',
-      hints: ''                       // suppress usual aliases hint
-    });
-    ```
-    ```console
-    Commands:
-      update    update a student record
-    See also the {@link TypeOptions.description} property.
-    ```
-   */
-  hints: string[]
-  /**
-   * The group option allows you to organize options into multiple sections in the generated help text. By default, commands are grouped under the section Commands:, positional arguments are grouped under the section Arguments:, and flagged options are grouped under Options:.
-
-  Tip:
-
-  The text you specify will be used verbatim, so be sure to include the ending colon (:)
-  within your label if you want the colon in your section header.
-  ```js
-  sywac.number('-p, --port <port>', {
-  desc: 'port to listen on',
-  group: 'Server Options:'
-  });
-  ```
-  ```console
-  Server Options:
-  -p, --port   port to listen on                                  [number]
-  ```
-   */
-  group: string
-  /**
-   * The hidden option allows you to specify that an option or argument should not be included
-     in the generated help text.
-
-      You can use this to hide a rarely-used or deprecated option, while still taking advantage
-      of sywac’s parsing.
-      ```ts
-      sywac.boolean('--fancy', {
-        hidden: true
-      });
-      ```
-      You can also use it to slurp up extra positional arguments, without being displayed in the arguments section.
-      ```ts
-      sywac.positional('[users...]', {
-        hidden: true
-      });
-      ```
-   */
-  hidden: boolean
-}
-export type TypeFactory<T extends Type<V>, V> = (opts?: TypeOptions<V>) => Type<V>
-
-export class Type<T> {
-  static get SOURCE_DEFAULT() {
-    return 'default'
-  }
-
-  static get SOURCE_FLAG() {
-    return 'flag'
-  }
-
-  static get SOURCE_POSITIONAL() {
-    return 'positional'
-  }
-
-  protected _aliases: string[]
-  protected _defaultVal?: T
+export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements IType<V, O> {
+  protected _aliases: string[] = []
+  protected _defaultVal?: V
   protected _required?: boolean
   protected _strict?: boolean
-  protected _coerceHandler?: CoerceFunction<T>
+  protected _coerceHandler?: CoerceFunction<V>
   protected _flags?: string
   protected _desc?: string
   protected _hints?: string | string[]
@@ -141,16 +15,14 @@ export class Type<T> {
   protected _hidden?: boolean
   protected _parent?: string
 
-  constructor(opts?: TypeOptions<T>) {
+  constructor(opts: O) {
     this._aliases = []
     this.configure(opts, true)
   }
-
-  configure(opts?: TypeOptions<T>, override?: boolean) {
-    opts = opts || {} as TypeOptions<T>
-    if (typeof override === 'undefined') override = true
+  configure(opts?: Partial<O>, override: boolean = true) {
+    opts = opts || {} as O
     // configurable for parsing
-    if (override || !this._aliases.length) this._aliases = opts.aliases ? (this._aliases || []).concat(opts.aliases) : this._aliases
+    if (override || !this._aliases.length) this._aliases = opts.aliases ? (this._aliases || []).concat(opts.aliases as string[]) : this._aliases
     if (override || typeof this._defaultVal === 'undefined') this._defaultVal = 'defaultValue' in opts ? opts.defaultValue : this._defaultVal
     if (override || typeof this._required === 'undefined') this._required = 'required' in opts ? opts.required : this._required
     if (override || typeof this._strict === 'undefined') this._strict = 'strict' in opts ? opts.strict : this._strict
@@ -164,8 +36,6 @@ export class Type<T> {
     return this
   }
 
-  /**A string uniquely identifying this type across all levels
-  used for mapping values and sources in context*/
   get id() {
     return `${this.parent}|${this.datatype}|${this.aliases.join(',')}`
   }
@@ -179,7 +49,6 @@ export class Type<T> {
     return this._parent || 'node'
   }
 
-  /**subtypes should override this!*/
   get datatype() {
     return 'value'
   }
@@ -198,7 +67,7 @@ export class Type<T> {
     return this._aliases
   }
 
-  defaultValue(dv: T) {
+  defaultValue(dv: V) {
     this._defaultVal = dv
     return this
   }
@@ -225,13 +94,13 @@ export class Type<T> {
     return !!this._strict
   }
 
-  coerce(syncFunction: CoerceFunction<T>) {
+  coerce(syncFunction: CoerceFunction<V>) {
     this._coerceHandler = syncFunction
     return this
   }
 
   get coerceHandler() {
-    return typeof this._coerceHandler === 'function' ? this._coerceHandler : (v: any) => v as T
+    return typeof this._coerceHandler === 'function' ? this._coerceHandler : (v: any) => v as V
   }
 
   flags(f: string) {
@@ -348,10 +217,10 @@ export class Type<T> {
   }
 
   // async parsing
-  parse(context: Context) {
-    return this._internalParse(context, true)
+  parse(context: Context, validate:boolean = true) {
+    return this._internalParse(context, validate)
   }
-  _internalParse(context: Context, validate?: boolean) {
+  private _internalParse(context: Context, validate?: boolean) {
     // console.log('parse', this.constructor.name, this.helpFlags)
     let lastKeyMatchesAlias = false
     let previousUsedValue: any
@@ -363,7 +232,7 @@ export class Type<T> {
       if (lastKeyMatchesAlias && arg.parsed.length === 1 && !arg.parsed[0].key && this.isApplicable(context, arg.parsed[0].value, previousUsedValue, arg)) {
         previousUsedValue = arg.parsed[0].value
         this.setValue(context, previousUsedValue)
-        this.applySource(context, Type.SOURCE_FLAG, arg.index, arg.raw)
+        this.applySource(context, SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw)
         arg.parsed[0].claimed = true
         return
       }
@@ -376,7 +245,7 @@ export class Type<T> {
           this.observeAlias(context, matchedAlias)
           previousUsedValue = kv.value
           this.setValue(context, previousUsedValue)
-          this.applySource(context, Type.SOURCE_FLAG, arg.index, arg.raw)
+          this.applySource(context, SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw)
           kv.claimed = true
         }
       })
@@ -393,7 +262,7 @@ export class Type<T> {
       if (msgAndArgs.msg) this.failValidation(context, [msgAndArgs.msg].concat(msgAndArgs.args || []))
     }
 
-    if (this.isStrict && (context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
+    if (this.isStrict && (context.lookupSourceValue(this.id) !==  SOURCE_CONSTANTS.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
       const isValid = await this.validateValue(this.getValue(context), context)
       if (!isValid) {
         const msgAndArgs = { msg: '', args: [] }
@@ -423,7 +292,7 @@ export class Type<T> {
   }
 
   hasRequiredValue(context: Context) {
-    return context.lookupSourceValue(this.id) !== Type.SOURCE_DEFAULT
+    return context.lookupSourceValue(this.id) !==  SOURCE_CONSTANTS.SOURCE_DEFAULT
   }
 
   buildRequiredMessage(context: Context, msgAndArgs: { msg: string, args: string[] }) {
@@ -431,7 +300,7 @@ export class Type<T> {
     msgAndArgs.args = [this.aliases.join(' or ')]
   }
 
-  buildInvalidMessage(context: Context, msgAndArgs: { msg: string, args: (T | string)[] }) {
+  buildInvalidMessage(context: Context, msgAndArgs: { msg: string, args: (V | string)[] }) {
     msgAndArgs.msg = 'Value "%s" is invalid for argument %s.'
     msgAndArgs.args = [this.getValue(context), this.aliases.join(' or ')]
   }
@@ -462,12 +331,12 @@ export class Type<T> {
 
   observeAlias(context: Context, alias: string) { }
 
-  setValue(context: Context, value: T) {
+  setValue(context: Context, value: V) {
     context.assignValue(this.id, value)
   }
 
   getValue(context: Context) {
-    return context.lookupValue(this.id) as T
+    return context.lookupValue(this.id) as V
   }
 
   // subtype impls can be async (return a promise)
@@ -475,7 +344,7 @@ export class Type<T> {
     return true
   }
 
-  toObject() {
+  toObject():TypeObject {
     return {
       // populated via config
       id: this.id,
@@ -483,15 +352,15 @@ export class Type<T> {
       datatype: this.datatype,
       // defaultVal: this.defaultVal,
       isRequired: this.isRequired,
-      helpFlags: this.helpFlags,
+      helpFlags: this.helpFlags!,
       helpDesc: this.helpDesc,
-      helpHints: this.helpHints,
+      helpHints: this.helpHints as string[],
       helpGroup: this.helpGroup,
       isHidden: this.isHidden
     }
   }
 
-  toResult(context: Context, shouldCoerce?: boolean): Partial<TypeObject> {
+  toResult(context: Context, shouldCoerce?: boolean): TypeResult {
     const obj = context.lookupSource(this.id)
     return {
       // populated via config

@@ -62,7 +62,7 @@
 					<a href="_types_positional_.typepositional.html">TypePositional</a>
 				</li>
 			</ul>
-			<h1>Class TypePositional&lt;T&gt;</h1>
+			<h1>Class TypePositional&lt;T, O&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -74,6 +74,9 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+					</li>
+					<li>
+						<h4>O<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_api_.typeoptions.html" class="tsd-signature-type">TypeOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -88,6 +91,12 @@
 							</li>
 						</ul>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_types_api_.itype.html" class="tsd-signature-type">IType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -137,15 +146,11 @@
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_types_positional_.typepositional.html#isvariadic" class="tsd-kind-icon">is<wbr>Variadic</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_types_positional_.typepositional.html#parent" class="tsd-kind-icon">parent</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_types_positional_.typepositional.html#shouldvalidatedefaultvalue" class="tsd-kind-icon">should<wbr>Validate<wbr>Default<wbr>Value</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_types_positional_.typepositional.html#source_default" class="tsd-kind-icon">SOURCE_<wbr>DEFAULT</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_types_positional_.typepositional.html#source_flag" class="tsd-kind-icon">SOURCE_<wbr>FLAG</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_types_positional_.typepositional.html#source_positional" class="tsd-kind-icon">SOURCE_<wbr>POSITIONAL</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_types_positional_.typepositional.html#_internalparse" class="tsd-kind-icon">_internal<wbr>Parse</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_types_positional_.typepositional.html#alias" class="tsd-kind-icon">alias</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_types_positional_.typepositional.html#applysource" class="tsd-kind-icon">apply<wbr>Source</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_types_positional_.typepositional.html#buildhelphints" class="tsd-kind-icon">build<wbr>Help<wbr>Hints</a></li>
@@ -197,7 +202,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L16">types/positional.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L16">types/positional.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -216,33 +221,33 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_aliases" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _aliases</h3>
-					<div class="tsd-signature tsd-kind-icon">_aliases<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">_aliases<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_aliases">_aliases</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L132">types/type.ts:132</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L6">types/type.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_coercehandler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> _coerce<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">_coerce<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_type_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">_coerce<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_api_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_coercehandler">_coerceHandler</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L136">types/type.ts:136</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L10">types/type.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="_defaultval" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> _default<wbr>Val</h3>
-					<div class="tsd-signature tsd-kind-icon">_default<wbr>Val<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">T</a></div>
+					<div class="tsd-signature tsd-kind-icon">_default<wbr>Val<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">V</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_defaultval">_defaultVal</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L133">types/type.ts:133</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L7">types/type.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -253,7 +258,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_desc">_desc</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L138">types/type.ts:138</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L12">types/type.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,7 +269,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_flags">_flags</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L137">types/type.ts:137</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L11">types/type.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -275,7 +280,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_group">_group</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L140">types/type.ts:140</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L14">types/type.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -286,7 +291,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_hidden">_hidden</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L141">types/type.ts:141</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L15">types/type.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -297,7 +302,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_hints">_hints</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L139">types/type.ts:139</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L13">types/type.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -308,7 +313,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_parent">_parent</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L142">types/type.ts:142</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L16">types/type.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -319,7 +324,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_required">_required</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L134">types/type.ts:134</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L8">types/type.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -330,7 +335,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_strict">_strict</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L135">types/type.ts:135</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L9">types/type.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -340,7 +345,7 @@
 					<div class="tsd-signature tsd-kind-icon">_variadic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L16">types/positional.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L16">types/positional.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -350,7 +355,7 @@
 					<div class="tsd-signature tsd-kind-icon">accept<wbr>Flags<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L15">types/positional.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L15">types/positional.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -368,7 +373,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#aliases">aliases</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L197">types/type.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L66">types/type.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -386,7 +391,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#coercehandler">coerceHandler</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L233">types/type.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L102">types/type.ts:102</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
@@ -423,7 +428,7 @@
 								<p>Inherited from <a href="_types_wrapper_.typewrapper.html">TypeWrapper</a>.<a href="_types_wrapper_.typewrapper.html#datatype">datatype</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#datatype">datatype</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/wrapper.ts#L30">types/wrapper.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/wrapper.ts#L31">types/wrapper.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -434,17 +439,17 @@
 					<a name="defaultval" class="tsd-anchor"></a>
 					<h3>default<wbr>Val</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> defaultVal<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> defaultVal<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#defaultval">defaultVal</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L206">types/type.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L75">types/type.ts:75</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -452,17 +457,17 @@
 					<a name="elementtype" class="tsd-anchor"></a>
 					<h3>element<wbr>Type</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> elementType<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_types_type_.type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> elementType<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_types_type_.type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/_types_api_.typeoptions.html" class="tsd-signature-type">TypeOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_wrapper_.typewrapper.html">TypeWrapper</a>.<a href="_types_wrapper_.typewrapper.html#elementtype">elementType</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/wrapper.ts#L25">types/wrapper.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/wrapper.ts#L26">types/wrapper.ts:26</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_types_type_.type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_types_type_.type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/_types_api_.typeoptions.html" class="tsd-signature-type">TypeOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -477,7 +482,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#helpdesc">helpDesc</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L255">types/type.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L124">types/type.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -495,7 +500,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#helpflags">helpFlags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L242">types/type.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L111">types/type.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4>
@@ -513,7 +518,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#helpgroup">helpGroup</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L38">types/positional.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L38">types/positional.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -531,7 +536,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#helphints">helpHints</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L265">types/type.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L134">types/type.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -549,15 +554,9 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#id">id</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L169">types/type.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L39">types/type.ts:39</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>A string uniquely identifying this type across all levels
-									used for mapping values and sources in context</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
@@ -573,7 +572,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#ishidden">isHidden</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L296">types/type.ts:296</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L165">types/type.ts:165</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -591,7 +590,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#isrequired">isRequired</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L215">types/type.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L84">types/type.ts:84</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -609,7 +608,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#isstrict">isStrict</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L224">types/type.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L93">types/type.ts:93</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -626,7 +625,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L33">types/positional.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L33">types/positional.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h4>
@@ -644,7 +643,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#parent">parent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L178">types/type.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L48">types/type.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -663,97 +662,16 @@
 								<p>Inherited from <a href="_types_wrapper_.typewrapper.html">TypeWrapper</a>.<a href="_types_wrapper_.typewrapper.html#shouldvalidatedefaultvalue">shouldValidateDefaultValue</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#shouldvalidatedefaultvalue">shouldValidateDefaultValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/wrapper.ts#L34">types/wrapper.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/wrapper.ts#L35">types/wrapper.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-					<a name="source_default" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SOURCE_<wbr>DEFAULT</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> SOURCE_DEFAULT<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#source_default">SOURCE_DEFAULT</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L120">types/type.ts:120</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-					<a name="source_flag" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SOURCE_<wbr>FLAG</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> SOURCE_FLAG<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#source_flag">SOURCE_FLAG</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L124">types/type.ts:124</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-					<a name="source_positional" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SOURCE_<wbr>POSITIONAL</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> SOURCE_POSITIONAL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#source_positional">SOURCE_POSITIONAL</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L128">types/type.ts:128</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="_internalparse" class="tsd-anchor"></a>
-					<h3>_internal<wbr>Parse</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">_internal<wbr>Parse<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a>, validate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#_internalparse">_internalParse</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L354">types/type.ts:354</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>context: <a href="_context_.context.html" class="tsd-signature-type">Context</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> validate: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="alias" class="tsd-anchor"></a>
 					<h3>alias</h3>
@@ -765,7 +683,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#alias">alias</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L192">types/type.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L61">types/type.ts:61</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -789,7 +707,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#applysource">applySource</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L81">types/positional.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L81">types/positional.ts:81</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -822,7 +740,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#buildhelphints">buildHelpHints</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L42">types/positional.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L42">types/positional.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -839,14 +757,14 @@
 					<a name="buildinvalidmessage" class="tsd-anchor"></a>
 					<h3>build<wbr>Invalid<wbr>Message</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">build<wbr>Invalid<wbr>Message<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a>, msgAndArgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Invalid<wbr>Message<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a>, msgAndArgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#buildinvalidmessage">buildInvalidMessage</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L434">types/type.ts:434</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L303">types/type.ts:303</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -855,10 +773,10 @@
 									<h5>context: <a href="_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 								<li>
-									<h5>msgAndArgs: <span class="tsd-signature-symbol">{ </span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<h5>msgAndArgs: <span class="tsd-signature-symbol">{ </span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
-											<h5>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+											<h5>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
 										</li>
 										<li class="tsd-parameter">
 											<h5>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
@@ -881,7 +799,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#buildrequiredmessage">buildRequiredMessage</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L429">types/type.ts:429</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L298">types/type.ts:298</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -909,20 +827,20 @@
 					<a name="coerce" class="tsd-anchor"></a>
 					<h3>coerce</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">coerce<span class="tsd-signature-symbol">(</span>syncFunction<span class="tsd-signature-symbol">: </span><a href="../modules/_types_type_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">coerce<span class="tsd-signature-symbol">(</span>syncFunction<span class="tsd-signature-symbol">: </span><a href="../modules/_types_api_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#coerce">coerce</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L228">types/type.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L97">types/type.ts:97</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>syncFunction: <a href="../modules/_types_type_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>syncFunction: <a href="../modules/_types_api_.html#coercefunction" class="tsd-signature-type">CoerceFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -938,9 +856,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#configure">configure</a></p>
 								<p>Overrides <a href="_types_wrapper_.typewrapper.html">TypeWrapper</a>.<a href="_types_wrapper_.typewrapper.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L22">types/positional.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L22">types/positional.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -967,7 +886,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#defaultvalue">defaultValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L201">types/type.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L70">types/type.ts:70</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -991,7 +910,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#desc">desc</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L251">types/type.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L120">types/type.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1015,7 +934,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#description">description</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L246">types/type.ts:246</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L115">types/type.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1039,7 +958,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#failvalidation">failValidation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L408">types/type.ts:408</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L277">types/type.ts:277</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1066,7 +985,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#flags">flags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L237">types/type.ts:237</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L106">types/type.ts:106</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1083,14 +1002,14 @@
 					<a name="getvalue" class="tsd-anchor"></a>
 					<h3>get<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#getvalue">getValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L469">types/type.ts:469</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L338">types/type.ts:338</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1099,7 +1018,7 @@
 									<h5>context: <a href="_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">V</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1114,7 +1033,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#group">group</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L282">types/type.ts:282</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L151">types/type.ts:151</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1138,7 +1057,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#hasrequiredvalue">hasRequiredValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L425">types/type.ts:425</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L294">types/type.ts:294</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1162,7 +1081,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#hidden">hidden</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L291">types/type.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L160">types/type.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1186,7 +1105,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#hints">hints</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L260">types/type.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L129">types/type.ts:129</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1210,7 +1129,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#isapplicable">isApplicable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L456">types/type.ts:456</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L325">types/type.ts:325</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1243,7 +1162,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#observealias">observeAlias</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L463">types/type.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L332">types/type.ts:332</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1270,7 +1189,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_wrapper_.typewrapper.html">TypeWrapper</a>.<a href="_types_wrapper_.typewrapper.html#of">of</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/wrapper.ts#L20">types/wrapper.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/wrapper.ts#L21">types/wrapper.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1292,9 +1211,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#parse">parse</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#parse">parse</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L58">types/positional.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L58">types/positional.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1316,9 +1236,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#postparse">postParse</a></p>
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#postparse">postParse</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L440">types/type.ts:440</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L309">types/type.ts:309</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1342,7 +1263,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#required">required</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L210">types/type.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L79">types/type.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1366,7 +1287,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#resolve">resolve</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L344">types/type.ts:344</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L213">types/type.ts:213</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1382,9 +1303,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#setvalue">setValue</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#setvalue">setValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L76">types/positional.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L76">types/positional.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1411,7 +1333,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#strict">strict</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L219">types/type.ts:219</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L88">types/type.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1428,46 +1350,18 @@
 					<a name="toobject" class="tsd-anchor"></a>
 					<h3>to<wbr>Object</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Object<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>aliases<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>datatype<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpDesc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpFlags<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpGroup<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpHints<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>isHidden<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>isRequired<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Object<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_api_.typeobject.html" class="tsd-signature-type">TypeObject</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#toobject">toObject</a></p>
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#toobject">toObject</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L478">types/type.ts:478</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L347">types/type.ts:347</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>aliases<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>datatype<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpDesc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpFlags<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpGroup<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>helpHints<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>isHidden<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>isRequired<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>aliases<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>datatype<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>help<wbr>Desc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>help<wbr>Flags<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>help<wbr>Group<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>help<wbr>Hints<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>is<wbr>Hidden<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>is<wbr>Required<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_api_.typeobject.html" class="tsd-signature-type">TypeObject</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -1475,14 +1369,14 @@
 					<a name="toresult" class="tsd-anchor"></a>
 					<h3>to<wbr>Result</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Result<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a>, shouldCoerce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Result<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_context_.context.html" class="tsd-signature-type">Context</a>, shouldCoerce<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_api_.typeresult.html" class="tsd-signature-type">TypeResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#toresult">toResult</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L85">types/positional.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L85">types/positional.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1494,9 +1388,7 @@
 									<h5>shouldCoerce: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span></h4>
-							<ul class="tsd-parameters">
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_api_.typeresult.html" class="tsd-signature-type">TypeResult</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -1509,9 +1401,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#validateconfig">validateConfig</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#validateconfig">validateConfig</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L53">types/positional.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L53">types/positional.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1535,7 +1428,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#validateparsed">validateParsed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L70">types/positional.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L70">types/positional.ts:70</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1559,7 +1452,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#validatevalue">validateValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/type.ts#L474">types/type.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/type.ts#L343">types/type.ts:343</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1584,9 +1477,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_types_api_.itype.html">IType</a>.<a href="../interfaces/_types_api_.itype.html#withparent">withParent</a></p>
 								<p>Overrides <a href="_types_type_.type.html">Type</a>.<a href="_types_type_.type.html#withparent">withParent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L46">types/positional.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L46">types/positional.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1609,7 +1503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/c243c64/src/types/positional.ts#L11">types/positional.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/jose-pr/sywac/blob/7ead2d9/src/types/positional.ts#L11">types/positional.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1643,7 +1537,13 @@
 						<a href="../modules/_context_.html">&quot;context&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/_helpers_factory_.html">&quot;helpers/factory&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_types_api_.html">&quot;types/api&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_types_array_.html">&quot;types/array&quot;</a>
@@ -1786,18 +1686,6 @@
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="_types_positional_.typepositional.html#shouldvalidatedefaultvalue" class="tsd-kind-icon">should<wbr>Validate<wbr>Default<wbr>Value</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-								<a href="_types_positional_.typepositional.html#source_default" class="tsd-kind-icon">SOURCE_<wbr>DEFAULT</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-								<a href="_types_positional_.typepositional.html#source_flag" class="tsd-kind-icon">SOURCE_<wbr>FLAG</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-								<a href="_types_positional_.typepositional.html#source_positional" class="tsd-kind-icon">SOURCE_<wbr>POSITIONAL</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_types_positional_.typepositional.html#_internalparse" class="tsd-kind-icon">_internal<wbr>Parse</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_types_positional_.typepositional.html#alias" class="tsd-kind-icon">alias</a>
 							</li>
@@ -1914,6 +1802,13 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
@@ -1921,13 +1816,11 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>

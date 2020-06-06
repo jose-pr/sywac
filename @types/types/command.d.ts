@@ -1,6 +1,7 @@
 import Api from '../api';
-import Type, { TypeOptions } from './type';
+import Type from './type';
 import { Context } from '../context';
+import { TypeOptions } from './api';
 export interface TypeCommandOptions extends TypeOptions<boolean>, PositionalOptions {
     api?: Api;
     setup?: Function;

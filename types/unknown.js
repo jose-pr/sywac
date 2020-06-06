@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeUnknown = void 0;
 const type_1 = __importDefault(require("./type"));
+const api_1 = require("./api");
 class TypeUnknown extends type_1.default {
     constructor(opts) {
         super(Object.assign({
@@ -81,7 +82,7 @@ class TypeUnknown extends type_1.default {
         if (unparsed.length && this.positionals && this.positionals.length) {
             unparsed = this._populatePositionals(unparsed, context);
         }
-        context.resetSource(this.id, type_1.default.SOURCE_DEFAULT);
+        context.resetSource(this.id, api_1.SOURCE_CONSTANTS.SOURCE_DEFAULT);
         const v = unparsed.map(arg => {
             this.applySource(context, null, arg.index, arg.raw);
             return arg.raw;
@@ -91,7 +92,7 @@ class TypeUnknown extends type_1.default {
         }));
         context.assignValue(this.id, v);
         if (v.length > 0)
-            this.applySource(context, type_1.default.SOURCE_POSITIONAL);
+            this.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_POSITIONAL);
         if (this.positionals && this.positionals.length) {
             await Promise.all(this.positionals.map(p => p.validateParsed(context)));
         }
@@ -102,7 +103,7 @@ class TypeUnknown extends type_1.default {
         const matched = implicitCommands.find(alias => alias === first.raw); // maybe indexOf would be better/faster?
         if (matched) {
             context.slurped[first.index].parsed[0].claimed = true;
-            this.implicit[matched].implicitCommandFound(context, type_1.default.SOURCE_POSITIONAL, first.index, first.raw);
+            this.implicit[matched].implicitCommandFound(context, api_1.SOURCE_CONSTANTS.SOURCE_POSITIONAL, first.index, first.raw);
             return unparsed.slice(1);
         }
         return unparsed;
@@ -125,7 +126,7 @@ class TypeUnknown extends type_1.default {
     _populatePositionals(unparsed, context) {
         // filter out positionals already populated via flags
         // (can populate via flags or positional args, but not both at same time)
-        const positionals = this.positionals.filter(p => context.lookupSourceValue(p.id) !== type_1.default.SOURCE_FLAG);
+        const positionals = this.positionals.filter(p => context.lookupSourceValue(p.id) !== api_1.SOURCE_CONSTANTS.SOURCE_FLAG);
         let numRequiredLeft = positionals.filter(p => p.isRequired).length;
         let current = positionals.shift();
         let numArgsLeft = unparsed.length;
@@ -141,7 +142,7 @@ class TypeUnknown extends type_1.default {
             }
             // assign value and decrement numArgsLeft
             current.setValue(context, arg.raw);
-            current.applySource(context, type_1.default.SOURCE_POSITIONAL, arg.index, arg.raw);
+            current.applySource(context, api_1.SOURCE_CONSTANTS.SOURCE_POSITIONAL, arg.index, arg.raw);
             numArgsLeft--;
             // determine if we should move on to the next positional
             if (!current.isVariadic || numArgsLeft <= positionals.length) {

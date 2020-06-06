@@ -1,12 +1,13 @@
-import Type, { TypeOptions } from "./type"
+import Type from "./type"
 import { Context } from "../context"
+import { TypeOptions } from "./api"
 
 class TypeNumber extends Type<number> {
   static isNumber(value: string | number): value is number {
     return typeof value === 'number' || /^0x[0-9a-f]+$/i.test(value) || /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(value)
   }
 
-  static get(opts?:TypeOptions<number>) {
+  static get(opts:TypeOptions<number>) {
     return new TypeNumber(opts)
   }
 

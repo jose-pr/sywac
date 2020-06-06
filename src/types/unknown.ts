@@ -1,7 +1,8 @@
-import Type, { TypeOptions } from './type'
+import Type from './type'
 import { Context, SlurpedArg, ParsedArg } from '../context'
 import TypeImplicitCommand from './implicit'
 import TypePositional from './positional'
+import { TypeOptions, SOURCE_CONSTANTS } from './api'
 
 export class TypeUnknown extends Type<unknown> {
   static get(opts: TypeOptions<unknown>) {
@@ -85,7 +86,7 @@ export class TypeUnknown extends Type<unknown> {
       unparsed = this._populatePositionals(unparsed, context)
     }
 
-    context.resetSource(this.id, Type.SOURCE_DEFAULT)
+    context.resetSource(this.id, SOURCE_CONSTANTS.SOURCE_DEFAULT)
     const v = unparsed.map(arg => {
       this.applySource(context, null, arg.index, arg.raw)
       return arg.raw
@@ -95,7 +96,7 @@ export class TypeUnknown extends Type<unknown> {
     }))
     context.assignValue(this.id, v)
 
-    if (v.length > 0) this.applySource(context, Type.SOURCE_POSITIONAL)
+    if (v.length > 0) this.applySource(context, SOURCE_CONSTANTS.SOURCE_POSITIONAL)
 
     if (this.positionals && this.positionals.length) {
       await Promise.all(this.positionals.map(p => p.validateParsed(context)))
@@ -109,7 +110,7 @@ export class TypeUnknown extends Type<unknown> {
     const matched = implicitCommands.find(alias => alias === first.raw) // maybe indexOf would be better/faster?
     if (matched) {
       context.slurped[first.index].parsed[0].claimed = true
-      this.implicit[matched].implicitCommandFound(context, Type.SOURCE_POSITIONAL, first.index, first.raw)
+      this.implicit[matched].implicitCommandFound(context, SOURCE_CONSTANTS.SOURCE_POSITIONAL, first.index, first.raw)
       return unparsed.slice(1)
     }
     return unparsed
@@ -136,7 +137,7 @@ export class TypeUnknown extends Type<unknown> {
   _populatePositionals(unparsed:SlurpedArg[], context:Context) {
     // filter out positionals already populated via flags
     // (can populate via flags or positional args, but not both at same time)
-    const positionals = this.positionals.filter(p => context.lookupSourceValue(p.id) !== Type.SOURCE_FLAG)
+    const positionals = this.positionals.filter(p => context.lookupSourceValue(p.id) !== SOURCE_CONSTANTS.SOURCE_FLAG)
     let numRequiredLeft = positionals.filter(p => p.isRequired).length
     let current = positionals.shift()
     let numArgsLeft = unparsed.length
@@ -154,7 +155,7 @@ export class TypeUnknown extends Type<unknown> {
 
       // assign value and decrement numArgsLeft
       current!.setValue(context, arg.raw)
-      current!.applySource(context, Type.SOURCE_POSITIONAL, arg.index, arg.raw)
+      current!.applySource(context, SOURCE_CONSTANTS.SOURCE_POSITIONAL, arg.index, arg.raw)
       numArgsLeft--
 
       // determine if we should move on to the next positional

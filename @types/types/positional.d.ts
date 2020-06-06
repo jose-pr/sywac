@@ -20,6 +20,6 @@ export declare class TypePositional<T> extends TypeWrapper<T> {
     validateParsed(context: Context): Promise<this>;
     setValue(context: Context, value: T): void;
     applySource(context: Context, source: string, position: number, raw: string): void;
-    toResult(context: Context, shouldCoerce: boolean): Partial<import("../context").TypeObject>;
+    toResult(context: Context, shouldCoerce: boolean): import("./api").TypeResult;
 }
 export default TypePositional;

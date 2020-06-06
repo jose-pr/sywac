@@ -69,5 +69,9 @@
     "./node_modules/**/*",
     "./test/**/*",
     "./lib/**/*"
-  ]
+  ],
+  "typedocOptions": {
+    "out": "docs",
+    "excludePrivate": true
+  }
 }

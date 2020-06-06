@@ -15,32 +15,38 @@ export function registerProvidedFactories(api: import('../api').Api) {
         fsLib: api.fsLib
     })) as any;
 
+    function registerOption<N extends string, O extends import("../types/api").TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, import("../types/type").Type<V>>) {
+        if (factory && api.constructor.prototype[shorcut] === undefined) api.registerFactory(name, factory);
+        api.constructor.prototype[shorcut] = ((flags: string | O, opts?: O) => {
+            return api._addOptionType(flags, opts, 'helpType')
+        })
+    }
     //meta
     api.registerFactory('unknownType', getLazyImport([__dirname, 'types/unknown']));
     api.registerFactory('_context', getLazyImport([__dirname, 'context']));
     api.registerFactory('helpBuffer', getLazyImport([__dirname, 'buffer']));
     // common types
     ['boolean', 'string', 'number', 'enum', 'array'].forEach(name => {
-        api.registerOption(name, name, getLazyImport([__dirname, `types/${name}`]))
+        registerOption(name, name, getLazyImport([__dirname, `types/${name}`]))
     })
-    api.registerOption('stringArray', 'array:string')
-    api.registerOption('numberArray', 'array:number')
+    registerOption('stringArray', 'array:string')
+    registerOption('numberArray', 'array:number')
 
-    api.registerOption('path', 'path', getPath);
-    api.registerOption('file', 'file', (opts) => getPath(Object.assign({ dirAllowed: false }, opts)))
-    api.registerOption('dir', 'dir', (opts) => getPath(Object.assign({ fileAllowed: false }, opts)))
+    registerOption('path', 'path', getPath);
+    registerOption('file', 'file', (opts) => getPath(Object.assign({ dirAllowed: false }, opts)))
+    registerOption('dir', 'dir', (opts) => getPath(Object.assign({ fileAllowed: false }, opts)))
 
     // specialty types
-    api.registerOption('helpType', 'help', getLazyImport([__dirname, "types/help"]));
-    api.registerOption('versionType', 'version', getLazyImport([__dirname, "types/version"]))
+    registerOption('helpType', 'help', getLazyImport([__dirname, "types/help"]));
+    registerOption('versionType', 'version', getLazyImport([__dirname, "types/version"]))
 
     // advanced types
     api.registerFactory('positional', getLazyImport([__dirname, "types/positional"]))
     api.registerFactory('commandType', getLazyImport([__dirname], "types/command"))
 }
 
-export function assignOpts<O extends {}>(target: Partial<O>, source: Partial<O>, keys:(keyof O)[]) {
-   keys.forEach(opt => {
+export function assignOpts<O extends {}>(target: Partial<O>, source: Partial<O>, keys: (keyof O)[]) {
+    keys.forEach(opt => {
         if (opt in source) target[opt] = source[opt]
     })
     return target

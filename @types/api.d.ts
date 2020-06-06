@@ -1,24 +1,19 @@
 /// <reference types="node" />
 import path from "path";
 import fs from "fs";
-import Type, { TypeFactory, TypeOptions } from './types/type';
-import { ContextOptions, Context } from "./context";
-import TypeString, { TypeStringOptions } from "./types/string";
-import TypePath, { TypePathOptions } from "./types/path";
-import TypeEnum, { TypeEnumOptions } from "./types/enum";
-import TypeArray, { TypeArrayOptions } from "./types/array";
-import TypeHelp, { TypeHelpOptions } from "./types/help";
-import TypeVersion, { TypeVersionOptions } from "./types/version";
-import TypePositional, { TypePositionalOptions } from "./types/positional";
+import { Context } from "./context";
+import { TypePositionalOptions } from "./types/positional";
 import TypeCommand, { TypeCommandOptions } from "./types/command";
-import { TypeUnknown } from "./types/unknown";
-import TypeBoolean from "./types/boolean";
-import TypeNumber from "./types/number";
+import { IFactory } from "./helpers/factory";
+import { TypeOptions, IType } from "./types/api";
+declare type WithOption<N extends string, A extends Api, Conf extends {} = {}> = A & {
+    [n in N]: (this: Api, dsl: string | Conf, opts?: Conf) => A & WithOption<N, A, Conf>;
+};
 export declare interface ApiOptions {
     utils?: unknown;
     pathLib?: typeof path;
     fsLib?: typeof fs;
-    factories?: Record<string, TypeFactory<Type<any>, unknown>>;
+    factories?: Record<string, IFactory<TypeOptions<any>, IType<TypeOptions<any>, any>>>;
     name?: string;
     parentName?: string;
     helpOpts?: {};
@@ -103,16 +98,16 @@ export interface Hooks extends Partial<{
 }
 export interface HelpOptions extends Partial<_HelpOptions> {
 }
-declare class Api {
+export declare class Api {
     static get DEFAULT_COMMAND_INDICATOR(): string;
     static ROOT_NAME?: string;
     static get(opts?: ApiOptions): Api;
-    types: Type<unknown>[];
+    types: IType[];
     private _helpOpts;
     private _factories;
     private _showHelpByDefault?;
     private _strictMode?;
-    private _magicCommandAdded?;
+    private _magicCommandAdded;
     private _modulesSeen;
     private _utils?;
     private _pathLib?;
@@ -122,32 +117,17 @@ declare class Api {
     private _unknownType?;
     constructor(opts?: ApiOptions);
     configure(opts?: ApiOptions): this;
-    newChild(commandName: string, childOptions?: ApiOptions): Api;
-    _assignHelpOpts(target: HelpOptions, source: HelpOptions): HelpOptions;
-    get unknownType(): Type<unknown>;
+    newChild(commandName: string, childOptions: ApiOptions): Api;
+    get unknownType(): IType<unknown, TypeOptions<unknown>> | undefined;
     get utils(): any;
     get helpOpts(): HelpOptions;
     get pathLib(): any;
     get fsLib(): typeof fs;
     get name(): string | undefined;
     get parentName(): string;
-    registerFactory<T>(name: string, factory: TypeFactory<Type<T>, T>): this;
-    get(name: string, opts?: TypeOptions<unknown>): Type<any> | null;
-    getUnknownType(opts?: TypeOptions<unknown>): TypeUnknown;
-    getContext(opts?: ContextOptions): Context;
-    getHelpBuffer(opts?: any): any;
-    getBoolean(opts?: TypeOptions<boolean>): TypeBoolean;
-    getString(opts?: TypeStringOptions): TypeString;
-    getNumber(opts?: TypeOptions<number>): TypeNumber;
-    getPath(opts?: TypePathOptions): TypePath;
-    getFile(opts?: Omit<TypePathOptions, 'dirAllowed'>): TypePath;
-    getDir(opts?: Omit<TypePathOptions, 'fileAllowed'>): TypePath;
-    getEnum(opts?: TypeEnumOptions): TypeEnum;
-    getArray<T>(opts?: TypeArrayOptions<T>): TypeArray<T>;
-    getHelpType(opts?: TypeHelpOptions): TypeHelp;
-    getVersionType(opts?: TypeVersionOptions): TypeVersion;
-    getPositional<T>(opts?: TypePositionalOptions<T>): TypePositional<T>;
-    getCommand(opts?: TypeCommandOptions): TypeCommand;
+    registerFactory<T, O extends {} = {}>(name: string, factory?: IFactory<O, T>): this;
+    registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, IType<V>>): WithOption<N, this, O>;
+    get(name: string, opts?: TypeOptions<unknown>): any;
     preface(icon: string, slogan: string): this;
     usage(usage: string | {
         usage?: string;
@@ -179,24 +159,12 @@ declare class Api {
     command(dsl: string, opts?: TypeCommandOptions): this;
     _internalCommand(dsl: string, opts?: TypeCommandOptions | Function): TypeCommand;
     positional<T>(dsl: string | TypePositionalOptions<T>, opts?: TypePositionalOptions<T>): this;
-    custom<T>(type: Type<T>): this;
+    custom<T>(type: IType<T>): this;
     _normalizeOpts(flags: any, opts: any): any;
     _addOptionType(flags: any, opts: any, name: any): this;
-    _getType(flags: any, opts: any, name: any): Type<any> | null;
-    _getArrayType(flags: any, opts: any, subtypeName: any): Type<any> | null;
+    _getType(flags: any, opts: any, name: any): any;
+    _getArrayType(flags: any, opts: any, subtypeName: any): any;
     option(flags: string, opts: TypeOptions<any>): this;
-    boolean(flags: string, opts: TypeOptions<boolean>): this;
-    string(flags: string, opts: TypeStringOptions): this;
-    number(flags: string, opts: TypeOptions<number>): this;
-    path(flags: string, opts: TypePathOptions): this;
-    file(flags: string, opts: TypePathOptions): this;
-    dir(flags: string, opts: TypePathOptions): this;
-    enumeration(flags: string, opts: TypeEnumOptions): this;
-    help(flags: string, opts: TypeHelpOptions): this;
-    version(flags: string, opts: TypeVersionOptions): this;
-    array<T>(flags: string, opts: TypeArrayOptions<T>): this;
-    stringArray(flags: string, opts: TypeArrayOptions<string>): this;
-    numberArray(flags: string, opts: TypeArrayOptions<number>): this;
     check(handler: Function): this;
     parseAndExit(args: any, state: any): Promise<{
         _?: string[] | undefined;
@@ -214,7 +182,7 @@ declare class Api {
         };
     }>;
     _parse(args: string[], state: unknown): Promise<Context>;
-    parseFromContext(context: Context): Promise<Type<unknown>[]>;
+    parseFromContext(context: Context): Promise<IType<any, TypeOptions<any>>[]>;
     initContext(includeTypes: boolean, state: unknown): Context;
     applyTypes(context: Context): Context;
     initHelpBuffer(): any;

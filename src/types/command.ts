@@ -1,7 +1,8 @@
 //@ts-ignore
 import Api from '../api'
-import Type, { TypeOptions } from './type'
+import Type from './type'
 import { Context } from '../context'
+import { TypeOptions, SOURCE_CONSTANTS } from './api'
 
 export interface TypeCommandOptions extends TypeOptions<boolean>, PositionalOptions {
   api?: Api
@@ -128,7 +129,7 @@ export class TypeCommand extends Type<boolean> {
       })
       if (matchedArg) {
         matchedArg.parsed[0].claimed = true
-        this.applySource(context, Type.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw)
+        this.applySource(context, SOURCE_CONSTANTS.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw)
       }
     }
     this.setValue(context, true) // set this value to true for context.details

@@ -1,8 +1,9 @@
-import Type, { TypeOptions } from "./type";
+import Type from "./type";
 import { Context } from "../context";
+import { TypeOptions } from "./api";
 declare class TypeNumber extends Type<number> {
     static isNumber(value: string | number): value is number;
-    static get(opts?: TypeOptions<number>): TypeNumber;
+    static get(opts: TypeOptions<number>): TypeNumber;
     get datatype(): string;
     getValue(context: Context): number;
     setValue(context: Context, value: number): void;

@@ -1,5 +1,6 @@
-import Type, { TypeOptions } from "./type"
+import Type from "./type"
 import { Context, SlurpedArg } from "../context"
+import { TypeOptions } from "./api"
 
 class TypeBoolean extends Type<boolean> {
   static get(opts: TypeOptions<boolean>) {

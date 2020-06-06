@@ -1,4 +1,5 @@
-import Type, { TypeOptions } from './type'
+import Type  from './type'
+import { TypeOptions } from './api'
 
 export interface TypeWrapperOptions<T> extends TypeOptions<T> {
   elementType?: Type<T>

@@ -60,7 +60,7 @@ export class TypePositional<T> extends TypeWrapper<T> {
     // otherwise will be populated by unknownType
     if (this.acceptFlags) {
       // first pass of parsing checks for flags with validation disabled
-      await this.elementType._internalParse(context, false)
+      await this.elementType.parse(context, false)
       return this.resolve()
     }
     return super.resolve()

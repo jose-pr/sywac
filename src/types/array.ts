@@ -1,7 +1,7 @@
-import Type from "./type"
 import TypeWrapper, { TypeWrapperOptions } from "./wrapper"
 import { Context, SlurpedArg } from "../context"
-const SOURCE_DEFAULT = Type.SOURCE_DEFAULT
+import { SOURCE_CONSTANTS } from "./api"
+const SOURCE_DEFAULT = SOURCE_CONSTANTS.SOURCE_DEFAULT
 
 export interface TypeArrayOptions<T> extends TypeWrapperOptions<T[]> {
   delimiter?: string

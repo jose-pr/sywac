@@ -12,7 +12,7 @@
     "pretest": "standard",
     "test": "tap",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "docs": "typedoc --out docs src && copy _config.yml docs\\",
+    "docs": "typedoc src && copy _config.yml docs\\",
     "build": "tsc && npm run docs"
   },
   "engines": {

@@ -1,8 +1,8 @@
-import { TypeOptions } from "./type"
 import TypeString from "./string"
 import { Context } from "../context"
 import fs from 'fs'
 import path from 'path'
+import { TypeOptions } from "./api"
 
 export interface TypePathOptions extends TypeOptions<string> {
   dirAllowed?: boolean,

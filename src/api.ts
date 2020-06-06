@@ -1,19 +1,10 @@
 import path from "path"
 import fs from "fs";
-import Type, { TypeFactory, TypeOptions } from './types/type'
-import { ContextOptions, Context } from "./context";
-import TypeString, { TypeStringOptions } from "./types/string";
-import TypePath, { TypePathOptions } from "./types/path";
-import TypeEnum, { TypeEnumOptions } from "./types/enum";
-import TypeArray, { TypeArrayOptions } from "./types/array";
-import TypeHelp, { TypeHelpOptions } from "./types/help";
-import TypeVersion, { TypeVersionOptions } from "./types/version";
-import TypePositional, { TypePositionalOptions } from "./types/positional";
+import { Context } from "./context";
+import { TypePositionalOptions } from "./types/positional";
 import TypeCommand, { TypeCommandOptions } from "./types/command";
-import { TypeUnknown } from "./types/unknown";
-import TypeBoolean from "./types/boolean";
-import TypeNumber from "./types/number";
 import { IFactory, registerProvidedFactories, assignOpts } from "./helpers/factory";
+import { TypeOptions, IType, SOURCE_CONSTANTS } from "./types/api";
 
 type WithOption<N extends string, A extends Api, Conf extends {} = {}> = A & {
   [n in N]: (this: Api, dsl: string | Conf, opts?: Conf) => A & WithOption<N, A, Conf>
@@ -23,7 +14,7 @@ export declare interface ApiOptions {
   utils?: unknown
   pathLib?: typeof path
   fsLib?: typeof fs
-  factories?: Record<string, IFactory<TypeOptions<any>, Type<any>>>
+  factories?: Record<string, IFactory<TypeOptions<any>, IType<TypeOptions<any>,any>>>
   name?: string
   parentName?: string
   helpOpts?: {}
@@ -125,7 +116,7 @@ export class Api {
   static get(opts?: ApiOptions) {
     return new Api(opts)
   }
-  types: Type<unknown>[] = []
+  types: IType[] = []
   private _helpOpts: HelpOptions
   private _factories: Record<string, IFactory<any, any>> = {}
   private _showHelpByDefault?: boolean
@@ -137,7 +128,7 @@ export class Api {
   private _fsLib?: any
   private _name?: string
   private _parentName?: string
-  private _unknownType?: Type<unknown>
+  private _unknownType?: IType<unknown>
 
   constructor(opts?: ApiOptions) {
     opts = opts ?? {}
@@ -222,7 +213,7 @@ export class Api {
     if (name && typeof factory === 'function') this._factories[name] = factory
     return this
   }
-  registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, Type<V>>) {
+  registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, IType<V>>) {
     const that = this as WithOption<N, this, O>;
     if (factory) this.registerFactory(name, factory);
       that[shorcut] = ((flags: string | O, opts?: O) => {
@@ -533,7 +524,7 @@ export class Api {
   }
 
   // configure any arg type
-  custom<T>(type: Type<T>) {
+  custom<T>(type: IType<T>) {
     if (type) {
       if (typeof type.withParent === 'function') type.withParent(this.name!)
       if (typeof type.validateConfig === 'function') type.validateConfig(this.utils)
@@ -637,7 +628,7 @@ export class Api {
     // init unknownType in context only for the top-level (all levels share/overwrite the same argv._)
     if (this.unknownType) {
       this.unknownType.setValue(context, this.unknownType.defaultVal)
-      this.unknownType.applySource(context, Type.SOURCE_DEFAULT)
+      this.unknownType.applySource(context, SOURCE_CONSTANTS.SOURCE_DEFAULT)
     }
 
     if (this._showHelpByDefault && !context.details.args.length) {
@@ -747,7 +738,7 @@ export class Api {
     //@ts-ignore
     context.pushLevel(this.name!, this.types.map(type => {
       type.setValue(context, type.defaultVal)
-      type.applySource(context, Type.SOURCE_DEFAULT)
+      type.applySource(context, SOURCE_CONSTANTS.SOURCE_DEFAULT)
       return type.toObject()
     }))
     return context

@@ -1,7 +1,8 @@
-import Type, { TypeOptions } from './type';
+import Type from './type';
 import { Context, SlurpedArg } from '../context';
 import TypeImplicitCommand from './implicit';
 import TypePositional from './positional';
+import { TypeOptions } from './api';
 export declare class TypeUnknown extends Type<unknown> {
     static get(opts: TypeOptions<unknown>): TypeUnknown;
     positionals: TypePositional<any>[];

@@ -1,9 +1,10 @@
-import Type, { TypeOptions } from "./type";
+import Type from "./type";
 import { Context } from "../context";
+import { TypeOptions } from "./api";
 export interface TypeStringOptions extends TypeOptions<string> {
 }
 declare class TypeString extends Type<string> {
-    static get(opts?: TypeStringOptions): TypeString;
+    static get(opts: TypeStringOptions): TypeString;
     get datatype(): string;
     getValue(context: Context): string;
     setValue(context: Context, value: string): void;
