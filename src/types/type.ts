@@ -1,14 +1,15 @@
-import { CoerceFunction, SOURCE_CONSTANTS, TypeResult, TypeObject } from "./api"
-import { TypeOptions, Type as IType, SywacProvider, Sywac, Context } from "../api"
+import { TypeOptions, Type as IType, Context, SywacProvider, SlurpedArg, TypeObject, TypeResult } from "../_api"
 
-
+export type MsgAndArgs = { msg: string , args: unknown[] }
 export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements IType<V, O> {
+
+  static SYWAC: SywacProvider
 
   protected _aliases: string[] = []
   protected _defaultVal?: V
   protected _required?: boolean
   protected _strict?: boolean
-  protected _coerceHandler?: CoerceFunction<V>
+  protected _coerceHandler?: (s: unknown) => V
   protected _flags?: string
   protected _desc?: string
   protected _hints?: string | string[]
@@ -95,7 +96,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
     return !!this._strict
   }
 
-  coerce(syncFunction: CoerceFunction<V>) {
+  coerce(syncFunction: (s: unknown) => V) {
     this._coerceHandler = syncFunction
     return this
   }
@@ -218,7 +219,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
   }
 
   // async parsing
-  parse(context: Context, validate:boolean = true) {
+  parse(context: Context, validate: boolean = true) {
     return this._internalParse(context, validate)
   }
   private _internalParse(context: Context, validate?: boolean) {
@@ -233,7 +234,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
       if (lastKeyMatchesAlias && arg.parsed.length === 1 && !arg.parsed[0].key && this.isApplicable(context, arg.parsed[0].value, previousUsedValue, arg)) {
         previousUsedValue = arg.parsed[0].value
         this.setValue(context, previousUsedValue)
-        this.applySource(context, SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw)
+        this.applySource(context, Type.SYWAC.SOURCE_FLAG, arg.index, arg.raw)
         arg.parsed[0].claimed = true
         return
       }
@@ -246,7 +247,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
           this.observeAlias(context, matchedAlias)
           previousUsedValue = kv.value
           this.setValue(context, previousUsedValue)
-          this.applySource(context, SOURCE_CONSTANTS.SOURCE_FLAG, arg.index, arg.raw)
+          this.applySource(context, Type.SYWAC.SOURCE_FLAG, arg.index, arg.raw)
           kv.claimed = true
         }
       })
@@ -263,7 +264,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
       if (msgAndArgs.msg) this.failValidation(context, [msgAndArgs.msg].concat(msgAndArgs.args || []))
     }
 
-    if (this.isStrict && (context.lookupSourceValue(this.id) !==  SOURCE_CONSTANTS.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
+    if (this.isStrict && (context.lookupSourceValue(this.id) !== Type.SYWAC.SOURCE_DEFAULT || this.shouldValidateDefaultValue)) {
       const isValid = await this.validateValue(this.getValue(context), context)
       if (!isValid) {
         const msgAndArgs = { msg: '', args: [] }
@@ -293,15 +294,15 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
   }
 
   hasRequiredValue(context: Context) {
-    return context.lookupSourceValue(this.id) !==  SOURCE_CONSTANTS.SOURCE_DEFAULT
+    return context.lookupSourceValue(this.id) !== Type.SYWAC.SOURCE_DEFAULT
   }
 
-  buildRequiredMessage(context: Context, msgAndArgs: { msg: string, args: string[] }) {
+  buildRequiredMessage(context: Context, msgAndArgs: MsgAndArgs) {
     msgAndArgs.msg = 'Missing required argument: %s'
     msgAndArgs.args = [this.aliases.join(' or ')]
   }
 
-  buildInvalidMessage(context: Context, msgAndArgs: { msg: string, args: (V | string)[] }) {
+  buildInvalidMessage(context: Context, msgAndArgs: MsgAndArgs) {
     msgAndArgs.msg = 'Value "%s" is invalid for argument %s.'
     msgAndArgs.args = [this.getValue(context), this.aliases.join(' or ')]
   }
@@ -337,7 +338,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
   }
 
   getValue(context: Context) {
-    return context.lookupValue(this.id) as V|undefined
+    return context.lookupValue(this.id) as V | undefined
   }
 
   // subtype impls can be async (return a promise)
@@ -345,7 +346,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
     return true
   }
 
-  toObject():TypeObject {
+  toObject(): TypeObject {
     return {
       // populated via config
       id: this.id,

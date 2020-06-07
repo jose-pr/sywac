@@ -1,8 +1,5 @@
 import TypeString from "./string"
-import { Context } from "../context"
-import fs from 'fs'
-import path from 'path'
-import { TypeOptions } from "./api"
+import { TypeOptions, Context } from "../_api"
 
 export interface TypePathOptions extends TypeOptions<string> {
   dirAllowed?: boolean,
@@ -11,8 +8,8 @@ export interface TypePathOptions extends TypeOptions<string> {
   asObject?: boolean,
   asPosix?: boolean,
   asWin32?: boolean
-  fsLib?:typeof fs
-  pathLib?:typeof path
+  fsLib?:typeof import('fs')
+  pathLib?:typeof import('path')
   mustExist?:boolean
 }
 class TypePath extends TypeString {
@@ -20,8 +17,8 @@ class TypePath extends TypeString {
     return new TypePath(opts)
   }
 
-  private _pathLib?:typeof path
-  private _fsLib?:typeof fs
+  private _pathLib?:typeof import('path')
+  private _fsLib?:typeof import('fs')
   private _dirAllowed?:boolean
   private _fileAllowed?:boolean
   private _normalize?:boolean
@@ -123,7 +120,7 @@ class TypePath extends TypeString {
     if (msg) this.failValidation(context, msg, this.fulltype, value)
   }
 
-  handleStats (stats:fs.Stats, context:Context, value:string) {
+  handleStats (stats:import('fs').Stats, context:Context, value:string) {
     let msg
     const actualType = stats.isFile() ? 'file' : 'directory'
     const wantedType = this.fulltype

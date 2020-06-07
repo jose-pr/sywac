@@ -1,26 +1,7 @@
 /// <reference types="node" />
-import path from "path";
 import fs from "fs";
 import { Context } from "./context";
-import { TypePositionalOptions } from "./types/positional";
-import TypeCommand, { TypeCommandOptions } from "./types/command";
-import { IFactory } from "./helpers/factory";
-import { TypeOptions, IType } from "./types/api";
-declare type WithOption<N extends string, A extends Api, Conf extends {} = {}> = A & {
-    [n in N]: (this: Api, dsl: string | Conf, opts?: Conf) => A & WithOption<N, A, Conf>;
-};
-export declare interface ApiOptions {
-    utils?: unknown;
-    pathLib?: typeof path;
-    fsLib?: typeof fs;
-    factories?: Record<string, IFactory<TypeOptions<any>, IType<TypeOptions<any>, any>>>;
-    name?: string;
-    parentName?: string;
-    helpOpts?: {};
-    showHelpByDefault?: boolean;
-    strictMode?: boolean;
-    modulesSeen?: [];
-}
+import { Sywac, SywacOptions, Type, Factory, TypeOptions, WithOption, SywacHandler } from "./_api";
 declare interface OutputOptions extends Partial<{
     'lineSep': string;
     'sectionSep': string;
@@ -98,11 +79,19 @@ export interface Hooks extends Partial<{
 }
 export interface HelpOptions extends Partial<_HelpOptions> {
 }
-export declare class Api {
+export interface Api<A = {}> extends Sywac<A> {
+}
+export declare class Api<A = {}> {
+    get SYWAC(): typeof Api;
+    static get SOURCE_DEFAULT(): string;
+    static get SOURCE_FLAG(): string;
+    static get SOURCE_POSITIONAL(): string;
     static get DEFAULT_COMMAND_INDICATOR(): string;
+    /**Defined by first Api instance in constructor*/
     static ROOT_NAME?: string;
-    static get(opts?: ApiOptions): Api;
-    types: IType[];
+    static get<A extends {} = {}>(opts?: SywacOptions): Sywac<A>;
+    static normalizeTypeOpts<O extends TypeOptions<any>>(flags: string | string[] | Partial<O>, opts: Partial<O>): O;
+    types: Type[];
     private _helpOpts;
     private _factories;
     private _showHelpByDefault?;
@@ -115,19 +104,19 @@ export declare class Api {
     private _name?;
     private _parentName?;
     private _unknownType?;
-    constructor(opts?: ApiOptions);
-    configure(opts?: ApiOptions): this;
-    newChild(commandName: string, childOptions: ApiOptions): Api;
-    get unknownType(): IType<unknown, TypeOptions<unknown>> | undefined;
+    private constructor();
+    configure(opts?: SywacOptions): this;
+    newChild(commandName: string, childOptions: SywacOptions): Api<{}>;
+    get unknownType(): Type<unknown, TypeOptions<unknown>>;
     get utils(): any;
     get helpOpts(): HelpOptions;
     get pathLib(): any;
     get fsLib(): typeof fs;
     get name(): string | undefined;
     get parentName(): string;
-    registerFactory<T, O extends {} = {}>(name: string, factory?: IFactory<O, T>): this;
-    registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, IType<V>>): WithOption<N, this, O>;
-    get(name: string, opts?: TypeOptions<unknown>): any;
+    registerFactory<T, O extends {} = {}>(name: string, factory?: Factory<O, T, Sywac<A>>): this;
+    registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: Factory<O, Type<V>, Sywac<A>>): this & Sywac<A> & { [n in N]: (this: Sywac<{}>, dsl: any, opts?: any) => WithOption<N, Sywac<A>, O>; };
+    get<O extends {}, T>(name: string, opts?: O): T | null;
     preface(icon: string, slogan: string): this;
     usage(usage: string | {
         usage?: string;
@@ -156,33 +145,19 @@ export declare class Api {
     commandDirectory(dir: string, opts?: {
         extensions?: string[];
     }): this;
-    command(dsl: string, opts?: TypeCommandOptions): this;
-    _internalCommand(dsl: string, opts?: TypeCommandOptions | Function): TypeCommand;
-    positional<T>(dsl: string | TypePositionalOptions<T>, opts?: TypePositionalOptions<T>): this;
-    custom<T>(type: IType<T>): this;
-    _normalizeOpts(flags: any, opts: any): any;
-    _addOptionType(flags: any, opts: any, name: any): this;
-    _getType(flags: any, opts: any, name: any): any;
-    _getArrayType(flags: any, opts: any, subtypeName: any): any;
+    command(dsl: string, opts?: any): this;
+    private _internalCommand;
+    positional<T>(dsl: string | any, opts?: any): this;
+    custom<T>(type: Type<T>): this;
+    private _addOptionType;
+    private _getType;
+    private _getArrayType;
     option(flags: string, opts: TypeOptions<any>): this;
-    check(handler: Function): this;
-    parseAndExit(args: any, state: any): Promise<{
-        _?: string[] | undefined;
-    } & Record<string, unknown>>;
-    parse(args: string[], state: any): Promise<{
-        code: number;
-        output: string;
-        errors: (string | Error | undefined)[];
-        argv: {
-            _?: string[] | undefined;
-        } & Record<string, unknown>;
-        details: {
-            args: string[];
-            types: import("./context").TypeObject[];
-        };
-    }>;
-    _parse(args: string[], state: unknown): Promise<Context>;
-    parseFromContext(context: Context): Promise<IType<any, TypeOptions<any>>[]>;
+    check(handler: SywacHandler): this;
+    parseAndExit(args?: any, state?: any): Promise<any>;
+    parse(args?: string[], state?: any): Promise<any>;
+    private _parse;
+    parseFromContext(context: Context): Promise<Type<any, TypeOptions<any>>[]>;
     initContext(includeTypes: boolean, state: unknown): Context;
     applyTypes(context: Context): Context;
     initHelpBuffer(): any;

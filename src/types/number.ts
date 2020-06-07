@@ -1,9 +1,7 @@
 import Type from "./type"
-import { TypeOptions, Context } from "../api"
+import { TypeOptions, Context } from "../_api"
 
-export interface TypeNumberOptions extends TypeOptions<number> {
-
-}
+export interface TypeNumberOptions extends TypeOptions<number> {}
 
 class TypeNumber extends Type<number> {
   static isNumber(value: string | number): value is number {

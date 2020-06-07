@@ -1,5 +1,5 @@
 import TypeString, { TypeStringOptions } from './string'
-import { Context } from '../context'
+import { Context } from '../_api'
 
 export interface TypeEnumOptions extends TypeStringOptions {
   /**

@@ -1,6 +1,5 @@
 import TypeBoolean from './boolean'
-import { Context } from '../context'
-import { TypeOptions } from './api'
+import { TypeOptions, Context } from '../_api'
 
 export interface TypeImplicitCommandOptions extends TypeOptions<boolean> {
   implicitCommand?: boolean

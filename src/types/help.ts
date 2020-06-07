@@ -1,6 +1,5 @@
-import TypeImplicitCommand from "./implicit"
-import { Context } from "../context"
-import { TypeOptions } from "./api"
+import TypeImplicitCommand, { TypeImplicitCommandOptions } from "./implicit"
+import { Context } from "../_api"
 
 interface HelpBufferOptions {
   includePreface?: boolean
@@ -9,7 +8,7 @@ interface HelpBufferOptions {
   includeExamples?: boolean
   includeEpilogue?: boolean
 }
-export interface TypeHelpOptions extends HelpBufferOptions, TypeOptions<boolean> {}
+export interface TypeHelpOptions extends HelpBufferOptions, TypeImplicitCommandOptions {}
 
 class TypeHelp extends TypeImplicitCommand {
   static get(opts?: TypeHelpOptions) {

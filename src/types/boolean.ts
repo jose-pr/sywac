@@ -1,12 +1,9 @@
 import Type from "./type"
-import { TypeOptions, Context, SlurpedArg, FlagTypeConfig, Sywac, TypeOptionsAliases, TypeIsRequired, ArgvExtension } from "../api"
-import { ValidTypeConfig } from "./api"
+import { TypeOptions, Context } from "../_api"
 
-export interface TypeBooleanOption extends TypeOptions<boolean> {
+export interface TypeBooleanOption extends TypeOptions<boolean> {}
 
-}
-
-class TypeBoolean extends Type<boolean, TypeBooleanOption> {
+export class TypeBoolean extends Type<boolean, TypeBooleanOption> {
   static get(opts: TypeBooleanOption) {
     return new TypeBoolean(opts)
   }

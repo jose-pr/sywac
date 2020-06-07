@@ -1,5 +1,5 @@
 import TypeWrapper, { TypeWrapperOptions } from './wrapper'
-import { Context } from '../context'
+import { Context } from '../_api'
 
 export interface TypePositionalOptions<T> extends TypeWrapperOptions<T> {
   acceptFlags?: boolean

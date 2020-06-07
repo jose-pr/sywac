@@ -1,6 +1,5 @@
-import Api, { } from '../_api';
-import { TypeOptions, Factory, Type } from '../api';
-import { Sywac } from '../api';
+import Api, { } from '../api';
+import { TypeOptions, Factory, Type, Sywac } from '../_api';
 
 export function lazyImport<O extends {}, T>(path: string[], opts: Partial<O>, def?: Partial<O> | (() => Partial<O>)) {
     def = typeof def === 'function' ? def() : def;

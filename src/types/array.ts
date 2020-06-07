@@ -1,6 +1,5 @@
 import TypeWrapper, { TypeWrapperOptions } from "./wrapper"
-import { Context, SlurpedArg } from "../context"
-import { Sywac } from "../api"
+import { Context, SlurpedArg } from "../_api"
 
 export interface TypeArrayOptions<T> extends TypeWrapperOptions<T[]> {
   delimiter?: string
@@ -65,8 +64,8 @@ export class TypeArray<T> extends TypeWrapper<T[]> {
 
   isApplicable(context: Context, currentValue: unknown, previousValue: unknown, slurpedArg: SlurpedArg) {
     // remove last element if previous value was not explicit
-    const v = context.lookupValue(this.id) as T[]
-    if (v && v.length && typeof previousValue !== 'string') v.pop()
+    const v = context.lookupValue<T[]>(this.id)
+    if (v && v.length && typeof previousValue !== 'string') (v as T[]).pop()
     this.elementType.isApplicable(context, currentValue, previousValue, slurpedArg)
     return true // TODO this is greedy (`--key=one two` includes `one` and `two`), make this configurable
   }
@@ -80,7 +79,7 @@ export class TypeArray<T> extends TypeWrapper<T[]> {
     // if current source is 'default', then we're now setting a non-default value
     // so append to a fresh array instead of the default one
     // note that this assumes setValue is called before applySource in api.applyTypes
-    if (context.lookupSourceValue(this.id) === SOURCE_DEFAULT) context.assignValue(this.id, [])
+    if (context.lookupSourceValue(this.id) === TypeArray.SYWAC.SOURCE_DEFAULT) context.assignValue(this.id, [])
 
     if (Array.isArray(value)) {
       const v = context.lookupValue(this.id) as T[]

@@ -1,12 +1,5 @@
 /// <reference types="node" />
-import path from "path";
-import fs from "fs";
-export interface ContextOptions {
-    utils?: unknown;
-    pathLib?: typeof path;
-    fsLib?: typeof fs;
-    state?: unknown;
-}
+import { ContextOptions, TypeObject, TypeResult } from "./_api";
 export interface ParsedArg {
     key: string;
     value: unknown;
@@ -18,11 +11,14 @@ export interface SlurpedArg {
     index: number;
     parsed: ParsedArg[];
 }
+declare type Type = TypeObject & TypeResult & {
+    invalid?: boolean;
+};
 export declare type DeferVersion = {
     version?: string | Function;
 };
 export declare type HelBuffer = {
-    groups: Record<string, TypeObject[]>;
+    groups: Record<string, Type[]>;
     _usageName: string;
     toString(o: {}): string;
     messages: string[];
@@ -32,30 +28,12 @@ export declare type Source = {
     position: number[];
     raw: string[];
 };
-export interface TypeObject {
-    id: string;
-    aliases: string[];
-    datatype: string;
-    isRequired: boolean;
-    helpFlags: string;
-    helpDesc: string;
-    helpHints: string;
-    helpGroup: string;
-    isHidden: boolean;
-    invalid?: boolean;
-    parent?: string;
-    value?: unknown;
-    source?: string;
-    position?: number[];
-    raw?: string[];
-}
 export declare class Context {
     static get(opts?: ContextOptions): Context;
     private _utils;
     private _pathLib?;
     private _fsLib?;
-    private state;
-    types: Record<string, undefined | TypeObject[]>;
+    types: Record<string, undefined | Type[]>;
     args: string[];
     slurped: SlurpedArg[];
     values: Map<string, unknown>;
@@ -68,7 +46,7 @@ export declare class Context {
     knownArgv: Record<string, unknown>;
     details: {
         args: string[];
-        types: TypeObject[];
+        types: Type[];
     };
     errors: (string | undefined | Error)[];
     messages: string[];
@@ -78,14 +56,14 @@ export declare class Context {
     versionRequested: DeferVersion | false;
     constructor(opts?: ContextOptions);
     get utils(): any;
-    get pathLib(): path.PlatformPath | undefined;
-    get fsLib(): typeof fs | undefined;
-    slurpArgs(args: string | string[]): this;
+    get pathLib(): import("path").PlatformPath | undefined;
+    get fsLib(): typeof import("fs") | undefined;
+    slurpArgs(args?: string | string[]): this;
     parseSingleArg(arg: string): {
         key: string;
         value: string | boolean;
     }[];
-    pushLevel(level: string, types: TypeObject[]): this;
+    pushLevel(level: string, types: Type[]): this;
     unexpectedError(err?: Error | string): void;
     cliMessage(...msg: string[]): void;
     markTypeInvalid(id: string): void;
@@ -107,7 +85,7 @@ export declare class Context {
     employSource(id: string, source?: string | null, position?: number, raw?: string): void;
     lookupSource(id: string): Source | undefined;
     lookupSourceValue(id: string): string | undefined;
-    populateArgv(typeResults: Partial<TypeObject>[]): void;
+    populateArgv(typeResults: Partial<Type>[]): void;
     getUnknownArguments(): string[];
     getUnknownSlurpedOptions(): SlurpedArg[];
     toResult(): {
@@ -119,7 +97,8 @@ export declare class Context {
         } & Record<string, unknown>;
         details: {
             args: string[];
-            types: TypeObject[];
+            types: Type[];
         };
     };
 }
+export {};

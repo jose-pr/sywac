@@ -1,7 +1,6 @@
 //@ts-ignore
 import Type from './type'
-import { SOURCE_CONSTANTS } from './api'
-import { Sywac, TypeOptions, Context, SywacProvider } from '../api'
+import { Sywac, TypeOptions, Context } from '../_api'
 
 export interface TypeCommandOptions<A> extends TypeOptions<boolean>, PositionalOptions {
   api?: Sywac<A>
@@ -17,9 +16,7 @@ export interface PositionalOptions {
   'ignore'?: boolean
 }
 export class TypeCommand<A> extends Type<boolean> {
-  private static SYWAC: SywacProvider
-  static get<A>(this: Sywac, opts?: TypeCommandOptions<A>) {
-    if (!TypeCommand.SYWAC) TypeCommand.SYWAC = this.SYWAC
+  static get<A>(opts?: TypeCommandOptions<A>) {
     return new TypeCommand(opts)
   }
 
@@ -132,7 +129,7 @@ export class TypeCommand<A> extends Type<boolean> {
       })
       if (matchedArg) {
         matchedArg.parsed[0].claimed = true
-        this.applySource(context, SOURCE_CONSTANTS.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw)
+        this.applySource(context, TypeCommand.SYWAC.SOURCE_POSITIONAL, matchedArg.index, matchedArg.raw)
       }
     }
     this.setValue(context, true) // set this value to true for context.details

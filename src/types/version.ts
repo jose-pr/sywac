@@ -1,7 +1,9 @@
 import TypeImplicitCommand, { TypeImplicitCommandOptions } from './implicit'
-import { Context, DeferVersion } from '../context'
+import { Context } from '../_api'
 
-export interface TypeVersionOptions extends DeferVersion, TypeImplicitCommandOptions { }
+export interface TypeVersionOptions extends TypeImplicitCommandOptions {
+  version?: string
+}
 
 class TypeVersion extends TypeImplicitCommand {
   static get(opts: TypeVersionOptions) {
@@ -26,7 +28,7 @@ class TypeVersion extends TypeImplicitCommand {
 
   _assignVersionOpts(target: TypeVersionOptions, source: TypeVersionOptions) {
     (['version'] as (keyof TypeVersionOptions)[]).forEach(opt => {
-      if (opt in source) (target[opt] as TypeVersionOptions[typeof opt]) = source[opt] as any   
+      if (opt in source) (target[opt] as TypeVersionOptions[typeof opt]) = source[opt] as any
     })
     return target
   }

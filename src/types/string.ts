@@ -1,6 +1,5 @@
 import Type from "./type"
-import { Context } from "../context"
-import { TypeOptions } from "./api"
+import { TypeOptions, Context } from "../_api"
 
 export interface TypeStringOptions extends TypeOptions<string>{
 
@@ -16,7 +15,7 @@ class TypeString extends Type<string> {
   }
 
   getValue(context: Context) {
-    const v = context.lookupValue(this.id) as string
+    const v = context.lookupValue<string>(this.id)
     if (typeof v === 'undefined' || v === null) return v
     return String(v)
   }

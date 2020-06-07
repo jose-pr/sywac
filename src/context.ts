@@ -1,4 +1,4 @@
-import { ContextOptions, TypeObject, TypeResult } from "./api"
+import { ContextOptions, TypeObject, TypeResult } from "./_api"
 
 const format = require('util').format
 
@@ -241,7 +241,7 @@ export class Context {
     }
   }
 
-  deferHelp(opts: {}) {
+  deferHelp(opts?: {}) {
     this.helpRequested = opts || {}
     return this
   }
