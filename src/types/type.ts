@@ -1,8 +1,9 @@
-import { Context, SlurpedArg } from "../context"
-import { CoerceFunction, TypeOptions, IType, SOURCE_CONSTANTS, TypeResult, TypeObject } from "./api"
+import { CoerceFunction, SOURCE_CONSTANTS, TypeResult, TypeObject } from "./api"
+import { TypeOptions, Type as IType, SywacProvider, Sywac, Context } from "../api"
 
 
 export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements IType<V, O> {
+
   protected _aliases: string[] = []
   protected _defaultVal?: V
   protected _required?: boolean
@@ -336,7 +337,7 @@ export class Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> implements
   }
 
   getValue(context: Context) {
-    return context.lookupValue(this.id) as V
+    return context.lookupValue(this.id) as V|undefined
   }
 
   // subtype impls can be async (return a promise)

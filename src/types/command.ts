@@ -1,43 +1,44 @@
 //@ts-ignore
-import Api from '../api'
 import Type from './type'
-import { Context } from '../context'
-import { TypeOptions, SOURCE_CONSTANTS } from './api'
+import { SOURCE_CONSTANTS } from './api'
+import { Sywac, TypeOptions, Context, SywacProvider } from '../api'
 
-export interface TypeCommandOptions extends TypeOptions<boolean>, PositionalOptions {
-  api?: Api
-  setup?:Function
-  run?:Function
-  paramsDsl?:string
+export interface TypeCommandOptions<A> extends TypeOptions<boolean>, PositionalOptions {
+  api?: Sywac<A>
+  setup?: Function
+  run?: Function
+  paramsDsl?: string
 }
 export interface PositionalOptions {
-  'params'?:string[]
-  'paramsDescription'?:string[]
-  'paramsDesc'?:string[]
-  'paramsGroup'?:string[]
-  'ignore'?:boolean
+  'params'?: string[]
+  'paramsDescription'?: string[]
+  'paramsDesc'?: string[]
+  'paramsGroup'?: string[]
+  'ignore'?: boolean
 }
-export class TypeCommand extends Type<boolean> {
-  static get(opts?: TypeCommandOptions) {
+export class TypeCommand<A> extends Type<boolean> {
+  private static SYWAC: SywacProvider
+  static get<A>(this: Sywac, opts?: TypeCommandOptions<A>) {
+    if (!TypeCommand.SYWAC) TypeCommand.SYWAC = this.SYWAC
     return new TypeCommand(opts)
   }
 
-  private _api?: Api
-  private _apiConfigured?:boolean
-  private _positionalOpts?:PositionalOptions
-  private _positionalDsl?:string
-  private _setupHandler?:Function
-  private _runHandler?:Function
-  private _default?:boolean
-  private _validAliases?:string[]
+  private _api?: Sywac
+  private _apiConfigured?: boolean
+  private _positionalOpts?: PositionalOptions
+  private _positionalDsl?: string
+  private _setupHandler?: Function
+  private _runHandler?: Function
+  private _default?: boolean
+  private _validAliases?: string[]
 
-  constructor(opts?: TypeCommandOptions) {
+  private constructor(opts?: TypeCommandOptions<A>) {
     // default value is for benefit of context.details.types
     super(Object.assign({ defaultValue: false }, opts))
   }
 
-  configure(opts?: TypeCommandOptions, override?: boolean) {
-    opts = opts || {} as TypeCommandOptions
+  configure(opts?: TypeCommandOptions<A>, override?: boolean) {
+    opts = opts || {} as TypeCommandOptions<A>
     if (typeof override === 'undefined') override = true
     super.configure(opts, override)
 
@@ -53,7 +54,7 @@ export class TypeCommand extends Type<boolean> {
     return this
   }
 
-  _assignPositionalOpts(target:PositionalOptions, source:PositionalOptions) {
+  _assignPositionalOpts(target: PositionalOptions, source: PositionalOptions) {
     ['params', 'paramsDescription', 'paramsDesc', 'paramsGroup', 'ignore'].forEach(opt => {
       //@ts-ignore
       if (opt in source) target[opt] = source[opt]
@@ -63,8 +64,9 @@ export class TypeCommand extends Type<boolean> {
 
   // if user requests help or a `setup` or `run` callback generates CLI messages,
   // we need to initialize the help buffer in the context of this command.
-  _initPossibleHelpBuffer(context:Context) {
+  _initPossibleHelpBuffer(context: Context) {
     const result = context.helpRequested || context.messages.length
+    //@ts-ignore
     if (result && !context.output) context.addDeferredHelp(this.api.initHelpBuffer())
     return result
   }
@@ -74,17 +76,17 @@ export class TypeCommand extends Type<boolean> {
   }
 
   get api() {
-    if (!this._api) this._api = Api.get()
+    if (!this._api) this._api = TypeCommand.SYWAC.get({})
     return this._api
   }
 
   get isDefault() {
-    if (typeof this._default !== 'boolean') this._default = this.aliases.some(alias => alias === Api.DEFAULT_COMMAND_INDICATOR)
+    if (typeof this._default !== 'boolean') this._default = this.aliases.some(alias => alias === TypeCommand.SYWAC.DEFAULT_COMMAND_INDICATOR)
     return this._default
   }
 
   get validAliases() {
-    if (!Array.isArray(this._validAliases)) this._validAliases = this.aliases.filter(alias => alias !== Api.DEFAULT_COMMAND_INDICATOR)
+    if (!Array.isArray(this._validAliases)) this._validAliases = this.aliases.filter(alias => alias !== TypeCommand.SYWAC.DEFAULT_COMMAND_INDICATOR)
     return this._validAliases
   }
 
@@ -105,7 +107,7 @@ export class TypeCommand extends Type<boolean> {
     return super.isHidden
   }
 
-  buildHelpHints(hints:string[]) {
+  buildHelpHints(hints: string[]) {
     if (this.validAliases.length > 1) hints.push('aliases: ' + this.validAliases.slice(1).join(', '))
     if (this.isDefault) hints.push('default')
   }
@@ -114,12 +116,13 @@ export class TypeCommand extends Type<boolean> {
     return this._group || 'Commands:'
   }
 
-  parse(context:Context) {
+  parse(context: Context) {
     return super.resolve()
   }
 
-  async postParse(context:Context) {
-    const match = context.matchCommand(this.api.parentName, this.validAliases, this.isDefault) as {explicit:boolean,implicit:boolean, candidate?:string}
+  async postParse(context: Context) {
+    //@ts-ignore
+    const match = context.matchCommand(this.api.parentName, this.validAliases, this.isDefault) as { explicit: boolean, implicit: boolean, candidate?: string }
     if (!match.explicit && !match.implicit) return this.resolve()
 
     if (match.explicit) {
@@ -151,12 +154,13 @@ export class TypeCommand extends Type<boolean> {
       // call sync "setup" handler, if defined
       this.setupHandler(this.api)
     }
-
+    //@ts-ignore
     await this.api.parseFromContext(context)
 
     // only run innermost command handler
     if (context.commandHandlerRun) return this.resolve()
     context.commandHandlerRun = true
+    //@ts-ignore
     this.api.addStrictModeErrors(context)
     if (this._initPossibleHelpBuffer(context)) return this.resolve()
 

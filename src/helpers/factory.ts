@@ -1,5 +1,6 @@
-
-export declare type IFactory<Conf extends {}, T> = (opts: Conf) => T
+import Api, { } from '../_api';
+import { TypeOptions, Factory, Type } from '../api';
+import { Sywac } from '../api';
 
 export function lazyImport<O extends {}, T>(path: string[], opts: Partial<O>, def?: Partial<O> | (() => Partial<O>)) {
     def = typeof def === 'function' ? def() : def;
@@ -9,13 +10,13 @@ export function getLazyImport<O extends {}, T>(path: string[], def?: Partial<O> 
     return (opts: Partial<O>) => lazyImport<O, T>(path, opts, def)
 }
 
-export function registerProvidedFactories(api: import('../api').Api) {
+export function registerProvidedFactories(api: Api<any>) {
     const getPath = getLazyImport([__dirname, 'types/path'], () => ({
         pathLib: api.pathLib,
         fsLib: api.fsLib
     })) as any;
 
-    function registerOption<N extends string, O extends import("../types/api").TypeOptions<V>, V>(name: string, shorcut: N, factory?: IFactory<O, import("../types/type").Type<V>>) {
+    function registerOption<N extends string, O extends TypeOptions<V>, V>(name: string, shorcut: N, factory?: Factory<O, Type<V>, Sywac>) {
         if (factory && api.constructor.prototype[shorcut] === undefined) api.registerFactory(name, factory);
         api.constructor.prototype[shorcut] = ((flags: string | O, opts?: O) => {
             //@ts-ignore

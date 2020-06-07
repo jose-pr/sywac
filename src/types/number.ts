@@ -1,6 +1,9 @@
 import Type from "./type"
-import { Context } from "../context"
-import { TypeOptions } from "./api"
+import { TypeOptions, Context } from "../api"
+
+export interface TypeNumberOptions extends TypeOptions<number> {
+
+}
 
 class TypeNumber extends Type<number> {
   static isNumber(value: string | number): value is number {
@@ -16,7 +19,7 @@ class TypeNumber extends Type<number> {
   }
 
   getValue(context:Context) {
-    const v = context.lookupValue(this.id)! as number|string
+    const v = context.lookupValue<string>(this.id) 
     if (typeof v === 'undefined' || v === null) return v
     return TypeNumber.isNumber(v) ? Number(v) : NaN
   }

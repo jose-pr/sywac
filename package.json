@@ -43,7 +43,7 @@
     "import-fresh": "^3.2.1",
     "standard": "^14.3.2",
     "tap": "^14.10.6",
-    "typedoc": "^0.17.7",
+    "typedoc": "^0.17.0-3",
     "typescript": "^3.9.5"
   }
 }

@@ -1,21 +1,25 @@
 import Type from "./type"
-import { Context, SlurpedArg } from "../context"
-import { TypeOptions } from "./api"
+import { TypeOptions, Context, SlurpedArg, FlagTypeConfig, Sywac, TypeOptionsAliases, TypeIsRequired, ArgvExtension } from "../api"
+import { ValidTypeConfig } from "./api"
 
-class TypeBoolean extends Type<boolean> {
-  static get(opts: TypeOptions<boolean>) {
+export interface TypeBooleanOption extends TypeOptions<boolean> {
+
+}
+
+class TypeBoolean extends Type<boolean, TypeBooleanOption> {
+  static get(opts: TypeBooleanOption) {
     return new TypeBoolean(opts)
   }
 
-  constructor(opts: TypeOptions<boolean>) {
+  constructor(opts: TypeBooleanOption) {
     super(Object.assign({ defaultValue: false }, opts))
   }
 
-  get datatype() {
+  get datatype(): 'boolean' {
     return 'boolean'
   }
 
-  isApplicable(context: Context, currentValue: unknown, previousValue: unknown, slurpedArg: SlurpedArg) {
+  isApplicable(context: Context, currentValue: unknown) {
     return typeof currentValue === 'boolean' || currentValue === 'true' || currentValue === 'false'
   }
 
@@ -24,16 +28,5 @@ class TypeBoolean extends Type<boolean> {
   }
 }
 
-declare module '../api' {
-  interface Api {
-    // common individual value types
-    /**
-     *  Add a boolean option
-     * @param flags 
-     * @param opts 
-     */
-    boolean(flags: string, opts: TypeOptions<boolean>): Api
-  }
-}
-
 export default TypeBoolean
+

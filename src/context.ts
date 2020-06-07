@@ -1,14 +1,8 @@
-import path from "path"
-import fs from "fs"
+import { ContextOptions, TypeObject, TypeResult } from "./api"
 
 const format = require('util').format
 
-export interface ContextOptions {
-  utils?: unknown
-  pathLib?: typeof path
-  fsLib?: typeof fs
-  state?: unknown
-}
+
 export interface ParsedArg {
   key: string,
   value: unknown,
@@ -20,41 +14,28 @@ export interface SlurpedArg {
   index: number,
   parsed: ParsedArg[]
 }
+type Type = TypeObject & TypeResult & {
+  invalid?: boolean
+}
 export type DeferVersion = { version?: string | Function }
 export type HelBuffer = {
-  groups: Record<string, TypeObject[]>
+  groups: Record<string, Type[]>
   _usageName: string
   toString(o: {}): string
-  messages:string[]
+  messages: string[]
 }
 export type Source = { source: string, position: number[], raw: string[] }
-export interface TypeObject {
-  id: string,
-  aliases: string[],
-  datatype: string,
-  isRequired: boolean,
-  helpFlags: string,
-  helpDesc: string,
-  helpHints: string,
-  helpGroup: string,
-  isHidden: boolean
-  invalid?: boolean
-  parent?: string
-  value?: unknown
-  source?:string
-  position?:number[]
-  raw?:string[]
-}
+
 export class Context {
   static get(opts?: ContextOptions) {
     return new Context(opts)
   }
 
   private _utils: any
-  private _pathLib?: typeof path
-  private _fsLib?: typeof fs
-  private state: unknown
-  types: Record<string, undefined | TypeObject[]>
+  private _pathLib?: typeof import("path")
+  private _fsLib?: typeof import("fs")
+  //private state: unknown
+  types: Record<string, undefined | Type[]>
   args: string[]
   slurped: SlurpedArg[]
   values: Map<string, unknown>
@@ -63,7 +44,7 @@ export class Context {
   output: string
   argv: { _?: string[] } & Record<string, unknown>
   knownArgv: Record<string, unknown>
-  details: { args: string[], types: TypeObject[] }
+  details: { args: string[], types: Type[] }
   errors: (string | undefined | Error)[]
   messages: string[]
   commandHandlerRun: boolean
@@ -78,7 +59,7 @@ export class Context {
     this._pathLib = opts.pathLib
     this._fsLib = opts.fsLib
     // config
-    this.state = opts.state
+    //this.state = opts.state
     this.types = {}
     // args to parse per type
     this.args = []
@@ -116,7 +97,7 @@ export class Context {
     return this._fsLib
   }
 
-  slurpArgs(args: string | string[]) {
+  slurpArgs(args?: string | string[]) {
     if (typeof args === 'string') args = this.utils.stringToArgs(args)
     if (!args) args = process.argv.slice(2)
     if (!Array.isArray(args)) args = ([] as string[]).concat(args)
@@ -201,7 +182,7 @@ export class Context {
     return kvArray
   }
 
-  pushLevel(level: string, types: TypeObject[]) {
+  pushLevel(level: string, types: Type[]) {
     this.types[level] = types
     return this
   }
@@ -271,7 +252,7 @@ export class Context {
   }
 
   addDeferredHelp(helpBuffer: HelBuffer) {
-    const groups: Record<string, TypeObject[]> = {}
+    const groups: Record<string, Type[]> = {}
     const mappedLevels = Object.keys(this.types)
     for (let i = mappedLevels.length - 1, currentLevel: string; i >= 0; i--) {
       currentLevel = mappedLevels[i]
@@ -294,7 +275,7 @@ export class Context {
     return this
   }
 
-  addHelp(helpBuffer:HelBuffer, opts: {}) {
+  addHelp(helpBuffer: HelBuffer, opts: {}) {
     return this.deferHelp(opts).addDeferredHelp(helpBuffer)
   }
 
@@ -332,14 +313,14 @@ export class Context {
   }
 
   lookupValue(id: string) {
-    return this.values.get(id) 
+    return this.values.get(id)
   }
 
   resetSource(id: string, source: string) {
     this.sources.set(id, { source: source, position: [], raw: [] })
   }
 
-  employSource(id: string, source?: string|null, position?: number, raw?: string) {
+  employSource(id: string, source?: string | null, position?: number, raw?: string) {
     let obj = this.lookupSource(id)
     if (!obj) {
       obj = { source: undefined as any, position: [], raw: [] }
@@ -359,9 +340,9 @@ export class Context {
     return obj && obj.source
   }
 
-  populateArgv(typeResults: Partial<TypeObject>[]) {
+  populateArgv(typeResults: Partial<Type>[]) {
     let detailIndex
-    (typeResults as TypeObject[]).forEach(tr => {
+    (typeResults as Type[]).forEach(tr => {
       // find and reset detailed object; otherwise add it
       detailIndex = this.details.types.findIndex(t => t.parent === tr.parent && t.datatype === tr.datatype && this.utils.sameArrays(tr.aliases, t.aliases))
       if (detailIndex !== -1) this.details.types[detailIndex] = tr

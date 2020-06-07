@@ -1,7 +1,6 @@
 import TypeWrapper, { TypeWrapperOptions } from "./wrapper"
 import { Context, SlurpedArg } from "../context"
-import { SOURCE_CONSTANTS } from "./api"
-const SOURCE_DEFAULT = SOURCE_CONSTANTS.SOURCE_DEFAULT
+import { Sywac } from "../api"
 
 export interface TypeArrayOptions<T> extends TypeWrapperOptions<T[]> {
   delimiter?: string
