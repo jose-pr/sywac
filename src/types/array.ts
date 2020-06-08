@@ -1,17 +1,12 @@
 import TypeWrapper, { TypeWrapperOptions } from "./wrapper"
-import { Context, SlurpedArg } from "../_api"
+import { Context, SlurpedArg,TypeArrayOptions } from "../_api"
 
-export interface TypeArrayOptions<T> extends TypeWrapperOptions<T[]> {
-  delimiter?: string
-  delim?: string
-  cumulative?: boolean
-}
 
 export class TypeArray<T> extends TypeWrapper<T[]> {
   static get<T>(opts?: TypeArrayOptions<T>) {
     return new TypeArray(opts)
   }
-  private _delim?: string
+  private _delim?: string|RegExp
   private _cumulative?: boolean
   constructor(opts?: TypeArrayOptions<T>) {
     super(Object.assign({ delim: ',', cumulative: true }, opts || {} as TypeArrayOptions<T>))

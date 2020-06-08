@@ -71,7 +71,7 @@
     "./node_modules/**/*",
     "./test/**/*",
     "./lib/**/*",
-    "./src/api/type_extensions.d.ts"
+    //"./src/api/type_extensions.d.ts"
   ],
   "typedocOptions": {
     "mode": "library",

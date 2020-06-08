@@ -1,7 +1,9 @@
 import { FactoryProvider } from "./factory";
-import { SywacOptions } from "./options";
+import { SywacOptions, ArgvExtension } from "./options";
 import { Sywac } from ".";
-import {ParsedDetails, ParsedArg} from "./context"
+import { ParsedDetails, ParsedArg } from "./context"
+import { SywacTypeExtensions } from "./type_extensions"
+import { Type } from './type'
 
 export interface SywacProvider<A = {}> extends FactoryProvider<SywacOptions, Sywac<A>> {
     readonly DEFAULT_COMMAND_INDICATOR: string
@@ -11,29 +13,27 @@ export interface SywacProvider<A = {}> extends FactoryProvider<SywacOptions, Syw
     readonly SOURCE_FLAG: string
     readonly SOURCE_POSITIONAL: string
 }
-export declare interface SywacExtensions<A extends {}> {
 
-}
-export declare interface Sywac<A extends {} = {}> extends SywacExtensions<A> {
+export declare interface Sywac<A extends {} = {}> extends SywacTypeExtensions<A> {
 
     readonly SYWAC: SywacProvider
     /**
-     * @summary Parse given args, validate them according to configuration, execute any commands found, and return the detailed results of execution on resolution.
-     * @description
+     * Parse given args, validate them according to configuration, execute any commands found, and return the detailed results of execution on resolution.
+     * @remakrs
      * This method is suitable for any application use. It treats each call as a stateless operation, accepting the input it needs and returning (as a Promise) the output result. It makes no assumptions about the application and therefore does not call any methods like console.log() or process.exit(). Rather, any potential output content (like help text) or error status (like an exit code) is reported in the result.
      * 
      * Note that this method is safe to use concurrently, meaning it is suitable for server-side apps that may handle many concurrent requests (e.g. a REST/HTTP service) or process many concurrent messages (e.g. a chatbot).
-     * 
-     * Example passing an explicit message to parse:
+     * @examples
+     * __Example passing an explicit message to parse:__
      * ```js
-        const msg = 'hello --name world'
-        sywac.parse(msg).then(result => {
-        console.log(JSON.stringify(result, null, 2))
-        if (result.output) return respond(result.output)
-        if (result.code !== 0) return respond('Error!', result.errors)
-        return respond('Success')
-        })
-        ```
+     *  const msg = 'hello --name world'
+     *  sywac.parse(msg).then(result => {
+     *  console.log(JSON.stringify(result, null, 2))
+     *      if (result.output) return respond(result.output)
+     *      if (result.code !== 0) return respond('Error!', result.errors)
+     *      return respond('Success')
+     *  })
+     * ```
      * @since 1.0,0
      * @param args The arguments or message to parse, validate, and execute. Defaults to: `process.argv.slice(2)`
      * @returns Promise that resolves to a result object
@@ -48,23 +48,19 @@ export declare interface Sywac<A extends {} = {}> extends SywacExtensions<A> {
      * 
      *@note In a command-driven app, it may be perfectly reasonable to call this method and do nothing with the returned Promise, because command execution will have already completed.
      *@examples -
-     * __CODE__:
      *```js
      * sywac.parseAndExit().then(argv => {
      *   console.log(argv)
      * })
-     * ```
-     * 
+     * ``` 
      * @since  `1.0.0`
      * @param args The arguments or message to parse, validate, and execute. Defaults to: `process.argv.slice(2)`
      * @returns Promise that resolves to the {@linkcode ArgParsed.argv}
-     * @throws Error
-     * @throws Test
      */
     parseAndExit(args?: string | string[]): Promise<Argv<A>>
     /**
      * Define any custom validation logic to run after all types have been parsed, validated, and coerced. The handler will not be called if help or version are explicitly requested.
-     *#Example
+     *@examples -
      *```js
      *require('sywac')
      *.file('-f <file>', {
@@ -107,12 +103,43 @@ export declare interface Sywac<A extends {} = {}> extends SywacExtensions<A> {
     check(handler: SywacHandler): this
 
     /**
+     * Configure the Api instance directly.
      * @since 1.0.0
-     * @summary Configure the Api instance directly.
      * @returns the Api instance for method chaining. [[`Sywac`]]
      * @example sywac.configure({ name: 'example' }) 
      */
     configure(opts: ApiOptions): this
+    /**
+     * Add an instance of any Type, representing an expected option, argument, or command.
+     * @since 1.0.0
+     * @param type instance of class extending {@link Type}
+     * @returns the Api instance for method chaining. [[`Sywac`]]
+     * @examples -
+     * ```js
+     * const url = require('url')
+     * const TypeString = require('sywac/types/string')
+     * class BaseUrl extends TypeString {
+     *      get datatype () {
+     *          return 'baseurl'
+     *      }
+     *      getValue (context) {
+     *       let v = super.getValue(context)
+     *       if (!v) return v
+     *       const p = v.includes('//') ? url.parse(v) : url.parse('http://' + v)
+     *       let proto = p.protocol || 'http:'
+     *       if (!proto.endsWith('//')) proto += '//'
+     *       v = proto + (p.host || '') + (p.pathname || '')
+     *       return v.endsWith('/') ? v.slice(0, -1) : v
+     *      }
+     * }
+     * sywac.custom(new BaseUrl({
+     *      flags: '-u, --url <baseurl>',
+     *      desc: 'A base url i.e. [protocol://]host[:port][/path]',
+     *      defaultValue: 'localhost:8080'
+     * }))
+     * ```
+     */
+    custom<N extends string, Required, V>(type: Type<V>): Sywac<A & ArgvExtension<{ required: Required, flags: N }, V>>
 }
 
 export type Argv<A> = {
@@ -142,7 +169,7 @@ export interface ArgParsed<A extends {}> {
      * @description
      * Note that the framework does not explicitly throw or reject internally, so any errors encountered are either the result of incorrect Api usage, your application code (custom handlers), or bugs in the framework.
      */
-    errors: (Error|string|undefined)[]
+    errors: (Error | string | undefined)[]
     /**
      * @summary Represents the parsed arguments and options as key-value pairs, where each key is a configured alias of an argument/option and each value is the parsed/coerced value for that argument/option.
      * @description 

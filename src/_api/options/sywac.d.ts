@@ -19,10 +19,11 @@ export declare interface SywacOptions {
      * @default process.argv[1]
      */
     name?: string
-    /**@ignore */
+    /**@internal */
     parentName?: string
     helpOpts?: {}
     showHelpByDefault?: boolean
     strictMode?: boolean
+    /**@internal */
     modulesSeen?: []
 }
