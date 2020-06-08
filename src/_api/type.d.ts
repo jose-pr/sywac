@@ -18,6 +18,7 @@ export interface TypeObject {
   helpHints: string[],
   helpGroup: string,
   isHidden: boolean
+  invalid?: boolean
 }
 
 export interface Type<V = any, O extends TypeOptions<V> = TypeOptions<V>> {

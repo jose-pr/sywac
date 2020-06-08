@@ -1,23 +1,10 @@
-import { ContextOptions, TypeObject, TypeResult } from "./_api"
+import { ContextOptions, TypeObject, TypeResult, SlurpedArg, Context as IContext } from "./_api"
+import { Argv } from "./_api/sywac"
 
 const format = require('util').format
 
+type Type = TypeObject & TypeResult
 
-export interface ParsedArg {
-  key: string,
-  value: unknown,
-  claimed?: boolean,
-  last?: boolean,
-}
-export interface SlurpedArg {
-  raw: string,
-  index: number,
-  parsed: ParsedArg[]
-}
-type Type = TypeObject & TypeResult & {
-  invalid?: boolean
-}
-export type DeferVersion = { version?: string | Function }
 export type HelBuffer = {
   groups: Record<string, Type[]>
   _usageName: string
@@ -26,7 +13,7 @@ export type HelBuffer = {
 }
 export type Source = { source: string, position: number[], raw: string[] }
 
-export class Context {
+export class Context<A={}> implements IContext<A> {
   static get(opts?: ContextOptions) {
     return new Context(opts)
   }
@@ -42,7 +29,7 @@ export class Context {
   sources: Map<string, Source>
   code: number
   output: string
-  argv: { _?: string[] } & Record<string, unknown>
+  argv: Argv<A>
   knownArgv: Record<string, unknown>
   details: { args: string[], types: Type[] }
   errors: (string | undefined | Error)[]
@@ -50,7 +37,7 @@ export class Context {
   commandHandlerRun: boolean
   helpRequested: {}
   helpRequestedImplicitly: boolean
-  versionRequested: DeferVersion | false
+  versionRequested: { version?: string|(()=>string) } | false
 
   constructor(opts?: ContextOptions) {
     opts = opts || {}
@@ -70,7 +57,7 @@ export class Context {
     // results of parsing and validation
     this.code = 0
     this.output = ''
-    this.argv = {}
+    this.argv = {} as A;
     this.knownArgv = {}
     this.details = { args: [], types: [] }
     this.errors = []
@@ -89,12 +76,12 @@ export class Context {
 
   get pathLib() {
     if (!this._pathLib) this._pathLib = require('path')
-    return this._pathLib
+    return this._pathLib!
   }
 
   get fsLib() {
     if (!this._fsLib) this._fsLib = require('fs')
-    return this._fsLib
+    return this._fsLib!
   }
 
   slurpArgs(args?: string | string[]) {
@@ -279,7 +266,7 @@ export class Context {
     return this.deferHelp(opts).addDeferredHelp(helpBuffer)
   }
 
-  deferVersion(opts: DeferVersion) {
+  deferVersion(opts?: { version?: string }) {
     this.versionRequested = opts || {}
     return this
   }
@@ -312,8 +299,8 @@ export class Context {
     this.values.set(id, value)
   }
 
-  lookupValue(id: string) {
-    return this.values.get(id)
+  lookupValue<V>(id: string) {
+    return this.values.get(id) as V|undefined
   }
 
   resetSource(id: string, source: string) {
@@ -332,7 +319,7 @@ export class Context {
   }
 
   lookupSource(id: string) {
-    return this.sources.get(id)
+    return this.sources.get(id) as Source
   }
 
   lookupSourceValue(id: string) {
@@ -351,7 +338,7 @@ export class Context {
       // if not command, set value for each alias in argv
       if (tr.datatype === 'command') return undefined // do not add command aliases to argv
       tr.aliases.forEach(alias => {
-        this.argv[alias] = tr.value
+        (this.argv as Record<string,any>)[alias] = tr.value
         this.knownArgv[alias] = tr.value
       })
     })

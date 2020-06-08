@@ -77,7 +77,7 @@ export interface Context<A extends {} = {}> {
     readonly utils: any
     readonly pathLib: typeof import("path")
     readonly fsLib: typeof import("fs")
-    helpRequested: boolean
+    helpRequested: {}
     messages: string[]
 
 
